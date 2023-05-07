@@ -4,6 +4,7 @@ title: linux
 parent: command
 nav_order: 5
 ---
+
 # 1. ubuntu网络防火端设置信息
 
 ```shell
@@ -150,8 +151,8 @@ ifconfig -address
 ```
 
 ## 4.2. telnet ip port
-检查某个服务的port是否启动
 
+检查某个服务的port是否启动
 
 ## 4.4. tcpdump
 

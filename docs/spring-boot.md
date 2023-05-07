@@ -1,10 +1,11 @@
 ---
 layout: default
-title: spring-boot.md
+title: spring-boot
 nav_order: 3
 ---
 
 # 1. auto configuration
+
 ```text
 找到 spring-boot-autoconfig这个jar包，下面的META-INF文件夹
 找到spring.factories文件
@@ -12,10 +13,11 @@ nav_order: 3
 ```
 
 ## 1.1. kafka
-- CommonClientConfigs  org.apache.kafka.clients.CommonClientConfigs
 
+- CommonClientConfigs org.apache.kafka.clients.CommonClientConfigs
 
 ## 1.2. log4j
+
 ```text
 SLF4J: Class path contains multiple SLF4J bindings.
 SLF4J: Found binding in [jar:file:/C:/Users/deips/.m2/repository/ch/qos/logback/logback-classic/1.2.3/logback-classic-1.2.3.jar!/org/slf4j/impl/StaticLoggerBinder.class]
@@ -27,6 +29,8 @@ SLF4J: Actual binding is of type [ch.qos.logback.classic.util.ContextSelectorSta
 ```
 
 ## dubbo
+
 ### dubbo 3.0
+
 duubo》curator》zookeeper
 这样的一种调用关系

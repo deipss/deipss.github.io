@@ -4,6 +4,7 @@ title: java
 parent: command
 nav_order: 3
 ---
+
 # 1. 高CPU使用率分析
 
 ## 1.1. 方式一
@@ -78,6 +79,7 @@ ognl -c 2e1ef60 '#context=@org.apache.dubbo.config.spring.extension.SpringExtens
 ```
 
 ## thread
+
 ```bash
 # 打印出阻塞的线程信息
 thread -b
@@ -105,7 +107,8 @@ monitor -c 1 <类全路径名> <方法名>
 trace com.frxs.repeater.receiver.event.consumer.RecieveGeneralMsgConsumer onMessage  -n 5 --skipJDKMethod false '#cost > 3000'
 ```
 
-## classloader 
+## classloader
+
 ```shell
 # 按类加载实例查看统计信息
 classloader -l

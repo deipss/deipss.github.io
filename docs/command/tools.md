@@ -4,6 +4,7 @@ title: tools
 parent: command
 nav_order: 8
 ---
+
 # 1. 装机
 
 ## 1.1. 办公
@@ -36,7 +37,6 @@ nav_order: 8
 - tcpdump(linux上)
 - ZeroTier vpn搭建
 - MobaXterm 远程登陆
-
 
 ## 1.5. 中间件
 

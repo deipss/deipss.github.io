@@ -4,6 +4,7 @@ title: mvn
 parent: command
 nav_order: 6
 ---
+
 # 1. 依赖树打印
 
 ```shell
@@ -37,8 +38,9 @@ mvn versions:set -D newVersion=1.5.0-SNAPSHOT
 ```
 
 - -D代表（Properties属性）
-- pl 表示只处理指定的module 
+- pl 表示只处理指定的module
 - am 表示处理-pl批定module关联的其他module
+
 ```shell
 
 <properties>
@@ -104,7 +106,9 @@ mvn deploy:deploy-file -DgroupId=com.frxs.repeater -DartifactId=receiver -Dversi
         </repository>
     </repositories>
 ```
+
 # 5. 安装在本地
+
 ```shell
 mvn install 会将包安装在本地的仓库
 mvn clean compile install deploy  -Dmaven.test.skip=true
@@ -113,6 +117,7 @@ mvn clean package  '-Dmaven.test.skip=true'
 ```
 
 # 6. mvn配置文件
+
 ```text
 <package></package>标签 可以有pom或是jar,默认是jar,在有父子继续关系时，一般父pom文件使用pom包
 ```

@@ -4,7 +4,9 @@ title: sandbox
 parent: command
 nav_order: 7
 ---
+
 # 异常制造
+
 ```shell
 cd /opt/sandbox/bin
 ./sandbox.sh -p 66 -d 'repeater/delay?class=com.xsyx.trade.stock.query.service.api.facade.ProductLimitFacade&method=queryLimit&delay=800'
@@ -12,6 +14,7 @@ cd /opt/sandbox/bin
 ```
 
 # 重新加载module
+
 ```shell
 cd /opt/sandbox/bin
 ./sandbox.sh -p 66 -f 只刷新有变更的module
