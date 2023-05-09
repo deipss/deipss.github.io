@@ -28,9 +28,9 @@ SLF4J: Actual binding is of type [ch.qos.logback.classic.util.ContextSelectorSta
 找到了多个binding类，将不需要去除
 ```
 
-## dubbo
+## 1.3. dubbo
 
-### dubbo 3.0
+### 1.3.1. dubbo 3.0
 
-duubo》curator》zookeeper
+dubbo>curator>zookeeper
 这样的一种调用关系
