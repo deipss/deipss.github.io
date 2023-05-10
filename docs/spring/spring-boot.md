@@ -1,6 +1,7 @@
 ---
 layout: default
 title: spring-boot
+parent: spring
 nav_order: 3
 ---
 

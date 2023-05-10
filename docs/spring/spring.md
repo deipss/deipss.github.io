@@ -1,9 +1,9 @@
 ---
 layout: default
-title: command 😼
-nav_order: 2
+title: Spring 🌿
+nav_order: 3
 has_children: true
-permalink: docs/command
+permalink: docs/spring
 ---
 
 # command
