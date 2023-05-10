@@ -11,7 +11,9 @@ nav_order: 3
 找到spring.factories文件
 在这个文件中搜索相关的关键字，如kafka，可以看kafka自动配置的入口类
 ```
+自定义的@Configuration如下
 
+![img.png](..%2Fassets%2Fimg%2Fspring%2Fimg.png)
 ## 1.1. kafka
 
 - CommonClientConfigs org.apache.kafka.clients.CommonClientConfigs
