@@ -1,7 +1,7 @@
 ---
 layout: default
 title: docker
-parent: command
+parent: Command
 nav_order: 2
 ---
 

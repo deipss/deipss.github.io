@@ -1,7 +1,7 @@
 ---
 layout: default
 title: tools
-parent: command
+parent: Command
 nav_order: 8
 ---
 

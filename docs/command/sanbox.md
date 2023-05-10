@@ -1,7 +1,7 @@
 ---
 layout: default
 title: sandbox
-parent: command
+parent: Command
 nav_order: 7
 ---
 

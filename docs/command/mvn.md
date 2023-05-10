@@ -1,7 +1,7 @@
 ---
 layout: default
 title: mvn
-parent: command
+parent: Command
 nav_order: 6
 ---
 

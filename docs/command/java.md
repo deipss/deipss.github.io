@@ -1,7 +1,7 @@
 ---
 layout: default
 title: java
-parent: command
+parent: Command
 nav_order: 3
 ---
 
