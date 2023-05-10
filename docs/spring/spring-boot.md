@@ -14,7 +14,8 @@ nav_order: 3
 ```
 自定义的@Configuration如下
 
-![img.png](..%2F..%2Fassets%2Fimg%2Fspring%2Fimg.png)
+![auto-config-metainfo.png](..%2F..%2Fassets%2Fimg%2Fspring%2Fauto-config-metainfo.png)
+
 ## 1.1. kafka
 
 - CommonClientConfigs org.apache.kafka.clients.CommonClientConfigs
