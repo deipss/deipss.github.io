@@ -39,7 +39,7 @@ mvn versions:set -D newVersion=1.5.0-SNAPSHOT
 
 - -D代表（Properties属性）
 - pl 表示只处理指定的module
-- am 表示处理-pl批定module关联的其他module
+- am 表示处理-pl指定module关联的其他module
 
 ```shell
 
@@ -47,13 +47,16 @@ mvn versions:set -D newVersion=1.5.0-SNAPSHOT
   <attr>defaultattr</attr>
 </properties>
 执行 mvn -Dattr=newattr clean package，则pom.xml内attr的实际值将被替换成newattr
-mvn -Dmaven.test.skip=true clean package ，跳过测试包下的程序
 
 ```
 
 - -U 代表强制更新（update）
 
-# 4. 部署到仓库
+# 4. 跳过测试
+
+- mvn -Dmaven.test.skip=true clean package ，跳过测试包下的程序
+
+# 5. 部署到仓库
 
 ```shell
 
@@ -86,10 +89,6 @@ mvn deploy:deploy-file
 -Durl=http://nexus.xsyxsc.com/repository/maven-snapshots
 
 
-# repeater项目打包 jar
-mvn deploy:deploy-file -DgroupId=com.frxs.repeater -DartifactId=receiver-api -Dversion=0.0.1-SNAPSHOT -Dpackaging=jar -Dfile=C:\Users\PC\IdeaProjects\test\repeater-receiver\receiver-api\target\receiver-api.jar -DrepositoryId=maven-snapshots -Durl=http://nexus.xsyxsc.com/repository/maven-snapshots
-# repeater项目打包 pom
-mvn deploy:deploy-file -DgroupId=com.frxs.repeater -DartifactId=receiver -Dversion=0.0.1-SNAPSHOT -Dpackaging=pom -Dfile=mvn deploy:deploy-file -DgroupId=com.frxs.repeater -DartifactId=receiver -Dpackaging=pom -Dfile=C:\Users\PC\IdeaProjects\test\repeater-receiver\pom.xml -DrepositoryId=maven-snapshots -Durl=http://nexus.xsyxsc.com/repository/maven-snapshots
 
 
 
@@ -107,7 +106,7 @@ mvn deploy:deploy-file -DgroupId=com.frxs.repeater -DartifactId=receiver -Dversi
     </repositories>
 ```
 
-# 5. 安装在本地
+# 6. 安装在本地
 
 ```shell
 mvn install 会将包安装在本地的仓库
@@ -116,7 +115,7 @@ mvn clean package  '-Dmaven.test.skip=true'
 
 ```
 
-# 6. mvn配置文件
+# 7. mvn配置文件
 
 ```text
 <package></package>标签 可以有pom或是jar,默认是jar,在有父子继续关系时，一般父pom文件使用pom包

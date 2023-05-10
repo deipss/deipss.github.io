@@ -5,9 +5,9 @@ parent: command
 nav_order: 3
 ---
 
-# 1. 高CPU使用率分析
+# 高CPU使用率分析
 
-## 1.1. 方式一
+## 方式一，借用 alibaba arthas
 
 ```
 1、top 命令分析，是否高CPU使用率、负载率，但是CPU空闲时间长
@@ -18,7 +18,7 @@ thread -n [tid] >> [filename] 将某个线程的执行方法栈及CPU状态字�
 
 - 参考 https://www.jianshu.com/p/3ba1e933682b
 
-## 1.2. 方式二
+## 方式二，Top命令结合 jstack
 
 ```
 1、top 命令分析，是否高CPU使用率、负载率，但是CPU空闲时间长
@@ -31,7 +31,9 @@ thread -n [tid] >> [filename] 将某个线程的执行方法栈及CPU状态字�
 
 - https://www.cnblogs.com/fengweiweicoder/p/10992043.html
 
-# 2. 高内存分析
+# 高内存分析
+
+## jmap 文件下载
 
 ```shell
 打印出jvm进程堆使用情况
@@ -42,7 +44,11 @@ jmap -dump:file=filename.dump <pid>
 jhat -port 9998 filename.dump
 
 在windows可以使用jvisualvm.exe命令，加载文件分析  
+```
 
+## 内存对象统计排序
+
+```
 排序出目前容量最大的一些类，-k 2是根据第2列排序，就是数据最大的
 jmap -histo <pid> | grep <class full path> | sort -n -k 3 | head 17
  num     #instances         #bytes  class name 
@@ -54,6 +60,11 @@ jmap -histo <pid> | grep <class full path> | sort -n -k 3 | head 17
    6:        278914       67329632  [Ljava.util.HashMap$Node;
    7:       1297968       62302464  
 
+```
+
+## gc 查看
+
+```
 使用jstat命令查看gc情况
 jstat -gcutil <pid> 5000 20
 ```
@@ -70,12 +81,12 @@ java -jar arthas-boot.jar
 ## ognl
 
 ```bash
-# 3. 注意SpringExtensionFactory的版本，不同版本，类路径可能不一样
+注意SpringExtensionFactory的版本，不同版本，类路径可能不一样
 sc -d 'org.apache.dubbo.config.spring.extension.SpringExtensionFactory'
-# 4. 上面的命中得出cloassLoader的内存地址
+上面的命中得出classLoader的内存地址
 ognl -c 2e1ef60 '#context=@org.apache.dubbo.config.spring.extension.SpringExtensionFactory@getContexts().iterator.next, 
-# 5. context.getBean("umsTradeBillSplitJob").execute(null)' -x 3
-# 6. 可以使用new construct() 构造函数来声明一个变量 #a=new java.lang.Object(1)，注意使用要带上#号
+context.getBean("umsTradeBillSplitJob").execute(null)' -x 3
+可以使用new construct() 构造函数来声明一个变量 #a=new java.lang.Object(1)，注意使用要带上#号
 ```
 
 ## thread
@@ -102,8 +113,8 @@ monitor -c 1 <类全路径名> <方法名>
 ## trace
 
 ```shell script
-# 8. 方法内部调用路径，并输出方法路径上的每个节点上耗时
-# 9. 可以指定毫秒数
+# 方法内部调用路径，并输出方法路径上的每个节点上耗时
+# 可以指定毫秒数
 trace com.frxs.repeater.receiver.event.consumer.RecieveGeneralMsgConsumer onMessage  -n 5 --skipJDKMethod false '#cost > 3000'
 ```
 
