@@ -6,7 +6,7 @@ nav_order: 4
 ---
 
 # 常用的注解 
-```java
+```text
 @Configuration 标注一个类为配置类
 @AutoConfigureAfter 在某个类配置之后再配置
 @AutoConfigureBefore 在某个类配置之前就配置
