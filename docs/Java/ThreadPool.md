@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Class Loader
+title: Thread Pool
 parent: Java
 nav_order: 8
 ---

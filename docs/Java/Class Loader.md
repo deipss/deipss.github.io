@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 类加载器
+title: Class Loader
 parent: Java
 nav_order: 2
 ---
