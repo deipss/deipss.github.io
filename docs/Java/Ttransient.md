@@ -1,6 +1,6 @@
 ---
 layout: default
-title: transient
+title: Transient
 parent: Java
 nav_order: 1
 ---
