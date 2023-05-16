@@ -1,7 +1,8 @@
 ---
 layout: default
-title: sql
-nav_order: 4
+title: mysql
+parent: Database
+nav_order: 1
 ---
 
 # mysql进程排查
