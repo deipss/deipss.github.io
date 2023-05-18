@@ -21,12 +21,12 @@ thread -n [tid] >> [filename] 将某个线程的执行方法栈及CPU状态字�
 ## 方式二，Top命令结合 jstack
 
 ```
-1、top 命令分析，是否高CPU使用率、负载率，但是CPU空闲时间长
-2、top -Hp <pid> 查询pid中的线程
-3、printf "%x\n" <tid>  把线程id转为16进制
-4、jstack -l <pid> >> ./jstack_result.txt 将此时的jvm快照打印到指定txt文件
-4.1 可以结合 | grep 来检索不同状态的线程
-5、在txt文件中搜索16进制的线程id
+top 命令分析，是否高CPU使用率、负载率，但是CPU空闲时间长
+top -Hp <pid> 查询pid中的线程
+printf "%x\n" <tid>  把线程id转为16进制
+jstack -l <pid> >> ./jstack_result.txt 将此时的jvm快照打印到指定txt文件
+可以结合 | grep 来检索不同状态的线程
+在txt文件中搜索16进制的线程id
 ```
 
 - https://www.cnblogs.com/fengweiweicoder/p/10992043.html
@@ -67,6 +67,12 @@ jmap -histo <pid> | grep <class full path> | sort -n -k 3 | head 17
 ```
 使用jstat命令查看gc情况
 jstat -gcutil <pid> 5000 20
+```
+
+## javap 反编译代码
+```shell
+通过以下命令来反编译出一个Class文件字节码
+javap -verbose -p Main.class
 ```
 
 # 使用Arthas
