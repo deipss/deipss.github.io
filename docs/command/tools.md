@@ -41,6 +41,7 @@ nav_order: 8
 ## 1.5. 中间件
 
 - redis:rdm
+- redis:resp.app
 - mangoDb:Robo 3T
 - mysql:DBeaver navicat
 - zooKeeper:prettyZoo
@@ -50,6 +51,7 @@ nav_order: 8
 
 - everything 搜索工具
 - wox 搜索工具
+- Listray 搜索工具
 - 3dm 用于安装windows上，某个可能不存在的工具包 如.net
 - snipaste 桌面截图工具
 - Revo Uninstaller 款能够代替Windows系统中的“添加/删除程序
@@ -60,7 +62,7 @@ nav_order: 8
 
 - alibaba arthas
 - 阿里代码规约检测
-- 代码注解插件： Lombok
+- 代码注解插件：Lombok
 - 代码生成工具：CodeMaker
 - 代码缩略 code glance pro
 - 单元测试测试生成工具：JUnitGenerator

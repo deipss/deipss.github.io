@@ -10,8 +10,7 @@ nav_order: 1
 - Tu es là aussi.
 - いらっしゃい。
 
-
-
----
-
 [It is my git](https://github.com/deipss).
+
+
+
