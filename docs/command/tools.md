@@ -83,3 +83,5 @@ nav_order: 8
 - markdown index
 - markdown
 - markdown editor
+- package check
+- package search
