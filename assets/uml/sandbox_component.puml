@@ -1,0 +1,16 @@
+@startuml
+component ASM as asm
+[jvm sandbox] as jsandbox
+[jvm sandbox repeater] as repeater
+component arthas
+component grey  as grey
+component btrace
+component AspectJ
+
+repeater --> jsandbox
+arthas --> grey
+grey --> asm
+jsandbox --> asm
+btrace --> asm
+AspectJ --> asm
+@enduml
