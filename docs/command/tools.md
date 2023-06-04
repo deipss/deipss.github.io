@@ -6,6 +6,7 @@ nav_order: 8
 ---
 
 # 1. 装机
+- https://github.com/jaywcjlove/awesome-mac awesome
 
 ## 1.1. 办公
 
