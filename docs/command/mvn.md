@@ -120,3 +120,10 @@ mvn clean package  '-Dmaven.test.skip=true'
 ```text
 <package></package>标签 可以有pom或是jar,默认是jar,在有父子继续关系时，一般父pom文件使用pom包
 ```
+
+# 源码下载
+```shell
+mvn dependency:sources
+mvn dependency:resolve -Dclassifier=javadoc
+mvn dependency:sources dependency:resolve -Dclassifier=javadoc
+```
