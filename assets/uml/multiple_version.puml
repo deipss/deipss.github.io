@@ -1,0 +1,30 @@
+@startuml
+hide empty description
+
+
+
+[*] --> 待发布 :新建
+note on link
+insert历史版本表(status=待发布，version=1)；
+insert版本表(前端显示版本=历史版本,线上版本=-1)；
+end note
+
+
+已发布 -> 待发布 :修改
+note on link 
+insert历史版本表(status=待发布，version++)；
+update版本表(前端显示版本=最新的历史版本，线上版本不变)；
+end note
+
+待发布 -> 已发布 :发布 ：前端显示版本<>线上版本
+note on link
+update历史版本表(max(version)的记录，status=发布)；
+update版本表(前端显示版本不变，线上版本=前端显示版本)；
+end note
+
+待发布 -> 待发布 :修改
+note on link
+insert历史版本表(status=待发布，version++)；
+update版本表(前端显示版本=最新的历史版本，线上版本不变)；
+end note
+@enduml
