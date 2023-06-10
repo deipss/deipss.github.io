@@ -5,11 +5,11 @@ parent: Command
 nav_order: 3
 ---
 
-# 1. 项目初始化
+# 项目初始化
 
 git初始化的一些配置
 
-## 1.1. 方法一、
+## 方法一、
 
     先将仓库clone到本地，修改后再push到码云的仓库仓库
     $ git clone https://gitee.com/用户个性地址/HelloGitee.git #将远程仓库克隆到本地
@@ -24,7 +24,7 @@ git初始化的一些配置
     $ git commit -m "my first commit" #提交并备注提交信息
     $ git push origin master #将本地提交推送到远程仓库
 
-## 1.2. 方法二
+## 方法二
 
     git init
     git remote add origin https://gitee.com/用户个性地址/HelloGitee.git
@@ -48,7 +48,7 @@ git rebase 分支名/节点哈希值
 git cherry-pick 节点哈希值
 ```
 
-# 3. 分支管理
+# 分支管理
 
 ```shell script
 git pull
@@ -57,42 +57,47 @@ git push
 git commit 
 git add .
 git fetch
+拉取远程分支
+git fetch -v 
 
 
-# 2. 撤消工作区
+# 撤消工作区
 git checkout -- 文件名
-# 3. 清空缓存区
+# 清空缓存区
 git reset HEAD 文件名
-# 4. 新建分支
+# 新建分支
 git branch 分支名
-# 5. 切换分支
+# 切换分支
 git checkout 分支名
-# 6. 同时切换并创建分支
+# 同时切换并创建分支
 git checkout -b 分支名
-# 7. 删除分支
+# 删除分支
 git branch -d 分支名
+git branch |xargs git branch -d
+
+
 
 ```
 
-# 4. 回退
+# 回退
 
-```
+```shell
 git checkout 节点哈希值
-//也可以直接脱离分支指向当前节点
+# 也可以直接脱离分支指向当前节点
 git checkout --detach
-//回退N个提交
+# 回退N个提交
 git reset HEAD~N
 
 ```
 
-# 5. 远程仓库
+# 远程仓库
 
 ```shell
 git remote -v  #查看远端地址
 git remote #查看远端仓库名
-git remote set-url origin https://gitee.com/xx/xx.git (新地址)
+git remote set-url origin https://gitee.com/xx/xx.git [新地址]
 ```
 
-# 6. 日志查询
+# 日志查询
 
 git log

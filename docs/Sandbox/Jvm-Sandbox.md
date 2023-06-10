@@ -13,6 +13,14 @@ nav_order: 1
 - 调用计时
 - 面向切面编程
 
+# 使用java agent时，注意的问题
+- 能解决jar包依赖冲突
+- 处理类加载隔离问题
+- 尽量保持agent轻量级
+- 保证后续场景可扩展
+- 保证业务方最低的接入集成成本
+
 ##  参考文献
 
 - https://www.baeldung.com/java-classloaders
+- https://tech.hipac.cn/archives/aeb6e3616cf74e1984b908fc1cd98913#jacoco

@@ -64,16 +64,25 @@ jmap -histo <pid> | grep <class full path> | sort -n -k 3 | head 17
 
 ## gc 查看
 
-```
-使用jstat命令查看gc情况
-jstat -gcutil <pid> 5000 20
-```
+```shell
+# 查看
+jstat -help 
+jstat -option
 
+# 使用jstat命令查看gc情况 每5秒一次，统计20次
+jstat -gcutil <pid> 5000 20
+# 查看到GC的内存占用情况
+jstat -gccapbility
+```
+- 参考 https://zhuanlan.zhihu.com/p/481206194
 ## javap 反编译代码
 ```shell
 通过以下命令来反编译出一个Class文件字节码
 javap -verbose -p Main.class
 ```
+
+## G1配置
+- https://zhuanlan.zhihu.com/p/83804324
 
 # 使用Arthas
 
