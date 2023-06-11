@@ -65,8 +65,9 @@ jmap -histo <pid> | grep <class full path> | sort -n -k 3 | head 17
 ## gc 查看
 
 ```shell
-# 查看
+# 查看帮助
 jstat -help 
+# 查看统计的可选项
 jstat -option
 
 # 使用jstat命令查看gc情况 每5秒一次，统计20次
