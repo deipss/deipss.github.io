@@ -1,0 +1,28 @@
+---
+layout: default
+title: 记一次jvm优化
+parent: Solution
+nav_order: 6
+---
+
+# 背景
+各个业务主机通过kafka将数据上报，有一个进行数据同步的机器，将kafka上的数据同步到消费，简单加工后，存放在ES。 
+问题：4台2C16G的机器内存使用占比在85%以上。
+
+# 分析过程
+- jps
+选出进程
+- jinfo
+查看进程的信息
+发现14G的jvm内存，新生代只占了140MB，许多数据全在老年代，且不回收
+- jstat gcutil 5000 20
+- jstat gcnew 5000 20
+- jstat gcnewcapbility 5000 20
+
+# 解决办法 
+- 可以指定新生代最大的内存
+- 使用G1作为垃圾回收
+
+# 参考资料
+- https://zhuanlan.zhihu.com/p/83804324
+- https://zhuanlan.zhihu.com/p/626362331
