@@ -29,5 +29,7 @@ nav_order: 6
 - 使用G1作为垃圾回收
 
 # 参考资料
-- https://zhuanlan.zhihu.com/p/83804324
-- https://zhuanlan.zhihu.com/p/626362331
+- https://zhuanlan.zhihu.com/p/83804324 JVM之G1回收器和常见参数配置
+- https://zhuanlan.zhihu.com/p/626362331 JVM性能调优常用命令Jstat
+- https://www.elastic.co/guide/en/logstash/current/tuning-logstash.html#profiling-the-heap
+- https://www.elastic.co/guide/en/logstash/current/jvm-settings.html

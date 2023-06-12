@@ -22,5 +22,5 @@ nav_order: 1
 
 ##  参考文献
 
-- https://www.baeldung.com/java-classloaders
-- https://tech.hipac.cn/archives/aeb6e3616cf74e1984b908fc1cd98913#jacoco
+- https://www.baeldung.com/java-classloaders 类加载器
+- https://tech.hipac.cn/archives/aeb6e3616cf74e1984b908fc1cd98913#jacoco 多agent治理在海拍客的应用与实践
