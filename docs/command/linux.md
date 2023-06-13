@@ -154,7 +154,7 @@ ifconfig -address
 
 检查某个服务的port是否启动
 
-## 4.4. tcpdump
+## 4.3. tcpdump
 
 ```shell
 yum install tcpdump
@@ -162,7 +162,7 @@ yum install tcpdump
 tcpdump -w package.cap  
 ```
 
-## 4.5. netstat
+## 4.4. netstat
 
 ```shell
 netstat -s | egrep "listen|LISTEN" 等同  netstat -s | grep -i "listen"
@@ -171,9 +171,9 @@ netstat -nap | grep port 将会显示使用该端口的应用程序的进程 id
 netstat -g 将会显示该主机订阅的所有多播网络。
 ```
 
-## 4.6. ps -efl
+## 4.5. ps -efl
 
-## 4.7. ss
+## 4.6. ss
 
 ```bash
 ss -int
@@ -190,10 +190,24 @@ ss -int
 ```shell
 env | grep -i 'env' 在环境变量中查找包括env字符的行
 ```
+# 7. 进程
 
-# 7. 其他
+## 7.1. ps
+ps -aux | grep  <服务名>
+ps -ef | grep  <关键字>
+ps -auf
+ps -L <pid>
 
-## 7.1. nohup
+
+## 7.2. kill
+kill -9 
+kill -15
+
+- https://www.runoob.com/linux/linux-comm-kill.html 菜鸟
+
+# 8. 其他
+
+## 8.1. nohup
 
 ```shell
 nohup /root/runoob.sh > runoob.log 2>&1 &
