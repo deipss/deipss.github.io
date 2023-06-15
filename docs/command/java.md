@@ -70,12 +70,60 @@ jstat -help
 # 查看统计的可选项
 jstat -option
 
-# 使用jstat命令查看gc情况 每5秒一次，统计20次
-jstat -gcutil <pid> 5000 20
+# 使用jstat命令查看gc情况 每5秒一次，统计20次，每5行显示一个表头
+jstat -gcutil -h5 <pid> 5000 20
+
+# 使用jstat命令查看gc情况 每5秒一次，统计20次，每5行显示一个表头
+jstat -gc -h5 <pid> 5000 20
+ S0C: 当前幸存者区0的容量 (kB).
+ S1C: 当前幸存者区1的容量(kB).
+ S0U: 幸存者区0已用内存 (kB).
+ S1U: 幸存者区1已用内存 (kB).
+ EC: 伊甸园区容量 (kB).
+ EU: 伊甸园区已用内存 (kB).
+ OC: 当前老旧区容量 (kB).
+ OU: 老旧区已用内存 (kB).
+ MC: 元数据区容量 (kB).
+ MU: 元数据区已用内存 (kB).
+ CCSC: 类压缩区容量 (kB).
+ CCSU: 类压缩区已用内存 (kB).
+ YGC: 新生垃圾回收事件数量.
+ YGCT: 新生垃圾回收时间.
+ FGC: 垃圾回收事件总和.
+ FGCT: 完整的一次垃圾回收时间.
+ GCT: 所有的垃圾回收时间.
+
 # 查看到GC的内存占用情况
 jstat -gccapbility
 ```
 - 参考 https://zhuanlan.zhihu.com/p/481206194
+
+## gc 日志打印
+```shell
+# 必备
+-XX:+PrintGCDetails 
+-XX:+PrintGCDateStamps 
+-XX:+PrintTenuringDistribution 
+-XX:+PrintHeapAtGC 
+-XX:+PrintReferenceGC 
+-XX:+PrintGCApplicationStoppedTime
+
+# 可选
+-XX:+PrintSafepointStatistics 
+-XX:PrintSafepointStatisticsCount=1
+
+# GC日志输出的文件路径
+-Xloggc:/path/to/gc-%t.log
+# 开启日志文件分割
+-XX:+UseGCLogFileRotation 
+# 最多分割几个文件，超过之后从头文件开始写
+-XX:NumberOfGCLogFiles=14
+# 每个文件上限大小，超过就触发分割
+-XX:GCLogFileSize=100M
+```
+
+- https://segmentfault.com/a/1190000039806436
+
 ## javap 反编译代码
 ```shell
 通过以下命令来反编译出一个Class文件字节码
@@ -161,8 +209,3 @@ profiler stop --format html
 - jvm 进程启动时参数
 - main 函数中获取
 
-
-- 三个卧室的衣柜、床、空调¡
-- 餐桌、餐椅
-- 客厅沙发、茶几、电视
-- 冰箱、洗衣机

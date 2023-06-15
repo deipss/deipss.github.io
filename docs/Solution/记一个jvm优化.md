@@ -11,16 +11,19 @@ nav_order: 6
 
 # 分析过程
 - jps
+
 选出进程
 
 - jinfo
 
 查看进程的信息
-发现14G的jvm内存，新生代只占了140MB，许多数据全在老年代，且不回收。后面发送是因为公司默认使用ParNew对年轻代进行回收，CMS进行老年代回收。140M是
+发现14G的jvm内存，新生代只占了140MB，许多数据全在老年代，且不回收。
+后面发现是因为公司默认使用ParNew对年轻代进行回收，CMS进行老年代回收。140M是
 公司默认的。
 
 - jstat gcutil 5000 20
 查看到有YGC频繁，每次30ms、FGC2小时一次
+
 - jstat gcnew 5000 20
 - jstat gcnewcapbility 5000 20
 
