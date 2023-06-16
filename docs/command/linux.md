@@ -144,7 +144,7 @@ which grep
 
 # 4. 网络信息查询
 
-## 4.1. ipconfig
+## 4.1. ifconfig
 
 ```shell
 ifconfig -address
@@ -171,9 +171,8 @@ netstat -nap | grep port 将会显示使用该端口的应用程序的进程 id
 netstat -g 将会显示该主机订阅的所有多播网络。
 ```
 
-## 4.5. ps -efl
 
-## 4.6. ss
+## 4.5. ss
 
 ```bash
 ss -int
@@ -193,13 +192,25 @@ env | grep -i 'env' 在环境变量中查找包括env字符的行
 # 7. 进程
 
 ## 7.1. ps
-ps -aux | grep  <服务名>
+```shell
+
+查看某个关键字的进程
+ps aux | grep java  
 ps -ef | grep  <关键字>
+
 ps -auf
 ps -L <pid>
 
+```
 
-## 7.2. kill
+
+## 7.2. lsof (list open files)列出当前系统打开文件
+```shell
+lsof -i:<端口号>
+lsof -i
+```
+
+## 7.3. kill
 kill -9 
 kill -15
 
