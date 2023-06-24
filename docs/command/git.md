@@ -5,11 +5,11 @@ parent: Command
 nav_order: 3
 ---
 
-# 项目初始化
+# 1. 项目初始化
 
 git初始化的一些配置
 
-## 方法一、
+## 1.1. 方法一、
 
     先将仓库clone到本地，修改后再push到码云的仓库仓库
     $ git clone https://gitee.com/用户个性地址/HelloGitee.git #将远程仓库克隆到本地
@@ -24,7 +24,7 @@ git初始化的一些配置
     $ git commit -m "my first commit" #提交并备注提交信息
     $ git push origin master #将本地提交推送到远程仓库
 
-## 方法二
+## 1.2. 方法二
 
     git init
     git remote add origin https://gitee.com/用户个性地址/HelloGitee.git
@@ -39,7 +39,6 @@ git初始化的一些配置
     git push origin master -f
     如果您选择保留线上的 readme 文件,则需要先执行：
 
-```
 
 # 2. 合并分支
 ```shell script
@@ -61,17 +60,17 @@ git fetch
 git fetch -v 
 
 
-# 撤消工作区
+# 2. 撤消工作区
 git checkout -- 文件名
-# 清空缓存区
+# 3. 清空缓存区
 git reset HEAD 文件名
-# 新建分支
+# 4. 新建分支
 git branch 分支名
-# 切换分支
+# 5. 切换分支
 git checkout 分支名
-# 同时切换并创建分支
+# 6. 同时切换并创建分支
 git checkout -b 分支名
-# 删除分支
+# 7. 删除分支
 git branch -d 分支名
 git branch |xargs git branch -d
 
@@ -83,9 +82,9 @@ git branch |xargs git branch -d
 
 ```shell
 git checkout 节点哈希值
-# 也可以直接脱离分支指向当前节点
+# 8. 也可以直接脱离分支指向当前节点
 git checkout --detach
-# 回退N个提交
+# 9. 回退N个提交
 git reset HEAD~N
 
 ```

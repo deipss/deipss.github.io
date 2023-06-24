@@ -67,7 +67,7 @@ sudo ./NVIDIA-Linux-x86_64-384.59.run –no-x-check -no-nouveau-check -no-opengl
 
 ## 2.1. 安装显卡驱动
 
-```text
+```shell
 
 
 预备依赖软件
