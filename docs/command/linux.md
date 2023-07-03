@@ -81,7 +81,7 @@ more命令是一个基于vi编辑器文本过滤器，它以全屏幕的方式�
 
 ## 2.6. grep
 
-```bash
+```shell
 grep "字符串" 文件名 | grep "字符串"
 grep "^字符串" 文件名
 
@@ -172,6 +172,11 @@ netstat -g 将会显示该主机订阅的所有多播网络。
 ```
 
 
+## traceroute
+```shell
+traceroute baidu.com
+```
+
 ## 4.5. ss
 
 ```bash
@@ -211,8 +216,8 @@ lsof -i
 ```
 
 ## 7.3. kill
-kill -9 
-kill -15
+- kill -9 
+- kill -15
 
 - https://www.runoob.com/linux/linux-comm-kill.html 菜鸟
 

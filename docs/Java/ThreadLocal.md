@@ -9,7 +9,7 @@ nav_order: 7
 - 这样做，就会让这些实例副本在线程之间完全独立，而ThreadLocal类实例在线程之间共享，通过具体的方法共享访问。
 #### 实现
 THreadLocal的set方法，key是当前的线程
-```java
+```shell
 public void set(T value) {
         Thread t = Thread.currentThread();
         ThreadLocalMap map = getMap(t);
@@ -21,7 +21,7 @@ public void set(T value) {
 ```
 
 内部维护一个static class ThreadLocalMap 这样一个静态内部类，而这个ThreadLocalMap类中，还有一个静态内部类
-```java
+```shell
 static class Entry extends WeakReference<ThreadLocal<?>> {
             /** The value associated with this ThreadLocal. */
             Object value;
@@ -34,7 +34,7 @@ private Entry[] table;
 ```
 
  ThreadLocalMap中的set()方法，在出现key为null的情况下，会调用replaceStaleEntry()方法，将这个对象替换掉
-```java
+```shell
 private void set(ThreadLocal<?> key, Object value) {
 
             // We don't use a fast path as with get() because it is at
@@ -78,7 +78,7 @@ private void set(ThreadLocal<?> key, Object value) {
 session会话
 # InheritableThreadLocal
 当一个主线程中使用了线程池或衍生了多个子线程，使用ThreadLocal是不能get到值的。
-```java
+```shell
 /*
  * Copyright (c) 1998, 2012, Oracle and/or its affiliates. All rights reserved.
  * ORACLE PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
@@ -145,7 +145,7 @@ public class InheritableThreadLocal<T> extends ThreadLocal<T> {
 
 ```
 整个InheritableThreadLocal就是这三个方法，其他都是使用从父类继承的方法，因此，真正实现InheritableThreadLocal的过程是在Thread类中的Ini()方法中。<br />每个Thread类实例都有如下 两个成员变量：
-```java
+```shell
 // 每个线程都拥有这两个成员变量
     ThreadLocal.ThreadLocalMap threadLocals = null;
     ThreadLocal.ThreadLocalMap inheritableThreadLocals = null;
@@ -189,7 +189,7 @@ private ThreadLocalMap(ThreadLocalMap parentMap) {
 - [https://my.oschina.net/xinxingegeya/blog/911883](https://my.oschina.net/xinxingegeya/blog/911883)
 # 示例
 子线程无法直接获取父线程中的值，需要会用InheritableThreadLocal类
-```java
+```shell
 public class ThreadLocalDemo {
     public static void main(String[] args) {
         //ThreadLocal<String>  threadLocal = new InheritableThreadLocal<>();

@@ -81,10 +81,14 @@ public class SemaphoreDemo {
 
 ```
 # volatile
-```java
+- https://leetcode-cn.com/problems/building-h2o/
+- https://www.cnblogs.com/dolphin0520/p/3920373.html
+
+
 当共享变量被一个线程修改后，会立即通过其他线程。 volatie有利于保证变量的原子性，对于i++这样的复合操作在高并发的情况下不行。在Thread类中，线程名字段就是用volatile修饰的。
 
-// https://leetcode-cn.com/problems/building-h2o/
+```java
+
 import java.util.concurrent.Semaphore;
 
 class H2O {
@@ -118,7 +122,6 @@ class H2O {
         }
     }
 }
-// https://leetcode-cn.com/problems/building-h2o/
 class H2O {
     private volatile int h;
     
@@ -145,7 +148,6 @@ class H2O {
         h=0;
     }
 }
-https://www.cnblogs.com/dolphin0520/p/3920373.html
 ```
 # CountDownLatch
 
