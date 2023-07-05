@@ -14,7 +14,7 @@ nav_order: 4
 @ConditionalOnBean 某个类存在配置
 ``` 
 
-# demo
+# 常用Configuration配置
 
 ## ThreadConfig
 ```java
