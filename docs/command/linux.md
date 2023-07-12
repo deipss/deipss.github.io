@@ -221,6 +221,10 @@ lsof -i
 
 - https://www.runoob.com/linux/linux-comm-kill.html 菜鸟
 
+
+## dmseg 
+- dmseg -t > dmseg1.log
+
 # 8. 其他
 
 ## 8.1. nohup
