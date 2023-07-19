@@ -74,12 +74,28 @@ G 跳到末行
 
 ## 2.4. more
 
-more命令是一个基于vi编辑器文本过滤器，它以全屏幕的方式按页显示文本文件的内容，支持vi中的关键字定位操作。more名单中内置了若干快捷键，常用的有H（获得帮助信息），Enter（向下翻滚一行），空格（向下滚动一屏），Q（退出命令）。more命令从前向后读取文件，因此在启动时就加载整个文件。
-该命令一次显示一屏文本，满屏后停下来，并且在屏幕的底部出现一个提示信息，给出至今己显示的该文件的百分比：
+more命令是一个基于vi编辑器文本过滤器，它以全屏幕的方式按页显示文本文件的内容，支持vi中的关键字定位操作。
+more内置了若干快捷键，常用的有H（获得帮助信息），
+- Enter（向下翻滚一行），
+- 空格（向下滚动一屏），
+- Q（退出命令）。
+- more命令从前向后读取文件，因此在启动时就加载整个文件。
+
+该命令一次显示一屏文本，
+满屏后停下来，并且在屏幕的底部出现一个提示信息，给出至今己显示的该文件的百分比：
 
 ## 2.5. cat
 
+cat（英文全拼：concatenate）命令用于连接文件并打印到标准输出设备上。
+```shell
+把 textfile1 的文档内容加上行号后输入 textfile2 这个文档里：
+cat -n textfile1 > textfile2
+把 textfile1 的文档内容加上行号后输入 textfile2 这个文档里：
+cat -b textfile1 textfile2 >> textfile3
+```
+
 ## 2.6. grep
+Linux grep (global regular expression) 命令用于查找文件里符合条件的字符串或正则表达式。
 
 ```shell
 grep "字符串" 文件名 | grep "字符串"
@@ -172,12 +188,12 @@ netstat -g 将会显示该主机订阅的所有多播网络。
 ```
 
 
-## traceroute
+## 4.5. traceroute
 ```shell
 traceroute baidu.com
 ```
 
-## 4.5. ss
+## 4.6. ss
 
 ```bash
 ss -int
@@ -185,7 +201,21 @@ ss -int
 
 # 5. 硬盘使用
 
-## 5.1. df -hl
+## 5.1. df
+df（英文全称：disk free）：列出文件系统的整体磁盘使用量
+```shell
+df -hf
+df -h /etc
+```
+
+## 5.2. du
+
+- h或--human-readable 以K，M，G为单位，提高信息的可读性。
+- -s或--summarize 仅显示总计。
+
+```shell
+du * sh 
+```
 
 # 6. 系统环境
 
@@ -222,7 +252,10 @@ lsof -i
 - https://www.runoob.com/linux/linux-comm-kill.html 菜鸟
 
 
-## dmseg 
+## 7.4. dmseg
+Linux dmesg（英文全称：display message）命令用于显示开机信息。
+
+
 - dmseg -t > dmseg1.log
 
 # 8. 其他
