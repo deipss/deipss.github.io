@@ -1,6 +1,6 @@
 ---
 layout: default
-title: conda
+title: git
 parent: Command
 nav_order: 3
 ---
@@ -9,7 +9,7 @@ nav_order: 3
 
 git初始化的一些配置
 
-## 1.1. 方法一、
+## 1.1. 方法一
 
     先将仓库clone到本地，修改后再push到码云的仓库仓库
     $ git clone https://gitee.com/用户个性地址/HelloGitee.git #将远程仓库克隆到本地
@@ -47,7 +47,7 @@ git rebase 分支名/节点哈希值
 git cherry-pick 节点哈希值
 ```
 
-# 分支管理
+# 3. 分支管理
 
 ```shell script
 git pull
@@ -78,7 +78,7 @@ git branch |xargs git branch -d
 
 ```
 
-# 回退
+# 4. 回退
 
 ```shell
 git checkout 节点哈希值
@@ -89,7 +89,7 @@ git reset HEAD~N
 
 ```
 
-# 远程仓库
+# 5. 远程仓库
 
 ```shell
 git remote -v  #查看远端地址
@@ -97,6 +97,7 @@ git remote #查看远端仓库名
 git remote set-url origin https://gitee.com/xx/xx.git [新地址]
 ```
 
-# 日志查询
-
+# 6. 日志查询
+```shell
 git log
+```

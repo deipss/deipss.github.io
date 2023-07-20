@@ -28,7 +28,7 @@ nav_order: 8
 - git
 
 ## 1.4. 网络
-### win
+### 1.4.1. win
 - charles(抓包收费)  whistle（免费）
 - xshell
 - xftp
@@ -39,7 +39,7 @@ nav_order: 8
 - ZeroTier vpn搭建
 - MobaXterm 远程登陆
 
-### mac
+### 1.4.2. mac
 - tabby 远程登陆
 ## 1.5. 中间件
 
