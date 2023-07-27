@@ -28,11 +28,11 @@ context-getBean("umsTradeBillSplitJob")-execute(null)' -x 3
 ## thread
 
 ```bash
-# 15- 打印出阻塞的线程信息
+# 打印出阻塞的线程信息
 thread -b
-# 16- 统计最近 1000ms 内的线程 CPU 时间
+# 统计最近 1000ms 内的线程 CPU 时间
 thread -i 1000
-# 17- 列出 1000ms 内最忙的 3 个线程栈
+# 列出 1000ms 内最忙的 3 个线程栈
 thread -n 3 -i 1000 
 
 ```
@@ -42,26 +42,26 @@ thread -n 3 -i 1000
 ## monitor
 
 ```shell script
-# 18- 每秒的请求数
+# 每秒的请求数
 monitor -c 1 <类全路径名> <方法名>
 ```
 
 ## trace
 
 ```shell script
-# 19- 方法内部调用路径，并输出方法路径上的每个节点上耗时
-# 20- 可以指定毫秒数
+# 方法内部调用路径，并输出方法路径上的每个节点上耗时
+# 可以指定毫秒数
 trace com-frxs-repeater-receiver-event-consumer-RecieveGeneralMsgConsumer onMessage  -n 5 --skipJDKMethod false '#cost > 3000'
 ```
 
 ## classloader
 
 ```shell
-# 21- 按类加载实例查看统计信息
+# 按类加载实例查看统计信息
 classloader -l
-# 22- 查看 ClassLoader 的继承树
+# 查看 ClassLoader 的继承树
 classloader -t
-# 23- 查看 URLClassLoader 实际的 urls
+# 查看 URLClassLoader 实际的 urls
 classloader -c 3d4eac69
 ```
 

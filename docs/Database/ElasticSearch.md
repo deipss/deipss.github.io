@@ -59,3 +59,4 @@ GET _nodes/stats?pretty
 
 ```
 ### 关于索引的Translog
+- https://www.elastic.co/guide/en/elasticsearch/reference/current/index-modules-translog.html
