@@ -5,7 +5,7 @@ parent: Command
 nav_order: 2
 ---
 
-# 1. docker 常用命令
+# 1. docker 安装
 
 ## 1.1. install docker on ubuntu
 
@@ -26,7 +26,11 @@ sudo systemctl start docker
 sudo systemctl enable docker 
 ```
 
-- 镜像加速 新版的 Docker 使用 /etc/docker/daemon.json
+
+
+## 1.3. docker 加速
+
+- 镜像加速：新版的Docker使用 /etc/docker/daemon.json
 
 ```json
  {
@@ -35,8 +39,6 @@ sudo systemctl enable docker
   ]
 }
 ```
-
-## 1.3. docker 加速
 
 - snap install docker 后镜像加速
 
@@ -51,15 +53,16 @@ docker info
 
 ## 1.4. 查询docker镜像
 
-```shell
 文档 https://hub.docker.com/
-查看镜像  
+```shell
+# 查看镜像
 docker image ls
 docker images -a
-查看已下载的 
-docker images 
-删除镜像 
-docker imamges rm 
+# 查看已下载的
+docker images
+# 删除镜像
+docker imamges rm
+
 ```
 
 ## 1.5. 容器启动
@@ -250,4 +253,29 @@ docker run -itd \
 docker pull bitnami/zookeeper:latest
 
 docker run --name=main-zk  --restart=always  -e ALLOW_ANONYMOUS_LOGIN=yes  -p 2181:2181  bitnami/zookeeper:latest 
+```
+
+
+# Docker file
+Docker 构建的早期需要 DockerFile，就是 Docker 构建了一个命令文件。Docker基于这个文件构建镜像并且打包镜像。
+- 1）Docker 镜像配置文件
+- 2）脚本编写
+- 3）脚本文件
+- 4）一系列命令和参数构成的脚本
+- 5）这些命令应用于基础镜像
+- 6）并最终创建一个新的镜像
+
+重新指令
+```text
+1）FROM 指定基础镜像文件
+2）MAINTAINER authors_name 作者
+3）RUN 运行特殊命令，比如下载 JDK
+4）SER 命令用于设置运行容器的 UID
+5）VOLUME 指定容器访问目录
+6）WORKDIR 运行目录
+7）ENV 环境变量，如 ENV LANG en_US.UTF-8
+8）CMD 容器执行的命令 CMD "echo" "Hello docker!" 9）ADD 复制文件到目标文件夹
+10）COPY 复制，类似 ADD
+11）EXPOSE 暴露端口
+12）ENTRYPOINT 入口，命令，只有一个不能被 Run 覆盖
 ```

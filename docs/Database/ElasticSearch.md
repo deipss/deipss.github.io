@@ -27,11 +27,11 @@ GET _nodes/stats?pretty
 
 ```
 
-# 查询
+# 索引常用命令
 
 
-##  GET /product_info/_doc/_search
-
+##  查询
+- GET /索引名/_doc/_search
 ```json
 {
   "query": {
@@ -41,3 +41,21 @@ GET _nodes/stats?pretty
   }
 }
 ```
+
+## 设置索引的配置
+- PUT /索引名/_settings
+```json
+{
+  "index": {
+    "number_of_replicas": "0",
+    "refresh_interval": "-1",
+    "translog": {
+      "sync_interval": "20s",
+      "durability": "async",
+      "flush_threshold_size": "1024mb"
+    }
+  }
+}
+
+```
+### 关于索引的Translog

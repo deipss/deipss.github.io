@@ -39,8 +39,8 @@ git初始化的一些配置
     git push origin master -f
     如果您选择保留线上的 readme 文件,则需要先执行：
 
-
 # 2. 合并分支
+
 ```shell script
 git merge 分支名/节点哈希值
 git rebase 分支名/节点哈希值
@@ -98,6 +98,8 @@ git remote set-url origin https://gitee.com/xx/xx.git [新地址]
 ```
 
 # 6. 日志查询
+
 ```shell
 git log
+
 ```
