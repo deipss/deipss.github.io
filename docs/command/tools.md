@@ -88,3 +88,4 @@ nav_order: 8
 - markdown editor
 - package check
 - package search
+- Vuesion Theme 主题

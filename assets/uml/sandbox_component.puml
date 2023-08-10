@@ -1,16 +1,22 @@
 @startuml
 component ASM as asm
-[jvm sandbox] as jsandbox
+[jvm sandbox] as JavaSandbox
 [jvm sandbox repeater] as repeater
 component arthas
 component grey  as grey
 component btrace
-component AspectJ
+component CGLib
+component JavaAgent
+component Spring
+component ByteBuddy
 
-repeater --> jsandbox
+Spring --> CGLib
+repeater --> JavaSandbox
 arthas --> grey
 grey --> asm
-jsandbox --> asm
+JavaSandbox --> asm
 btrace --> asm
-AspectJ --> asm
+CGLib --> asm
+ByteBuddy --> asm
+asm --> JavaAgent
 @enduml
