@@ -8,6 +8,7 @@ nav_order: 6
 # index 设计优化
 
 - 对于不需要的字段，可以关闭index功能，来节省空间
+
 ```json
 
 {
