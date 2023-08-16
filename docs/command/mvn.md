@@ -121,9 +121,23 @@ mvn clean package  '-Dmaven.test.skip=true'
 <package></package>标签 可以有pom或是jar,默认是jar,在有父子继续关系时，一般父pom文件使用pom包
 ```
 
-# 源码下载
+# 8. 源码下载
 ```shell
 mvn dependency:sources
 mvn dependency:resolve -Dclassifier=javadoc
 mvn dependency:sources dependency:resolve -Dclassifier=javadoc
 ```
+
+# 9. mvn 仓库优先级
+```shell
+本地仓库 > 私服 （profile）> 远程仓库（repository）和 镜像 （mirror） > 中央仓库 （central）
+```
+
+
+# nexus
+nexus里可以配置3种类型的仓库，分别是proxy、hosted、group 。
+- proxy是远程仓库的代理。比如说在nexus中配置了一个central repository的proxy，当用户向这个proxy请求一个artifact，这个proxy就会先在本地查找，如果找不到的话，就会从远程仓库下载，然后返回给用户，相当于起到一个中转的作用。
+- hosted是宿主仓库，用户可以把自己的artifact、proxy下载不到的artifact，deploy到hosted中。
+- group是仓库组，目的是将上述多个仓库聚合，对用户暴露统一的地址，这样用户就不需要在pom中配置多个地址，只要统一配置group的地址就可以了 。
+
+

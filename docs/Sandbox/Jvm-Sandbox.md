@@ -34,11 +34,16 @@ nav_order: 2
 - 沙箱的配置 ConfigInfo 如启用方式是Agent 还是 Attach
 
 ## sandbox-core
+- classloader 类加载器
+
+
 
 
 ## sandbox-debug-module
+- 调用模块，定义了许多module
 
 ## sandbox-mgr-module
+
 - ControlModule 沙箱控制模块
 - InfoModule 沙箱信息模块
 - ModuleMgrModule 沙箱管理模块 list flush reset unload frozen
