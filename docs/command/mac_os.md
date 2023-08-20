@@ -8,11 +8,15 @@ nav_order: 10
 # 1. Homebrew
 
 ## 1.1. 镜像加速
+
 - https://zhuanlan.zhihu.com/p/137464385
 
 ## 1.2. jdk
+
 安装的目录
+
 - mac上的默认目录 /Library/Java/JavaVirtualMachines/jdk-1.8.jdk/Contents/Home
+
 ```shell
 # 跳转到根目录显示查看所有.a配置文件
 cd
@@ -37,3 +41,7 @@ echo "source ~/.bash_profile" >>~/.zshrc
 ```
 
 # 2. tabby 远程登陆
+
+# SCROLL REVERSER
+
+用于鼠标与触摸板的转换
