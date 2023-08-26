@@ -9,8 +9,30 @@ nav_order: 2
 
 ## sandbox-agent
 
-- SandboxClassLoader 类加载器，构造函数中声明了sandboxCoreJarFilePath这个核心jar包的文件
-- AgentLauncher 代理的启用类
+### SandboxClassLoader 类加载器，
+
+构造函数中声明了sandboxCoreJarFilePath这个核心jar包的文件
+
+### AgentLauncher 代理的启用类
+
+使用两种方式来启动agent，**LAUNCH_MODE_AGENT（启动加载）**，**LAUNCH_MODE_ATTACH（动态加载）**
+
+- 会不会两个命令同时写一个文件，产生竞争，发生ABA？
+
+```text
+private static synchronized InetSocketAddress install(final Map<String, String> featureMap, final Instrumentation inst)
+premain和attach两种方式都会调用这个方法，这个方法上的static锁。
+
+```
+
+- 对同一个类文件增强，会有先后顺序的影响吗？会同时存在吗？
+
+#### premain 方式
+
+- premain方式启动时，loadOrDefineClassLoader()会使用SandboxClassLoader来加载sandbox-core这个模块的jar文件，做到与工程代码的类加载器隔离
+- inst.appendToBootstrapClassLoaderSearch(new JarFile(new File(getSandboxSpyJarPath(home)  将Spy注入到BootstrapClassLoader
+
+#### attach
 
 ## sandbox-api
 
@@ -60,6 +82,32 @@ nav_order: 2
 ## sandbox-spy
 
 - 流程扭转中间类 SpyHandler Spy
+
+```shell
+Spy类的方法，其实是ASM增强后，调用的
+
+public static void spyMethodOnCallThrows(final String throwException,
+                                             final String namespace,
+                                             final int listenerId) throws Throwable {
+        try {
+            final SpyHandler spyHandler = namespaceSpyHandlerMap.get(namespace);
+            if (null != spyHandler) {
+                spyHandler.handleOnCallThrows(listenerId, throwException);
+            }
+        } catch (Throwable cause) {
+            handleException(cause);
+        }
+    }
+
+    /**
+     * asm method of {@link Spy#spyMethodOnCallThrows(String, String, int)}
+     */
+    Method ASM_METHOD_Spy$spyMethodOnCallThrows = getAsmMethod(
+            Spy.class,
+            "spyMethodOnCallThrows",
+            String.class, String.class, int.class
+    );
+```
 
 # 参考文献
 

@@ -40,8 +40,8 @@ echo "source ~/.bash_profile" >>~/.zshrc
 
 ```
 
-# 2. tabby 远程登陆
+# 2. Tabby 远程登陆
 
-# SCROLL REVERSER
+# 3. SCROLL REVERSER
 
 用于鼠标与触摸板的转换
