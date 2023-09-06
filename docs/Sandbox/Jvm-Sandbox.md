@@ -59,6 +59,9 @@ premain和attach两种方式都会调用这个方法，这个方法上的static�
 
 - classloader 类加载器
 
+### asm
+- CodeLock 代码锁
+
 ## sandbox-debug-module
 
 - 调用模块，定义了许多module
