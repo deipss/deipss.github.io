@@ -13,8 +13,7 @@ nav_order: 3
 在这个文件中搜索相关的关键字，如kafka，可以看kafka自动配置的入口类
 ```
 自定义的 @Configuration如下
-
-![auto-config-metainfo.png](..%2F..%2Fassets%2Fimg%2Fspring%2Fauto-config-metainfo.png)
+![auto-config-metainfo.png](img%2Fauto-config-metainfo.png)
 
 ## 1.1. Kafka
 
