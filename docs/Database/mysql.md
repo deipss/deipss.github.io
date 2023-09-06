@@ -5,12 +5,21 @@ parent: Database
 nav_order: 1
 ---
 
-# mysql进程排查
+# mysql efficient shell
+
+## show dead lock
 
 ```shell
 show open tables where in_use > 0;
 select * from information_schema.innodb_trx;
 show processlist 
+```
+
+## table structure copy
+
+```shell
+select  concat('drop  table if exsits frxs_fund_accountant_2012.', table_name ,';create  table  frxs_fund_accountant_2012.', table_name ,' like ','frxs_fund_accountant_2001.',table_name,';')  
+from information_schema.tables WHERE table_schema='frxs_fund_accountant';
 ```
 
 # 索引

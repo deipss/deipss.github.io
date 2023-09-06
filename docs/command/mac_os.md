@@ -45,3 +45,5 @@ echo "source ~/.bash_profile" >>~/.zshrc
 # 3. SCROLL REVERSER
 
 用于鼠标与触摸板的转换
+
+# logi optional 罗技鼠键
