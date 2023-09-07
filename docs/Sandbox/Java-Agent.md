@@ -31,16 +31,24 @@ ASM提供了与其他Java字节码框架类似的功能，但更注重性能。
 > 另外除了 ASM 可以操作字节码，还有javassist和Byte-code等，他们比 asm 要简单，但是执行效率还是 asm 高。因为 asm
 > 是直接使用指令来控制字节码。
 
-## Asm两张方式
+## Asm两种方式
+
+ASM API基于访问者模式，为我们提供了ClassVisitor，MethodVisitor，FieldVisitor API接口，每当ASM扫描到类字段是会回调visitField方法，扫描到类方法是会回调MethodVisitor，下面我们看一下API接口
 
 
-## 使用ASM技术来实现的插件
+## 使用Asm技术来实现的插件
 
 如图所示，业界有许多的技术都使用ASM技术来实现一些提交的插件，主要目的不乏：
 
 - 参数实时打印
 - 调用计时
 - 面向切面编程
+
+## Asm辅助命令
+```shell
+javac -g Test.java
+javap -verbose Test.class
+```
 
 # Java Agent 技术
 
