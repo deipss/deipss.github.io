@@ -76,6 +76,7 @@ G 跳到末行
 
 more命令是一个基于vi编辑器文本过滤器，它以全屏幕的方式按页显示文本文件的内容，支持vi中的关键字定位操作。
 more内置了若干快捷键，常用的有H（获得帮助信息），
+
 - Enter（向下翻滚一行），
 - 空格（向下滚动一屏），
 - Q（退出命令）。
@@ -87,14 +88,16 @@ more内置了若干快捷键，常用的有H（获得帮助信息），
 ## 2.5. cat
 
 cat（英文全拼：concatenate）命令用于连接文件并打印到标准输出设备上。
+
 ```shell
-把 textfile1 的文档内容加上行号后输入 textfile2 这个文档里：
+#把 textfile1 的文档内容加上行号后输入 textfile2 这个文档里：
 cat -n textfile1 > textfile2
-把 textfile1 的文档内容加上行号后输入 textfile2 这个文档里：
+#把 textfile1 的文档内容加上行号后输入 textfile2 这个文档里：
 cat -b textfile1 textfile2 >> textfile3
 ```
 
 ## 2.6. grep
+
 Linux grep (global regular expression) 命令用于查找文件里符合条件的字符串或正则表达式。
 
 ```shell
@@ -187,8 +190,8 @@ netstat -nap | grep port 将会显示使用该端口的应用程序的进程 id
 netstat -g 将会显示该主机订阅的所有多播网络。
 ```
 
-
 ## 4.5. traceroute
+
 ```shell
 traceroute baidu.com
 ```
@@ -202,7 +205,9 @@ ss -int
 # 5. 硬盘使用
 
 ## 5.1. df
+
 df（英文全称：disk free）：列出文件系统的整体磁盘使用量
+
 ```shell
 df -hf
 df -h /etc
@@ -219,14 +224,129 @@ du * sh
 
 # 6. 系统环境
 
-## 6.1. env 查看当前主机的所有环境环境
+- https://www.cnblogs.com/youyoui/p/10680329.html
+
+## 6.1. 修改环建变量
+
+- Linux环境变量配置方法一：export PATH
+
+```shell
+export PATH=/home/uusama/mysql/bin:$PATH
+
+# 或者把PATH放在前面
+export PATH=$PATH:/home/uusama/mysql/bin
+注意事项：
+生效时间：立即生效
+生效期限：当前终端有效，窗口关闭后无效
+生效范围：仅对当前用户有效
+配置的环境变量中不要忘了加上原来的配置，即$PATH部分，避免覆盖原来配置
+
+```
+
+- Linux环境变量配置方法二：vim ~/.bashrc
+
+```shell
+vim ~/.bashrc
+
+# 在最后一行加上
+export PATH=$PATH:/home/uusama/mysql/bin
+注意事项：
+
+生效时间：使用相同的用户打开新的终端时生效，或者手动source ~/.bashrc生效
+生效期限：永久有效
+生效范围：仅对当前用户有效
+如果有后续的环境变量加载文件覆盖了PATH定义，则可能不生效
+
+```
+
+- Linux环境变量配置方法三：vim ~/.bash_profile
+
+```shell
+和修改~/.bashrc文件类似，也是要在文件最后加上新的路径即可：
+
+vim ~/.bash_profile
+
+# 在最后一行加上
+export PATH=$PATH:/home/uusama/mysql/bin
+注意事项：
+
+生效时间：使用相同的用户打开新的终端时生效，或者手动source ~/.bash_profile生效
+生效期限：永久有效
+生效范围：仅对当前用户有效
+如果没有~/.bash_profile文件，则可以编辑~/.profile文件或者新建一个
+```
+
+- Linux环境变量配置方法四：vim /etc/bashrc
+
+```shell
+该方法是修改系统配置，需要管理员权限（如root）或者对该文件的写入权限：
+
+# 如果/etc/bashrc文件不可编辑，需要修改为可编辑
+chmod -v u+w /etc/bashrc
+
+vim /etc/bashrc
+
+# 在最后一行加上
+export PATH=$PATH:/home/uusama/mysql/bin
+注意事项：
+
+生效时间：新开终端生效，或者手动source /etc/bashrc生效
+生效期限：永久有效
+生效范围：对所有用户有效
+
+```
+
+- Linux环境变量配置方法五：vim /etc/profile
+
+```shell
+该方法修改系统配置，需要管理员权限或者对该文件的写入权限，和vim /etc/bashrc类似：
+
+# 如果/etc/profile文件不可编辑，需要修改为可编辑
+chmod -v u+w /etc/profile
+
+vim /etc/profile
+
+# 在最后一行加上
+export PATH=$PATH:/home/uusama/mysql/bin
+注意事项：
+
+生效时间：新开终端生效，或者手动source /etc/profile生效
+生效期限：永久有效
+生效范围：对所有用户有效
+```
+
+## 环境变量分类
+
+环境变量可以简单的分成用户自定义的环境变量以及系统级别的环境变量。
+
+- 用户级别环境变量定义文件：~/.bashrc、~/.profile（部分系统为：~/.bash_profile）
+- 系统级别环境变量定义文件：/etc/bashrc、/etc/profile(部分系统为：/etc/bash_profile）、/etc/environment
+
+Linux加载环境变量的顺序如下：
+
+```text
+/etc/environment
+/etc/profile
+/etc/bash.bashrc
+/etc/profile.d/test.sh
+~/.profile
+~/.bashrc
+```
+
+## 6.2. 查看环境变量
+
+- env 查看当前主机的所有环境环境
+- export命令显示当前系统定义的所有环境变量
+- echo $PATH命令输出当前的PATH环境变量的值
 
 ```shell
 env | grep -i 'env' 在环境变量中查找包括env字符的行
 ```
+
 # 7. 进程
 
 ## 7.1. ps
+
 ```shell
 
 查看某个关键字的进程
@@ -238,23 +358,23 @@ ps -L <pid>
 
 ```
 
-
 ## 7.2. lsof (list open files)列出当前系统打开文件
+
 ```shell
 lsof -i:<端口号>
 lsof -i
 ```
 
 ## 7.3. kill
-- kill -9 
+
+- kill -9
 - kill -15
 
 - https://www.runoob.com/linux/linux-comm-kill.html 菜鸟
 
-
 ## 7.4. dmseg
-Linux dmesg（英文全称：display message）命令用于显示开机信息。
 
+Linux dmesg（英文全称：display message）命令用于显示开机信息。
 
 - dmseg -t > dmseg1.log
 

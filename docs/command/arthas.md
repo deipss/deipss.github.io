@@ -18,10 +18,10 @@ java -jar arthas-boot-jar
 
 ```bash
 # 注意SpringExtensionFactory的版本，不同版本，类路径可能不一样
-sc -d 'org-apache-dubbo-config-spring-extension-SpringExtensionFactory'
+sc -d 'org.apache.dubbo.config.spring.extension.SpringExtensionFactory'
 # 上面的命中得出classLoader的内存地址
-ognl -c 2e1ef60 '#context=@org-apache-dubbo-config-spring-extension-SpringExtensionFactory@getContexts()-iterator-next, 
-context-getBean("umsTradeBillSplitJob")-execute(null)' -x 3
+ognl -c 2e1ef60 '#context=@oorg.apache.dubbo.config.spring.extension.SpringExtensionFactory@getContexts().iterator.next, 
+context.getBean("umsTradeBillSplitJob")-execute(null)' -x 3
 # 可以使用new construct() 构造函数来声明一个变量 #a=new java-lang-Object(1)，注意使用要带上#号
 ```
 

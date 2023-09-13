@@ -18,7 +18,7 @@ sudo apt-get install dkms build-essential linux-headers-generic
 
 ## 1.2. 先卸载原有N卡驱动
 
-```
+```shell
 #for case1: original driver installed by apt-get:
 sudo apt-get remove --purge nvidia*
 #for case2: original driver installed by runfile:
@@ -28,16 +28,17 @@ sudo ./NVIDIA-Linux-x86_64-384.59.run --uninstall
 
 ## 1.3. 禁用自带的 nouveau nvidia驱动
 
-```
+```shell
 sudo gedit /etc/modprobe.d/blacklist.conf
-并添加如下内容:
+#并添加如下内容:
 blacklist nouveau
 options nouveau modeset=0
-再更新一下
+#再更新一下
 sudo update-initramfs -u
-修改后需要重启系统。确认下Nouveau是已经被你干掉，使用命令： 
+#修改后需要重启系统。确认下Nouveau是已经被你干掉，使用命令：
 lsmod | grep nouveau
-如果没有屏幕输出，说明禁用nouveau成功。
+#如果没有屏幕输出，说明禁用nouveau成功。
+
 ```
 
 ## 1.4. 禁用X-Window服务

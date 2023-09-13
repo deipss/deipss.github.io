@@ -14,15 +14,15 @@ nav_order: 2
 ## 1.2. install docker on centos
 
 ```shell
-查看内核版本
+#查看内核版本
 uname -r
-确保 yum 包更新到最新
+#确保 yum 包更新到最新
 sudo yum update
-执行 docker 安装脚本
+#执行 docker 安装脚本
 curl >fsSL [https://get.docker.com](https://get.docker.com) >o get>[docker.sh](http://docker.sh) sudo sh get>[docker.sh](http://docker.sh)
-启动 Docker 进程
+#启动 Docker 进程
 sudo systemctl start docker
-开机启动
+#开机启动
 sudo systemctl enable docker 
 ```
 
@@ -45,7 +45,7 @@ sudo systemctl enable docker
 > https://programlife.net/2020/09/12/ubuntu-snap-docker-registry-mirrors/
 
 ```shell
-# 新版的ubuntu使用snap来管理一些软件，所以重启使用snap的命令
+#新版的ubuntu使用snap来管理一些软件，所以重启使用snap的命令
 sudo systemctl list-units --type=service
 sudo systemctl restart snap.docker.dockerd.service
 docker info
@@ -54,13 +54,14 @@ docker info
 ## 1.4. 查询docker镜像
 
 文档 https://hub.docker.com/
+
 ```shell
-# 查看镜像
+#查看镜像
 docker image ls
 docker images -a
-# 查看已下载的
+#查看已下载的
 docker images
-# 删除镜像
+#删除镜像
 docker imamges rm
 
 ```
@@ -68,22 +69,22 @@ docker imamges rm
 ## 1.5. 容器启动
 
 ```bash
-# 虚拟内存设置大一点
+#虚拟内存设置大一点
 sysctl -w vm.max_map_count=262144
 
 docker run --name tomcat -p 8080:8080 -d tomcat   --restart=always
 docker run -p 27017:27017  -d mongo --restart=always
 docker run -p 6379:6379  -d redis redis-server --appendonly yes --restart=always
-# 自动启动
+#自动启动
 docker update --restart=always 01a07d12cfec
 ```
 
 ## 1.6. 删除未启动的容器
 
 ```bash
-# 删除容器
+#删除容器
 docker rm $( docker ps -a -q)
-# 删除镜像
+#删除镜像
 docker rm $( docker images -a -q)
 ```
 
@@ -91,6 +92,7 @@ docker rm $( docker images -a -q)
 
 ```shell
 docker port [容器id]
+
 ```
 
 ## 1.8. 进行容器
@@ -132,7 +134,7 @@ select Host,User,plugin from mysql.user;
 - [https://blog.csdn.net/ora_dy/article/details/80251487](https://blog.csdn.net/ora_dy/article/details/80251487)
   【2059错误】
 
-## 2.2. zookeeper kakfa
+## 2.2. zookeeper kafka
 
 ```bash
 docker pull wurstmeister/zookeeper  
@@ -152,7 +154,7 @@ docker exec -it kafka /bin/bash
 
 ```
 
-## 2.3. Mongo
+## 2.3. MongoDB
 
 ```bash
 docker run -d -p 27017:27017 -v mongo_configdb:/data/configdb -v mongo_db:/data/db --name mongo docker.io/mongo --auth
@@ -256,7 +258,8 @@ docker run --name=main-zk  --restart=always  -e ALLOW_ANONYMOUS_LOGIN=yes  -p 21
 ```
 
 
-# Docker file
+# 3. Docker file
+
 Docker 构建的早期需要 DockerFile，就是 Docker 构建了一个命令文件。Docker基于这个文件构建镜像并且打包镜像。
 - 1）Docker 镜像配置文件
 - 2）脚本编写
