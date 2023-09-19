@@ -61,6 +61,7 @@ nav_order: 8
 - NirSoft's password recovery tools 查看windows凭据密码，
 - switch host 主机配置切换
 
+
 ## 1.7. idea plugin
 
 - alibaba arthas
@@ -91,3 +92,8 @@ nav_order: 8
 - Vuesion Theme 主题
 - findbugs 代码扫描
 - ASM插件 ASM Bytecode Outline
+
+
+## jvm分析
+- jvisualvm 不使用jdk8版本自带的，使用github上最新的
+- Eclipse MAT
