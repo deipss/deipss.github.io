@@ -62,13 +62,16 @@ jmap -dump:file=filename-dump <pid>
 #使用jhat命令
 jhat -port 9998 filename-dump
 
-#在windows可以使用jvisualvm-exe命令,加载文件分析  
+ 
 ```
+- 在windows可以使用jvisualvm-exe命令,加载文件分析
+- 使用jhat
+- 使用eclipse MAT
 
 ##  内存对象统计与排序
 
 ```
-jmap -histo <pid> | grep <class full path> | sort -n -k 3 | head 17
+jmap -histo <pid> | grep <class full path> | sort -n -k 3 | head -17
 
 排序出目前容量最大的一些类，-k 2是根据第2列排序，就是数据最大的
  num     #instances         #bytes  class name 
