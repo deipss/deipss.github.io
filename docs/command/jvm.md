@@ -59,6 +59,7 @@ jstack -l <pid> >> -/jstack_result-txt
 jmap -heap <pid>
 #下载快照到文件
 jmap -dump:file=filename-dump <pid>
+jmap -dump:format=b,file=heapdump.phrof <pid>
 #使用jhat命令
 jhat -port 9998 filename-dump
 
