@@ -10,8 +10,14 @@ _|    _|    _|_|_|  _|          _|_|_|        _|_|_|    _|_|      _|_|_|        
 
 ```
 
-你来啦 😃
+你来啦 😃,
+
+Ok Let's Go……
+
+
+![hello_world.gif](assets%2Fimg%2Fhello_world.gif)
+
 
 ---
 
-[^1]: [It is my git](https://github.com/deipss).
+[1]: [It is my git](https://github.com/deipss).
