@@ -60,6 +60,7 @@ nav_order: 8
 - Revo Uninstaller 款能够代替Windows系统中的“添加/删除程序
 - NirSoft's password recovery tools 查看windows凭据密码，
 - switch host 主机配置切换
+- simple sticky
 
 
 ## 1.7. idea plugin
@@ -72,6 +73,7 @@ nav_order: 8
 - 单元测试测试生成工具：JUnitGenerator
 - Mybatis 工具 MybatisX
 - Mybatis 工具 MybatisX with mapper
+- MyBatisCodeHelperPro
 - Maven辅助神器：Maven Helper
 - JSON转领域对象工具：GsonFormat
 - 领域对象转JSON工具：POJO to JSON

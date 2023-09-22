@@ -112,6 +112,20 @@ public static void spyMethodOnCallThrows(final String throwException,
     );
 ```
 
+
+# 源代码细节
+
+## 如何进行类隔离
+
+- 对于同样的类，是不是会加载多次，比如LogFactory
+
+## 同一个类被多个模块增强，字节码会是怎么样
+
+
+## 同一个类被多个模块同步增强，是否会出现ABA问题，如何应对这类问题
+
+
+
 # 参考文献
 
 - https://www.baeldung.com/java-classloaders 类加载器
