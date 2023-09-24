@@ -13,7 +13,18 @@ import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+
 class Foo {
+    public static void main(String[] args) throws InterruptedException {
+        Foo f = new Foo();
+        long t = System.currentTimeMillis();
+        f.threadPoolTest(10000);
+        System.out.println(System.currentTimeMillis() - t);
+        long e = System.currentTimeMillis();
+        f.threadTest(10000);
+        System.out.println(System.currentTimeMillis() - e);
+    }
+
     public void threadPoolTest(int cnt) throws InterruptedException {
         final List<Integer> l = new LinkedList<Integer>();
         ThreadPoolExecutor tp =
@@ -23,7 +34,7 @@ class Foo {
                         TimeUnit.SECONDS,
                         new LinkedBlockingQueue<Runnable>(cnt));
         final Random random = new Random();
-        for(int i=0;i<cnt;++i){
+        for (int i = 0; i < cnt; ++i) {
             tp.execute(new Runnable() {
                 @Override
                 public void run() {
@@ -32,13 +43,14 @@ class Foo {
             });
         }
         tp.shutdown();
-        tp.awaitTermination(1,TimeUnit.DAYS);
+        tp.awaitTermination(1, TimeUnit.DAYS);
     }
+
     public void threadTest(int cnt) throws InterruptedException {
         final List<Integer> l = new LinkedList<Integer>();
         final Random random = new Random();
-        for(int i=0;i<cnt;++i){
-            Thread t = new Thread(){
+        for (int i = 0; i < cnt; ++i) {
+            Thread t = new Thread() {
                 @Override
                 public void run() {
                     l.add(random.nextInt());
@@ -47,15 +59,6 @@ class Foo {
             t.start();
             t.join();
         }
-    }
-    public static void main(String[] args) throws InterruptedException {
-        Foo f = new Foo();
-        long t = System.currentTimeMillis();
-        f.threadPoolTest(10000);
-        System.out.println(System.currentTimeMillis()-t);
-        long e = System.currentTimeMillis();
-        f.threadTest(10000);
-        System.out.println(System.currentTimeMillis()-e);
     }
 }
 ```

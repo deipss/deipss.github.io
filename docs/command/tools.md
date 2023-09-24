@@ -95,6 +95,7 @@ nav_order: 8
 - Vuesion Theme 主题
 - findbugs 代码扫描
 - ASM插件 ASM Bytecode Outline
+- VisualVM
 
 
 ## jvm分析
