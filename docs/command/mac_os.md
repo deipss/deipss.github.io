@@ -11,7 +11,7 @@ nav_order: 10
 
 - https://zhuanlan.zhihu.com/p/137464385
 
-## 1.2. jdk
+## 1.2. Jdk
 
 安装的目录
 
@@ -46,4 +46,4 @@ echo "source ~/.bash_profile" >>~/.zshrc
 
 用于鼠标与触摸板的转换
 
-# logi optional 罗技鼠键
+# 4. Logi Optional 罗技鼠键
