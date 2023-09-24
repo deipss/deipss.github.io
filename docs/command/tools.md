@@ -74,6 +74,7 @@ nav_order: 8
 - Mybatis 工具 MybatisX
 - Mybatis 工具 MybatisX with mapper
 - MyBatisCodeHelperPro
+- database navigator
 - Maven辅助神器：Maven Helper
 - JSON转领域对象工具：GsonFormat
 - 领域对象转JSON工具：POJO to JSON
