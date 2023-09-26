@@ -96,6 +96,7 @@ nav_order: 8
 - findbugs 代码扫描
 - ASM插件 ASM Bytecode Outline
 - VisualVM
+- jclasslib 
 
 
 ## jvm分析
