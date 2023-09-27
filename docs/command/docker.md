@@ -10,6 +10,12 @@ nav_order: 2
 ## 1.1. install docker on ubuntu
 
 - https://docs.docker.com/engine/install/ubuntu/
+```shell
+sudo snap install docker         # version 20.10.24, or
+sudo apt  install docker.io      # version 24.0.5-0ubuntu1~22.04.1
+sudo apt  install podman-docker  # version 3.4.4+ds1-1ubuntu1.22.04.2
+See 'snap info docker' for additional versions.
+```
 
 ## 1.2. install docker on centos
 
@@ -25,8 +31,6 @@ sudo systemctl start docker
 #开机启动
 sudo systemctl enable docker 
 ```
-
-
 
 ## 1.3. docker 加速
 
@@ -257,10 +261,10 @@ docker pull bitnami/zookeeper:latest
 docker run --name=main-zk  --restart=always  -e ALLOW_ANONYMOUS_LOGIN=yes  -p 2181:2181  bitnami/zookeeper:latest 
 ```
 
-
 # 3. Docker file
 
 Docker 构建的早期需要 DockerFile，就是 Docker 构建了一个命令文件。Docker基于这个文件构建镜像并且打包镜像。
+
 - 1）Docker 镜像配置文件
 - 2）脚本编写
 - 3）脚本文件
@@ -269,6 +273,7 @@ Docker 构建的早期需要 DockerFile，就是 Docker 构建了一个命令文
 - 6）并最终创建一个新的镜像
 
 重新指令
+
 ```text
 1）FROM 指定基础镜像文件
 2）MAINTAINER authors_name 作者

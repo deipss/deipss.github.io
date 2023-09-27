@@ -86,11 +86,13 @@ $ source ~/.bash_profile #Zsh应改为 source ~/.zshrc
 
 # 5. CPU
 ```shell
-处理器体系结构的类型	ARM	x86/x64
-架构开发公司	ARM	Intel /AMD
-处理器制造公司	Intel，Freescale Semiconductor，Renesas Electronics	Intel /AMD
-指令集的架构	RISC	CISC
-主要使用的用途	智能手机，平板电脑	电脑，PC服务器
-32位/64位	两者都有	x86:32位/x64:64位
-字节存储次序	bi-endian	Little endian
+uname -pa
+
+处理器体系结构的类型	ARM	            x86/x64
+架构开发公司	        ARM	            Intel /AMD
+处理器制造公司	        Intel,apple	    Intel /AMD
+指令集的架构	        RISC	        CISC
+主要使用的用途	        智能手机，平板电脑	电脑，PC服务器
+32位/64位	        两者都有	        x86:32位/x64:64位
+字节存储次序	        bi-endian	    Little endian
 ```
