@@ -22,7 +22,16 @@ brew doctor
 ## 1.2. 镜像加速
 
 - https://zhuanlan.zhihu.com/p/137464385
+```shell
 
+cd "$(brew --repo)"
+git config -l 先查看下当前git的配置
+git remote set-url origin https://mirrors.ustc.edu.cn/brew.git
+
+cd "$(brew --repo)/Library/Taps/homebrew/homebrew-core"
+git remote set-url origin https://mirrors.ustc.edu.cn/homebrew-core.git
+
+```
 ## 1.3. Jdk
 
 - 查看本地安装的java版本  /usr/libexec/java_home -V
@@ -73,3 +82,15 @@ $ source ~/.bash_profile #Zsh应改为 source ~/.zshrc
 用于鼠标与触摸板的转换
 
 # 4. Logi Optional 罗技鼠键
+
+
+# 5. CPU
+```shell
+处理器体系结构的类型	ARM	x86/x64
+架构开发公司	ARM	Intel /AMD
+处理器制造公司	Intel，Freescale Semiconductor，Renesas Electronics	Intel /AMD
+指令集的架构	RISC	CISC
+主要使用的用途	智能手机，平板电脑	电脑，PC服务器
+32位/64位	两者都有	x86:32位/x64:64位
+字节存储次序	bi-endian	Little endian
+```
