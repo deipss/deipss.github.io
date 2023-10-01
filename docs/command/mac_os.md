@@ -64,9 +64,9 @@ echo "source ~/.bash_profile" >>~/.zshrc
 
 #------------------------
 # JDK 13
-JAVA_13_HOME=/Library/Java/JavaVirtualMachines/jdk-13.0.1.jdk/Contents/Home/
+JAVA_11_HOME=/Library/Java/JavaVirtualMachines/jdk-11.0.1.jdk/Contents/Home/
 # JDK 8
-JAVA_8_HOME=/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/# 默认JDK8
+JAVA_8_HOME=/Library/Java/JavaVirtualMachines/jdk-1.8.jdk/Contents/Home
 export JAVA_HOME=$JAVA_8_HOME# alias命令动态切换JDK版本
 alias jdk8="export JAVA_HOME=$JAVA_8_HOME"
 alias jdk13="export JAVA_HOME=$JAVA_13_HOME"export PATH=$JAVA_HOME/bin:$PATH:.

@@ -22,6 +22,6 @@ parent: Spring
 
 - namespace 
 - pod 部署的节点
-- deployment 根据ymal文件来配置
+- deployment 根据ymal文件来配置,感觉有和docker-compose类似，是使用一个配置文件来配置多种数据
 - service 一个应用，如交易或支付的某个业务系统
 - ingress 网络域名绑定,本身是一个nginx

@@ -7,9 +7,12 @@ nav_order: 2
 
 # 1. docker 安装
 
+使用**1panel**管理docker
+
 ## 1.1. install docker on ubuntu
 
 - https://docs.docker.com/engine/install/ubuntu/
+
 ```shell
 sudo snap install docker         # version 20.10.24, or
 sudo apt  install docker.io      # version 24.0.5-0ubuntu1~22.04.1
@@ -44,15 +47,14 @@ sudo systemctl enable docker
 }
 ```
 
-- snap install docker 后镜像加速
+## ubuntu snap install docker 后镜像加速
 
 > https://programlife.net/2020/09/12/ubuntu-snap-docker-registry-mirrors/
 
 ```shell
 #新版的ubuntu使用snap来管理一些软件，所以重启使用snap的命令
 sudo systemctl list-units --type=service
-sudo systemctl restart snap.docker.dockerd.service
-docker info
+
 ```
 
 ## 1.4. 查询docker镜像
@@ -126,8 +128,8 @@ docker inspect [容器ID]
 docker run --name mysql_1 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=deipss -d mysql:latest
 docker exec -it mysql_1 bash
 mysql -u root -p -h localhost
-ALTER USER 'root'@'%' IDENTIFIED BY 'deipss' PASSWORD EXPIRE NEVER;
-ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'deipss'; 
+ALTER USER 'root'@'%' IDENTIFIED BY 'mysql_Xh7Z62' PASSWORD EXPIRE NEVER;
+ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'mysql_Xh7Z62'; 
 FLUSH PRIVILEGES;
 commit;
 select Host,User,plugin from mysql.user;
