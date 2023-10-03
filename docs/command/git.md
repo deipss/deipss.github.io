@@ -60,17 +60,17 @@ git fetch
 git fetch -v 
 
 
-# 2. 撤消工作区
+# 撤消工作区
 git checkout -- 文件名
-# 3. 清空缓存区
+# 清空缓存区
 git reset HEAD 文件名
-# 4. 新建分支
+# 新建分支
 git branch 分支名
-# 5. 切换分支
+# 切换分支
 git checkout 分支名
-# 6. 同时切换并创建分支
+# 同时切换并创建分支
 git checkout -b 分支名
-# 7. 删除分支
+# 删除分支
 git branch -d 分支名
 git branch |xargs git branch -d
 
@@ -82,9 +82,9 @@ git branch |xargs git branch -d
 
 ```shell
 git checkout 节点哈希值
-# 8. 也可以直接脱离分支指向当前节点
+# 也可以直接脱离分支指向当前节点
 git checkout --detach
-# 9. 回退N个提交
+# 回退N个提交
 git reset HEAD~N
 
 ```

@@ -47,7 +47,7 @@ sudo systemctl enable docker
 }
 ```
 
-## ubuntu snap install docker 后镜像加速
+## 1.4. ubuntu snap install docker 后镜像加速
 
 > https://programlife.net/2020/09/12/ubuntu-snap-docker-registry-mirrors/
 
@@ -57,7 +57,7 @@ sudo systemctl list-units --type=service
 
 ```
 
-## 1.4. 查询docker镜像
+## 1.5. 查询docker镜像
 
 文档 https://hub.docker.com/
 
@@ -72,7 +72,7 @@ docker imamges rm
 
 ```
 
-## 1.5. 容器启动
+## 1.6. 容器启动
 
 ```bash
 #虚拟内存设置大一点
@@ -85,7 +85,7 @@ docker run -p 6379:6379  -d redis redis-server --appendonly yes --restart=always
 docker update --restart=always 01a07d12cfec
 ```
 
-## 1.6. 删除未启动的容器
+## 1.7. 删除未启动的容器
 
 ```bash
 #删除容器
@@ -94,27 +94,27 @@ docker rm $( docker ps -a -q)
 docker rm $( docker images -a -q)
 ```
 
-## 1.7. 查看端口映射
+## 1.8. 查看端口映射
 
 ```shell
 docker port [容器id]
 
 ```
 
-## 1.8. 进行容器
+## 1.9. 进行容器
 
 ```shell
 docker exec -it [容器ID] /bin/bash
 
 ```
 
-## 1.9. 日志查看
+## 1.10. 日志查看
 
 ```shell
 docker logs -f bf08b7f2cd89
 ```
 
-## 1.10. 观测某个容器
+## 1.11. 观测某个容器
 
 ```shell
 docker inspect [容器ID]
@@ -137,8 +137,7 @@ select Host,User,plugin from mysql.user;
 
 - [https://www.cnblogs.com/limingxie/p/8655457.html](https://www.cnblogs.com/limingxie/p/8655457.html) 【使用docker运行mysql】
 - [https://www.cnblogs.com/lifan1998/p/9177731.html](https://www.cnblogs.com/lifan1998/p/9177731.html) 【2059错误】
-- [https://blog.csdn.net/ora_dy/article/details/80251487](https://blog.csdn.net/ora_dy/article/details/80251487)
-  【2059错误】
+- [https://blog.csdn.net/ora_dy/article/details/80251487](https://blog.csdn.net/ora_dy/article/details/80251487)【2059错误】
 
 ## 2.2. zookeeper kafka
 
@@ -222,6 +221,43 @@ docker pull docker.elastic.co/kibana/kibana:7.17.9
 docker run --name kib01-test --net elastic -p 127.0.0.1:5601:5601 -e "ELASTICSEARCH_HOSTS=http://{本地ip}:9200" docker.elastic.co/kibana/kibana:7.17.9
 ```
 
+
+### 2.5.3. 7.10.2 compose方式来启动ES和KIBANA
+```yaml
+version: "3.7"
+services:
+  elasticsearch:
+    image: "docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2"
+    container_name: elasticsearch_001
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      node.name: es01
+      discovery.type: single-node
+      cluster.name: mycluster
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+    volumes:
+      - "es-data-es01:/usr/share/elasticsearch/data"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+  kibana:
+    image: docker.elastic.co/kibana/kibana-oss:7.10.2
+    container_name: kibana_001
+    depends_on:
+      - elasticsearch
+    ports:
+      - "5601:5601"
+      - "9600:9600"
+    environment:
+      SERVERNAME: kibana
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+      ES_JAVA_OPTS: -Xmx512m -Xms512m
+volumes:
+  es-data-es01: { }
+```
 ## 2.6. redis
 
 ```bash

@@ -85,6 +85,9 @@ $ source ~/.bash_profile #Zsh应改为 source ~/.zshrc
 
 
 # 5. CPU
+用来操作计算单元的控制单元的指令集合就是CPU指令集，有X86、RAM、MIPS、IA64，可以分成复杂指令集和
+精简指令集两类，CISC和RISC。
+PC端主要是X86，移动端主是要RAM。
 ```shell
 uname -pa
 

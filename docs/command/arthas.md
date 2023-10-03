@@ -5,9 +5,9 @@ parent: Command
 nav_order: 15
 ---
 
-# 使用Arthas
+# Arthas
 
-## 安装
+## install
 
 ```shell script
 curl -O https://arthas-aliyun-com/arthas-boot-jar
