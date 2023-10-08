@@ -3,6 +3,7 @@ layout: default
 title: Redission
 parent: Database
 ---
+图片来源：https://www.bilibili.com/video/BV1cr4y1671t?p=160&vd_source=f52d9488d7d3c21ed33580e4dce1a022
 
 # 分布式锁需要优化的问题
 - 不可重入：同一个线程，依次执行两个方法都要获取同一把分布式锁，需要可重入锁
