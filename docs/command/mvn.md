@@ -4,20 +4,37 @@ title: mvn
 parent: Command
 nav_order: 6
 ---
+图片来源=https://www.bilibili.com/video/BV1Ah411S7ZE?p=13&vd_source=f52d9488d7d3c21ed33580e4dce1a022
+# 1. maven简介
+![maven_1.png](img%2Fmaven_1.png)
 
-# 1. 依赖树打印
+- maven有自己的类加载器
+
+# 依赖冲突
+
+![maven_conflict.png](img%2Fmaven_conflict.png)
+
+- 可以使用`<optional>true</optional>`取消依赖的传递
+- `<exclusion>` 不用写版本号
+
+# 依赖范围
+![maven_scope.png](img%2Fmaven_scope.png)
+
+# 2. 指令
+
+## 2.1. 依赖树打印
 
 ```shell
 mvn dependency:tree > mvnTree.txt
 ```
 
-# 2. 设置版本
+## 2.2. 设置版本
 
 ```shell
 mvn versions:set -D newVersion=1.5.0-SNAPSHOT
 ```
 
-# 3. mvn -D -P -U
+## 2.3. mvn -D -P -U
 
 - P代表（Profiles配置文件）
 
@@ -52,11 +69,11 @@ mvn versions:set -D newVersion=1.5.0-SNAPSHOT
 
 - -U 代表强制更新（update）
 
-# 4. 跳过测试
+## 2.4. 跳过测试
 
 - mvn -Dmaven.test.skip=true clean package ，跳过测试包下的程序
 
-# 5. 部署到仓库
+## 2.5. 部署到仓库
 
 ```shell
 
@@ -106,7 +123,7 @@ mvn deploy:deploy-file
     </repositories>
 ```
 
-# 6. 安装在本地
+## 2.6. 安装在本地
 
 ```shell
 mvn install 会将包安装在本地的仓库
@@ -115,13 +132,13 @@ mvn clean package  '-Dmaven.test.skip=true'
 
 ```
 
-# 7. mvn配置文件
+## 2.7. mvn配置文件
 
 ```text
 <package></package>标签 可以有pom或是jar,默认是jar,在有父子继续关系时，一般父pom文件使用pom包
 ```
 
-# 8. 源码下载
+## 2.8. 源码下载
 
 ```shell
 mvn dependency:sources
@@ -129,27 +146,26 @@ mvn dependency:resolve -Dclassifier=javadoc
 mvn dependency:sources dependency:resolve -Dclassifier=javadoc
 ```
 
-# 9. mvn 仓库优先级
+## 2.9. mvn 仓库优先级
 
 ```shell
 本地仓库 > 私服 （profile）> 远程仓库（repository）和 镜像 （mirror） > 中央仓库 （central）
 ```
 
-# 10. nexus
+# 3. nexus
 
 nexus里可以配置3种类型的仓库，分别是proxy、hosted、group 。
 
 - proxy是远程仓库的代理。比如说在nexus中配置了一个central
   repository的proxy，当用户向这个proxy请求一个artifact，这个proxy就会先在本地查找，如果找不到的话，就会从远程仓库下载，然后返回给用户，相当于起到一个中转的作用。
 - hosted是宿主仓库，用户可以把自己的artifact、proxy下载不到的artifact，deploy到hosted中。
--
-group是仓库组，目的是将上述多个仓库聚合，对用户暴露统一的地址，这样用户就不需要在pom中配置多个地址，只要统一配置group的地址就可以了 。
+- group是仓库组，目的是将上述多个仓库聚合，对用户暴露统一的地址，这样用户就不需要在pom中配置多个地址，只要统一配置group的地址就可以了 。
 
-# 11. plugins
+# 4. plugins
 
 https://maven.apache.org/plugins/index.html
 
-## 11.1. basic
+## 4.1. basic
 
 - clean
 - compiler
@@ -160,7 +176,7 @@ https://maven.apache.org/plugins/index.html
 - surefire which ensure isolated classloader to run Junit Integrated test
 - verifier
 
-## 11.2. tools
+## 4.2. tools
 
 - findbugs
 - checkstyle

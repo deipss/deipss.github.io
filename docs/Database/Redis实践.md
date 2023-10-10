@@ -3,9 +3,9 @@ layout: default
 title: Redis实践
 parent: Database
 ---
-图片来源：https://www.bilibili.com/video/BV1cr4y1671t?p=160&vd_source=f52d9488d7d3c21ed33580e4dce1a022
+> 图片来源：https://www.bilibili.com/video/BV1cr4y1671t?p=160&vd_source=f52d9488d7d3c21ed33580e4dce1a022
 
- # KEY设计
+# KEY设计
 - 业务名称：数据名：ID  login：user：10
 - 长度不超过44字节，因为KEY是由STRING保存的，STRING底层编码有INT，EMBSTR，RAW三种，EMBSTR在小于44字节时使用，采用连续内存，内存使用小
 

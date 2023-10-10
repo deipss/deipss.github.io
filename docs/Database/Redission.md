@@ -3,25 +3,27 @@ layout: default
 title: Redission
 parent: Database
 ---
-图片来源：https://www.bilibili.com/video/BV1cr4y1671t?p=160&vd_source=f52d9488d7d3c21ed33580e4dce1a022
+
+> 图片来源：https://www.bilibili.com/video/BV1cr4y1671t?p=160&vd_source=f52d9488d7d3c21ed33580e4dce1a022
 
 # 分布式锁需要优化的问题
+
 - 不可重入：同一个线程，依次执行两个方法都要获取同一把分布式锁，需要可重入锁
 - 不可重试：获取锁只尝试一次就返回false，缺少重试机制
 - 超时释放：业务执行时间长，导致锁释放，存在安全隐患
 - 主从一致性：主从集群，数据同步存在时延，主机宕机，从机还没有完成同步锁数据
 
-
 ![lock.png](img%2Flock.png)
 
 # 可重入锁
+
 - 判断持有锁是不是自己
 - 是自己将上锁次数+1
 - 释放锁一次，上锁次数-1
 - 释放锁两次，上锁次数-1，为0，释放锁
 
-利用HASH结构记录线程ID和重入次数 
-  
+利用HASH结构记录线程ID和重入次数
+
 ```shell
 org.redisson.RedissonLock#tryLockInnerAsync 
 
@@ -143,7 +145,9 @@ org.redisson.RedissonLock#tryLock(long, long, java.util.concurrent.TimeUnit)
 ```
 
 # 锁超时
+
 - 获取锁之后，利用watchDog定时任务去续约
+
 ```shell
 org.redisson.RedissonLock#tryAcquireAsync
 org.redisson.RedissonLock#scheduleExpirationRenewal
@@ -198,14 +202,18 @@ private void scheduleExpirationRenewal(long threadId) {
 ```
 
 # 主从一致性
+
 如下图所示：主节点宕机后，数据同步没有完成，导致新的主节点没有同步原主节点的数据，来上锁时，别的JVM上锁成功了。
+
 ![distribute2.png](img%2Fdistribute2.png)
+
 所以不使用主从的形式来管理集群，使用同等节点的方式 **redissonClient.getMultiLock()**
+
 ![distribute.png](img%2Fdistribute.png)
+
 - 所有节点要全部上锁
 - 一个失败，其他要全部释放
 - 全部上锁后，要续约一次，使首次上锁与末次上锁的释放时间保持一致
-- 
 
 ```shell
 @Override
