@@ -6,7 +6,7 @@ parent: Database
 
 > 图片来源：https://www.bilibili.com/video/BV1cr4y1671t?p=160&vd_source=f52d9488d7d3c21ed33580e4dce1a022
 
-# 分布式锁需要优化的问题
+# 1. 分布式锁需要优化的问题
 
 - 不可重入：同一个线程，依次执行两个方法都要获取同一把分布式锁，需要可重入锁
 - 不可重试：获取锁只尝试一次就返回false，缺少重试机制
@@ -15,7 +15,7 @@ parent: Database
 
 ![lock.png](img%2Flock.png)
 
-# 可重入锁
+# 2. 可重入锁
 
 - 判断持有锁是不是自己
 - 是自己将上锁次数+1
@@ -66,11 +66,11 @@ org.redisson.RedissonLock#tryLockInnerAsync
     }
 ```
 
-# 锁重试
+# 3. 锁重试
+- 不是单一的死循环，而是通过消息订阅和信号量的方式来节省资源，收到消息或信号量，才去重试获取锁
+`org.redisson.RedissonLock#tryLock(long, long, java.util.concurrent.TimeUnit)`
 
 ```shell
-org.redisson.RedissonLock#tryLock(long, long, java.util.concurrent.TimeUnit)
-不是单一的死循环，而是通过消息订阅和信号量的方式来节省资源，收到消息或信号量，才去重试获取锁 
 @Override
     public boolean tryLock(long waitTime, long leaseTime, TimeUnit unit) throws InterruptedException {
         long time = unit.toMillis(waitTime);
@@ -144,7 +144,7 @@ org.redisson.RedissonLock#tryLock(long, long, java.util.concurrent.TimeUnit)
     }
 ```
 
-# 锁超时
+# 4. 锁超时
 
 - 获取锁之后，利用watchDog定时任务去续约
 
@@ -201,7 +201,7 @@ private void scheduleExpirationRenewal(long threadId) {
     }
 ```
 
-# 主从一致性
+# 5. 主从一致性
 
 如下图所示：主节点宕机后，数据同步没有完成，导致新的主节点没有同步原主节点的数据，来上锁时，别的JVM上锁成功了。
 

@@ -5,16 +5,16 @@ parent: Command
 nav_order: 15
 ---
 
-# Arthas
+# 1. Arthas
 
-## install
+## 1.1. install
 
 ```shell script
 curl -O https://arthas-aliyun-com/arthas-boot-jar
 java -jar arthas-boot-jar
 ```
 
-## ognl
+## 1.2. ognl
 
 ```bash
 # 注意SpringExtensionFactory的版本，不同版本，类路径可能不一样
@@ -25,7 +25,7 @@ context.getBean("umsTradeBillSplitJob")-execute(null)' -x 3
 # 可以使用new construct() 构造函数来声明一个变量 #a=new java-lang-Object(1)，注意使用要带上#号
 ```
 
-## thread
+## 1.3. thread
 
 ```bash
 # 打印出阻塞的线程信息
@@ -39,14 +39,14 @@ thread -n 3 -i 1000
 
 - 参考 https://cloud-tencent-com/developer/article/1846725
 
-## monitor
+## 1.4. monitor
 
 ```shell script
 # 每秒的请求数
 monitor -c 1 <类全路径名> <方法名>
 ```
 
-## trace
+## 1.5. trace
 
 ```shell script
 # 方法内部调用路径，并输出方法路径上的每个节点上耗时
@@ -54,7 +54,7 @@ monitor -c 1 <类全路径名> <方法名>
 trace com-frxs-repeater-receiver-event-consumer-RecieveGeneralMsgConsumer onMessage  -n 5 --skipJDKMethod false '#cost > 3000'
 ```
 
-## classloader
+## 1.6. classloader
 
 ```shell
 # 按类加载实例查看统计信息
@@ -65,7 +65,7 @@ classloader -t
 classloader -c 3d4eac69
 ```
 
-## profile
+## 1.7. profile
 
 火焰图查看
 

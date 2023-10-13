@@ -375,7 +375,7 @@ public class CyclicBarrierDemo {
 
 # 7. BlockingQueue
 
-阻塞队列，继承 ** Queue **接口，遵循FIFO规则，又是满足阻塞条件：
+阻塞队列，继承 **Queue** 接口，遵循FIFO规则，又是满足阻塞条件：
 
 - 队列满时，阻塞添加操作
 - 队列空时，阻塞取出操作

@@ -5,22 +5,22 @@ parent: Command
 nav_order: 3
 ---
 
-# jps
+# 1. jps
 
 ```shell
 #查看
 jps -mlVv
 ```
 
-# 高CPU使用率分析
+# 2. 高CPU使用率分析
 
-## 线程死锁
+## 2.1. 线程死锁
 
 - 使用 jstack -p <pid> > jstack1.txt 将当前的jvm执行栈打印
 - 搜索 block状态的线程
 - 看被阻塞的线程是因为什么哪个锁被占用，造成的阻塞
 
-## alibaba arthas
+## 2.2. alibaba arthas
 
 ```shell
 #top 命令分析，是否高CPU使用率、负载率，但是CPU空闲时间长
@@ -32,7 +32,7 @@ thread -b 查看BLOCKED状态的线程
 
 - 参考 https://www-jianshu-com/p/3ba1e933682b
 
-## top命令结合 jstack
+## 2.3. top命令结合 jstack
 
 ```shell
 #命令分析，是否高CPU使用率、负载率，但是CPU空闲时间长
@@ -50,9 +50,9 @@ jstack -l <pid> >> -/jstack_result-txt
 
 - https://www-cnblogs-com/fengweiweicoder/p/10992043-html
 
-#  高内存分析
+# 3. 高内存分析
 
-##  jmap 文件下载
+## 3.1. jmap 文件下载
 
 ```shell
 #打印出jvm进程堆使用情况
@@ -65,18 +65,19 @@ jhat -port 9998 filename-dump
 
  
 ```
+
 - 在windows可以使用jvisualvm-exe命令,加载文件分析
 - 使用jhat
 - 使用eclipse MAT
 
-##  内存对象统计与排序
+## 3.2. 内存对象统计与排序
 
 ```
 jmap -histo <pid> | grep <class full path> | sort -n -k 3 | head -17
 
 排序出目前容量最大的一些类，-k 2是根据第2列排序，就是数据最大的
  num     #instances         #bytes  class name 
-----------------------------------------------
+
    1:       4632416      392305928  [C
    2:       6509258      208296256  java-util-HashMap$Node
    3:       4615599      110774376  java-lang-String
@@ -86,9 +87,9 @@ jmap -histo <pid> | grep <class full path> | sort -n -k 3 | head -17
 
 ```
 
-# Jvm GC
+# 4. JvmGC
 
-## gc 查看
+## 4.1. gc查看
 
 ```shell
 #查看帮助
@@ -125,7 +126,7 @@ jstat -gccapbility
 
 - 参考 https://zhuanlan-zhihu-com/p/481206194
 
-## Jvm启动参数-GC日志打印
+## 4.2. Jvm启动参数-GC日志打印
 
 ```shell
 #必备
@@ -152,18 +153,18 @@ jstat -gccapbility
 
 - https://segmentfault-com/a/1190000039806436
 
-## javap 反编译代码
+## 4.3. javap 反编译代码
 
 ```shell
 通过以下命令来反编译出一个Class文件字节码
 javap -verbose -p Main-class
 ```
 
-## G1配置
+## 4.4. G1配置
 
 - https://zhuanlan-zhihu-com/p/83804324
 
-# jvm启动获取参数
+# 5. jvm启动获取参数
 
 - 系统主机中的参数
 - jvm 进程启动时参数

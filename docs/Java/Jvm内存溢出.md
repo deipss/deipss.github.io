@@ -5,23 +5,22 @@ parent: Java
 nav_order: 9
 ---
 
-# 1 虚拟机栈与本地方法栈溢出
+# 1. 虚拟机栈与本地方法栈溢出
 
-## 1-1 StackOverflowError
+## 1.1. StackOverflowError
 
-方法一 使用Xss 参数减少栈内存容量
+- 方法一 使用Xss 参数减少栈内存容量
+- 方法二 在一个方法中，定义大量的本地变量，使用方法栈帧容量增大
 
-方法二 在一个方法中，定义大量的本地变量，使用方法栈帧容量增大
+## 1.2. OutOfMemoryError
 
-## 1-2 OutOfMemoryError
-
-循环创建线程，会出现提示
+- 循环创建线程，会出现提示
 
 ```shell
 unable to create native thread
 ```
 
-# 2 方法区和运行时常量池溢出
+# 2. 方法区和运行时常量池溢出
 
 自jdk1.8后，永久代不在jvm的规划内，使用元空间代替。
 
@@ -35,7 +34,7 @@ unable to create native thread
     - Lambda表达式 也会生成类信息
     - Spring BeanUtil.copy()也会
 
-# 3 本机内存内存溢出
+# 3. 本机内存内存溢出
 
 unsafe类，或是native声明的方法，会直接使用本机内存，想这块内存溢出，
 就要不断申请这块本机内存，可以通过

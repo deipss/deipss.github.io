@@ -5,7 +5,7 @@ parent: Java
 nav_order: 3
 ---
 
-# 基础类型
+# 1. 基础类型
 
 | **类型**      | **字节数** |
 |-------------|---------|
@@ -18,7 +18,7 @@ nav_order: 3
 | **Double**  | **8**   |
 | **Float**   | **4**   |
 
-# Object
+# 2. Object
 
 ```text
 //本地方法的注册
@@ -61,7 +61,7 @@ protected void finalize() throws Throwable { }
 
 - 为何notify()，notifyAll(),wait()这三个不是Thread类声明中的方法，而是Object类中声明的方法
 （当然由于Thread类继承了Object类，所以Thread也可以调用者三个方法）？
-- 由于每个对象都拥有monitor（即锁），所以让当前线程等待某个对象的锁，当然应该通过这个对象来操作了。
+> 由于每个对象都拥有monitor（即锁），所以让当前线程等待某个对象的锁，当然应该通过这个对象来操作了。
 而不是用当前线程来操作，因为当前线程可能会等待多个线程的锁，如果通过线程来操作，就非常复杂了。
 上面已经提到，如果调用某个对象的wait()方法，当前线程必须拥有这个对象的monitor（即锁），
 因此调用wait()方法必须在同步块或者同步方法中进行（synchronized块或者synchronized方法）。

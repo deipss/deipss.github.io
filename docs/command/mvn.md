@@ -4,76 +4,81 @@ title: mvn
 parent: Command
 nav_order: 6
 ---
-图片来源=https://www.bilibili.com/video/BV1Ah411S7ZE?p=13&vd_source=f52d9488d7d3c21ed33580e4dce1a022
+
+> 图片来源=https://www.bilibili.com/video/BV1Ah411S7ZE?p=13&vd_source=f52d9488d7d3c21ed33580e4dce1a022
+
 # 1. maven简介
+
 ![maven_1.png](img%2Fmaven_1.png)
 
 - maven有自己的类加载器
 
-# 依赖冲突
+# 2. 依赖冲突
 
 ![maven_conflict.png](img%2Fmaven_conflict.png)
 
 - 可以使用`<optional>true</optional>`取消依赖的传递
 - `<exclusion>` 不用写版本号
 
-# 依赖范围
+# 3. 依赖范围
+
 ![maven_scope.png](img%2Fmaven_scope.png)
 
-# 2. 指令
+# 4. 指令
 
-## 2.1. 依赖树打印
+## 4.1. 依赖树打印
 
 ```shell
 mvn dependency:tree > mvnTree.txt
 ```
 
-## 2.2. 设置版本
+## 4.2. 设置版本
 
 ```shell
 mvn versions:set -D newVersion=1.5.0-SNAPSHOT
 ```
 
-## 2.3. mvn -D -P -U
+## 4.3. mvn -D -P -U
 
 - P代表（Profiles配置文件）
+- 打包时执行 `mvn clean package -P test`将触发test环境的profile配置
 
-```shell
+```xml
 
 <profiles>
-   <profile>
-     <id>prod</id>
-     ...
-   </profile>
-   <profile>
-     <id>test</id>
-     ...
-   </profile>
-  </profiles>
-打包时执行mvn clean package -P test将触发test环境的profile配置 
+    <profile>
+        <id>prod</id>
+        ...
+    </profile>
+    <profile>
+        <id>test</id>
+        ...
+    </profile>
+</profiles>
+
 
 ```
 
 - -D代表（Properties属性）
 - pl 表示只处理指定的module
 - am 表示处理-pl指定module关联的其他module
+- 执行 `mvn -Dattr=newattr clean package`，则pom.xml内attr的实际值将被替换成newattr
 
-```shell
+```xml
 
 <properties>
-  <attr>defaultattr</attr>
+    <attr>defaultattr</attr>
 </properties>
-执行 mvn -Dattr=newattr clean package，则pom.xml内attr的实际值将被替换成newattr
 
 ```
 
 - -U 代表强制更新（update）
 
-## 2.4. 跳过测试
+## 4.4. 跳过测试
 
-- mvn -Dmaven.test.skip=true clean package ，跳过测试包下的程序
+- `mvn -Dmaven.test.skip=true clean package` 跳过测试包下的程序
 
-## 2.5. 部署到仓库
+## 4.5. 部署到仓库
 
 ```shell
 
@@ -85,7 +90,7 @@ mvn deploy:deploy-file -DgroupId=<group-id> \
 -DrepositoryId=<id-to-map-on-server-section-of-settings.xml> \
 -Durl=<url-of-the-repository-to-deploy>
 
-# 打jar包 windows ^ 标记换行
+#打jar包 windows ^ 标记换行
 mvn deploy:deploy-file ^
 -DgroupId=com.alibaba.jvm.sandbox  ^
 -DartifactId=repeater-console-service  ^
@@ -95,7 +100,7 @@ mvn deploy:deploy-file ^
 -DrepositoryId=maven-snapshots  ^
 -Durl=http://nexus.xsyxsc.com/repository/maven-snapshots
 
-# 打pom包
+#打pom包
 mvn deploy:deploy-file 
 -DgroupId=com.alibaba.jvm.sandbox 
 -DartifactId=repeater-console 
@@ -106,10 +111,11 @@ mvn deploy:deploy-file
 -Durl=http://nexus.xsyxsc.com/repository/maven-snapshots
 
 
+```
+### 4.5.1. 仅在dev的profile中，开启SNAPSHOT的仓库
 
-
-
-<!-- 仅在dev的profile中，开启SNAPSHOT的仓库 -->
+```xml
+<!--  -->
     <repositories>
         <repository>
             <id>nexus-snapshots</id>
@@ -123,7 +129,7 @@ mvn deploy:deploy-file
     </repositories>
 ```
 
-## 2.6. 安装在本地
+## 4.6. 安装在本地
 
 ```shell
 mvn install 会将包安装在本地的仓库
@@ -132,13 +138,13 @@ mvn clean package  '-Dmaven.test.skip=true'
 
 ```
 
-## 2.7. mvn配置文件
+## 4.7. mvn配置文件
 
 ```text
 <package></package>标签 可以有pom或是jar,默认是jar,在有父子继续关系时，一般父pom文件使用pom包
 ```
 
-## 2.8. 源码下载
+## 4.8. 源码下载
 
 ```shell
 mvn dependency:sources
@@ -146,13 +152,13 @@ mvn dependency:resolve -Dclassifier=javadoc
 mvn dependency:sources dependency:resolve -Dclassifier=javadoc
 ```
 
-## 2.9. mvn 仓库优先级
+## 4.9. mvn 仓库优先级
 
 ```shell
 本地仓库 > 私服 （profile）> 远程仓库（repository）和 镜像 （mirror） > 中央仓库 （central）
 ```
 
-# 3. nexus
+# 5. nexus
 
 nexus里可以配置3种类型的仓库，分别是proxy、hosted、group 。
 
@@ -161,11 +167,11 @@ nexus里可以配置3种类型的仓库，分别是proxy、hosted、group 。
 - hosted是宿主仓库，用户可以把自己的artifact、proxy下载不到的artifact，deploy到hosted中。
 - group是仓库组，目的是将上述多个仓库聚合，对用户暴露统一的地址，这样用户就不需要在pom中配置多个地址，只要统一配置group的地址就可以了 。
 
-# 4. plugins
+# 6. plugins
 
 https://maven.apache.org/plugins/index.html
 
-## 4.1. basic
+## 6.1. basic
 
 - clean
 - compiler
@@ -176,7 +182,7 @@ https://maven.apache.org/plugins/index.html
 - surefire which ensure isolated classloader to run Junit Integrated test
 - verifier
 
-## 4.2. tools
+## 6.2. tools
 
 - findbugs
 - checkstyle

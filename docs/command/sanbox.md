@@ -5,7 +5,7 @@ parent: Command
 nav_order: 7
 ---
 
-# 异常制造
+# 1. 异常制造
 
 ```shell
 cd /opt/sandbox/bin
@@ -13,7 +13,7 @@ cd /opt/sandbox/bin
 ./sandbox.sh -p 77 -d 'repeater/wreck?class=com.frxs.trade.user.core.service.engine.chain.node.create.CreateCoreProcessorNode&method=process&type=RuntimeException'
 ```
 
-# 重新加载module
+# 2. 重新加载module
 
 ```shell
 cd /opt/sandbox/bin

@@ -5,9 +5,9 @@ parent: Command
 nav_order: 10
 ---
 
-# 1. Homebrew
+# 1. homebrew
 
-## 1.1. Command
+## 1.1. command
 ```shell
 brew -v 
 brew search jdk
@@ -62,7 +62,6 @@ $source .bash_profile
 
 echo "source ~/.bash_profile" >>~/.zshrc
 
-#------------------------
 # JDK 13
 JAVA_11_HOME=/Library/Java/JavaVirtualMachines/jdk-11.0.1.jdk/Contents/Home/
 # JDK 8

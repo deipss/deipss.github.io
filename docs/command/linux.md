@@ -24,7 +24,7 @@ systemctl is-enabled nginx
 systemctl is-enabled supervisord
 ```
 
-# 3. 日志查看
+# 3. log
 
 - [https://cloud.tencent.com/developer/article/1579977](https://cloud.tencent.com/developer/article/1579977)
 
@@ -194,7 +194,8 @@ tcpdump -w package.cap
 ## 5.4. netstat
 
 ```shell
-netstat -s | egrep "listen|LISTEN" 等同  netstat -s | grep -i "listen"
+netstat -s | egrep "listen|LISTEN" 
+netstat -s | grep -i "listen"
 netstat -at 查询所有tcp的连接，可用于服务启动后的端口查看，是否启动了kafka，dubbo等
 netstat -nap | grep port 将会显示使用该端口的应用程序的进程 id
 netstat -g 将会显示该主机订阅的所有多播网络。
@@ -251,7 +252,7 @@ df -h /etc
 du * sh 
 ```
 
-## cpu memory disk
+## 6.3. cpu memory disk
 ```shell
 lshw -class memory
 lshw -class cpu
@@ -264,7 +265,7 @@ lshw -class disk
 
 ## 7.1. 修改环建变量
 
-- Linux环境变量配置方法一：export PATH
+### 7.1.1. Linux环境变量配置方法一：export PATH
 
 ```shell
 export PATH=/home/uusama/mysql/bin:$PATH
@@ -279,7 +280,7 @@ export PATH=$PATH:/home/uusama/mysql/bin
 
 ```
 
-- Linux环境变量配置方法二：vim ~/.bashrc
+### 7.1.2. Linux环境变量配置方法二：vim ~/.bashrc
 
 ```shell
 vim ~/.bashrc
@@ -295,7 +296,7 @@ export PATH=$PATH:/home/uusama/mysql/bin
 
 ```
 
-- Linux环境变量配置方法三：vim ~/.bash_profile
+### 7.1.3. Linux环境变量配置方法三：vim ~/.bash_profile
 
 ```shell
 和修改~/.bashrc文件类似，也是要在文件最后加上新的路径即可：
@@ -312,7 +313,7 @@ export PATH=$PATH:/home/uusama/mysql/bin
 如果没有~/.bash_profile文件，则可以编辑~/.profile文件或者新建一个
 ```
 
-- Linux环境变量配置方法四：vim /etc/bashrc
+### 7.1.4. Linux环境变量配置方法四：vim /etc/bashrc
 
 ```shell
 该方法是修改系统配置，需要管理员权限（如root）或者对该文件的写入权限：
@@ -332,7 +333,7 @@ export PATH=$PATH:/home/uusama/mysql/bin
 
 ```
 
-- Linux环境变量配置方法五：vim /etc/profile
+### 7.1.5. Linux环境变量配置方法五：vim /etc/profile
 
 ```shell
 该方法修改系统配置，需要管理员权限或者对该文件的写入权限，和vim /etc/bashrc类似：

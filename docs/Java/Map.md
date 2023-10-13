@@ -5,7 +5,7 @@ parent: Java
 nav_order: 5
 ---
 
-# Map
+# 1. Map
 
 |                       | **可为空** | **有序**   | **线程安全** | **其他**  |
 |-----------------------|---------|----------|----------|---------|
@@ -15,14 +15,13 @@ nav_order: 5
 | **LinkedHashMap**     | **否**   | **先后顺序** | **否**    | **红黑树** |
 | **ConcurrentHashMap** |         | **否**    | **是**    |         |
 
-# HashMap
+# 2. HashMap
 
 ```text
-transient Node<K,V>[] table;
+transient Node<K,V>[] table; // 不能被序列化
 static final int DEFAULT_INITIAL_CAPACITY = 1 << 4; // aka 16 初始大小为16
 static final int MAXIMUM_CAPACITY = 1 << 30;
-static final float DEFAULT_LOAD_FACTOR = 0.75f;//负载因子当map中的个数超过capacity*load factor时，重新调整capacity大小为当前的2倍，
-又称作装填因子，值越大，产生冲突的可能就越大。
+static final float DEFAULT_LOAD_FACTOR = 0.75f;//负载因子当map中的个数超过capacity*load factor时，重新调整capacity大小为当前的2倍，又称作装填因子，值越大，产生冲突的可能就越大。
 
 static final int hash(Object key) {
         int h;
@@ -110,6 +109,6 @@ final Node<K,V> getNode(int hash, Object key) {
 - 当长度达到8时，链表转换成红黑树
 - 扩容时是原来的2倍，在扩容时可以确保扩容前的链表结构不变，key冲突的在新的扩容桶中
 
-# LinkedHashMap
+# 3. LinkedHashMap
 
 可用于LRU(最近最少使用)算法的实现，还有一种实现方式就是MAP加上LinkedList（双向链表）。

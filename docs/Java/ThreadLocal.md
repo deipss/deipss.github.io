@@ -5,17 +5,17 @@ parent: Java
 nav_order: 7
 ---
 
-# ThreadLocal
+# 1. ThreadLocal
 
-- 提供了本地线程的实例，即每个使用该变量的线程都会初始化一个完全独立的实例副本。ThreadLocal变量通常[private static]
+- 提供了本地线程的实例，即每个使用该变量的线程都会初始化一个完全独立的实例副本。ThreadLocal变量通常`private static`
   修饰。当一个线程结束时，它所使用的所有ThreadLocal所生成的实例副本也会被回收。
 - 这样做，就会让这些实例副本在线程之间完全独立，而ThreadLocal类实例在线程之间共享，通过具体的方法共享访问。
 
-## 实现
+## 1.1. 实现
 
-ThreadLocal的set方法，key是当前的线程
+### 1.1.1. ThreadLocal的set方法，key是当前的线程
 
-```shell
+```text
 public void set(T value) {
         Thread t = Thread.currentThread();
         ThreadLocalMap map = getMap(t);
@@ -26,7 +26,7 @@ public void set(T value) {
     }
 ```
 
-内部维护一个static class ThreadLocalMap 这样一个静态内部类，而这个ThreadLocalMap类中，还有一个静态内部类
+### 1.1.2. 内部维护一个static class ThreadLocalMap 这样一个静态内部类，而这个ThreadLocalMap类中，还有一个静态内部类
 
 ```shell
 static class Entry extends WeakReference<ThreadLocal<?>> {
@@ -40,7 +40,7 @@ static class Entry extends WeakReference<ThreadLocal<?>> {
 private Entry[] table;
 ```
 
-ThreadLocalMap中的set()方法，在出现key为null的情况下，会调用replaceStaleEntry()方法，将这个对象替换掉
+### 1.1.3. ThreadLocalMap中的set()方法，在出现key为null的情况下，会调用replaceStaleEntry()方法，将这个对象替换掉
 
 ```shell
 private void set(ThreadLocal<?> key, Object value) {
@@ -80,17 +80,17 @@ private void set(ThreadLocal<?> key, Object value) {
 
 注意到Entry是继承自WeakReference这个弱引用的，当system.GC()时，无法此时JVM中内存是否足够，都要被回收。
 
-#### 存在的问题
+#### 1.1.3.1. 存在的问题
 
 - 线程安全问题：新增线程或销毁线程都要读写ThreadLocal的中map,如何确保线程安全；可以用锁，但把map维护交由thread处理，而不是ThreadLocal。即每个Thread只访问自己的map，就不存在写的问题。
 - 内存问题：当一个线程结束，它在ThreadLocal里面的键是弱引用，但值还存在强引用的话，GC无法回收这个内存。在调用 set()、get()
   、remove() 方法的时候，会清理掉 key 为 null 的记录，即调用 replaceStaleEntry()方法。
 
-#### 应用场景
+#### 1.1.3.2. 应用场景
 
-session会话
+- session会话
 
-# InheritableThreadLocal
+# 2. InheritableThreadLocal
 
 当一个主线程中使用了线程池或衍生了多个子线程，使用ThreadLocal是不能get到值的。
 
@@ -173,11 +173,11 @@ public class InheritableThreadLocal<T> extends ThreadLocal<T> {
 private void init(ThreadGroup g, Runnable target, String name,
                       long stackSize, AccessControlContext acc) {
     	Thread parent = currentThread();
-       。。。
+       
         if (parent.inheritableThreadLocals != null)
             this.inheritableThreadLocals =
                 ThreadLocal.createInheritedMap(parent.inheritableThreadLocals);
-        。。。
+      
     }
 // 将当前主线程的ThreadLocalMap的值复制一份给inheritableThreadLocals
 private ThreadLocalMap(ThreadLocalMap parentMap) {
@@ -207,7 +207,7 @@ private ThreadLocalMap(ThreadLocalMap parentMap) {
 
 - [https://my.oschina.net/xinxingegeya/blog/911883](https://my.oschina.net/xinxingegeya/blog/911883)
 
-# 示例
+## 2.1. 示例
 
 子线程无法直接获取父线程中的值，需要会用InheritableThreadLocal类
 

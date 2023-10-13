@@ -13,3 +13,5 @@ mermaid:
     version: "9.1.3"
 
 
+# For copy button on code
+enable_copy_code_button: true

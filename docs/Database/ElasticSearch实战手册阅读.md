@@ -5,7 +5,7 @@ parent: Database
 nav_order: 6
 ---
 
-# index 设计优化
+# 1. index 设计优化
 
 - 对于不需要的字段，可以关闭index功能，来节省空间
 
@@ -22,7 +22,7 @@ nav_order: 6
 }
 ```
 
-# 部署优化
+# 2. 部署优化
 
 - 官方标准建议是：将 50％ 的可用内存（不超过 32 GB，一般建议最大设置为：31 GB）分配给 Elasticsearch 堆，而其余 50％ 留给 Lucene
   缓存。
