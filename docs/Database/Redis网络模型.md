@@ -62,6 +62,12 @@ parent: Database
 
 ![img.png](img/io-asynchronized.png)
 
+# 零COPY
+
+![io-zero-copy.png](img%2Fio-zero-copy.png)
+
+因为使用mmap技术实现零拷贝，受到一定的内存大小限制，一般在1-2个G。所以使用零拷贝技术的文件，大小一般在1G左右，
+比如rocket MQ 的commit log文件就是1G一个。
 # 3. 对比
 
 ![img.png](img/io-conclusion.png)
