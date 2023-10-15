@@ -18,7 +18,7 @@ _| |_|\___|_|  \___| \__, |\___/ \__,_|_|    \__,_|_|  \___|              _)
 ---
 
 你来啦！
-{: .label }
+{: .label .label-purple }
 
 Here you are .
 {: .label .label-green }
@@ -38,9 +38,10 @@ Ok,Let's Go……
 
 ![hello_world.gif](assets%2Fimages%2Fhello_world.gif)
 
+--- 
 
-[It is my git](https://github.com/deipss).
-{: .label .label-blue }
+[It is my git.](https://github.com/deipss){: .btn .btn-blue .float-right}
+
 
 
 
