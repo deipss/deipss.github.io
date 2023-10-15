@@ -15,3 +15,5 @@ mermaid:
 
 # For copy button on code
 enable_copy_code_button: true
+favicon_ico: "/assets/images/favicon.ico"
+

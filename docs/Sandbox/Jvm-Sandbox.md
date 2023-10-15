@@ -5,15 +5,15 @@ parent: Sandbox
 nav_order: 2
 ---
 
-# 包结构
+# 1. 包结构
 
-## sandbox-agent
+## 1.1. sandbox-agent
 
-### SandboxClassLoader 类加载器，
+### 1.1.1. SandboxClassLoader 类加载器，
 
 构造函数中声明了sandboxCoreJarFilePath这个核心jar包的文件
 
-### AgentLauncher 代理的启用类
+### 1.1.2. AgentLauncher 代理的启用类
 
 使用两种方式来启动agent，**LAUNCH_MODE_AGENT（启动加载）**，**LAUNCH_MODE_ATTACH（动态加载）**
 
@@ -27,14 +27,14 @@ premain和attach两种方式都会调用这个方法，这个方法上的static�
 
 - 对同一个类文件增强，会有先后顺序的影响吗？会同时存在吗？
 
-#### premain 方式
+#### 1.1.2.1. premain 方式
 
 - premain方式启动时，loadOrDefineClassLoader()会使用SandboxClassLoader来加载sandbox-core这个模块的jar文件，做到与工程代码的类加载器隔离
 - inst.appendToBootstrapClassLoaderSearch(new JarFile(new File(getSandboxSpyJarPath(home)  将Spy注入到BootstrapClassLoader
 
-#### attach
+#### 1.1.2.2. attach
 
-## sandbox-api
+## 1.2. sandbox-api
 
 - 注解：命令注解、BootstrapClassLoader类加载注解、包含子类注解、不使用sandbox的加载类加载的注解
 - 事件定义：定义了7件事件如，调用之前，调用之后，异常之后……
@@ -51,38 +51,38 @@ premain和attach两种方式都会调用这个方法，这个方法上的static�
 - ModuleLifecycle 沙箱模块的生命周期 ModuleLifecycleAdapter
 - ProcessController 流程控制 ProcessControlException
 
-## sandbox-common-api
+## 1.3. sandbox-common-api
 
 - 沙箱的配置 ConfigInfo 如启用方式是Agent 还是 Attach
 
-## sandbox-core
+## 1.4. sandbox-core
 
 - classloader 类加载器
 
-### asm
+### 1.4.1. asm
 - CodeLock 代码锁
 
-## sandbox-debug-module
+## 1.5. sandbox-debug-module
 
 - 调用模块，定义了许多module
 
-## sandbox-mgr-module
+## 1.6. sandbox-mgr-module
 
 - ControlModule 沙箱控制模块
 - InfoModule 沙箱信息模块
 - ModuleMgrModule 沙箱管理模块 list flush reset unload frozen
 - OnJarUnLoadCompleted SPI实现
 
-## sandbox-mgr-provider
+## 1.7. sandbox-mgr-provider
 
 - 对ModuleLoadingChain 和 ModuleJarLoadingChain 的空实现
 
-## sandbox-provider-api
+## 1.8. sandbox-provider-api
 
 - 模块加载链 ModuleLoadingChain
 - 模块jar包文件加载链 ModuleJarLoadingChain
 
-## sandbox-spy
+## 1.9. sandbox-spy
 
 - 流程扭转中间类 SpyHandler Spy
 
@@ -113,26 +113,26 @@ public static void spyMethodOnCallThrows(final String throwException,
 ```
 
 
-# 源代码细节
+# 2. 源代码细节
 
-## JVMTI
+## 2.1. JVMTI
 
-## JPLISAgent
+## 2.2. JPLISAgent
 
 
-## 如何进行类隔离
+## 2.3. 如何进行类隔离
 
 - 对于同样的类，是不是会加载多次，比如LogFactory
 
-## 同一个类被多个模块增强，字节码会是怎么样
+## 2.4. 同一个类被多个模块增强，字节码会是怎么样
 
 
-## 同一个类被多个模块同步增强，是否会出现ABA问题，如何应对这类问题
+## 2.5. 同一个类被多个模块同步增强，是否会出现ABA问题，如何应对这类问题
 - 代码锁
 
-## 同一类被多个模块增强后，同步命中，多个事件是否存在顺序
+## 2.6. 同一类被多个模块增强后，同步命中，多个事件是否存在顺序
 
-# 参考文献
+# 3. 参考文献
 
 - https://www.baeldung.com/java-classloaders 类加载器
 - https://tech.hipac.cn/archives/aeb6e3616cf74e1984b908fc1cd98913#jacoco 多agent治理在海拍客的应用与实践
