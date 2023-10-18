@@ -42,7 +42,7 @@ Ok,Let's Go……
 
 --- 
 
-[It is my git.](https://github.com/deipss){: .btn .btn-blue .float-right}
+[ my github ](https://github.com/deipss){: .btn .btn-blue .float-right}
 
 
 
