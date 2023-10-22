@@ -11,7 +11,7 @@ nav_order: 2
 
 ### 1.1.1. SandboxClassLoader 类加载器，
 
-构造函数中声明了sandboxCoreJarFilePath这个核心jar包的文件
+构造函数中声明了sandboxCoreJarFilePath这个核心jar包的文件,用来隔离业务代码
 
 ### 1.1.2. AgentLauncher 代理的启用类
 
@@ -25,7 +25,6 @@ premain和attach两种方式都会调用这个方法，这个方法上的static�
 
 ```
 
-- 对同一个类文件增强，会有先后顺序的影响吗？会同时存在吗？
 
 #### 1.1.2.1. premain 方式
 
@@ -116,13 +115,15 @@ public static void spyMethodOnCallThrows(final String throwException,
 # 2. 源代码细节
 
 ## 2.1. JVMTI
+- JVMTI（JVM Tool Interface）是 Java 虚拟机所提供的 native 编程接口，是 JVMPI（Java Virtual Machine Profiler Interface）和 JVMDI（Java Virtual Machine Debug Interface）的替代版本。
+> VMTI只是一套接口，我们要开发JVM工具就需要写一个Agent程序来使用这些接口。Agent程序其实就是一个C/C++语言编写的**动态链接库**。
 
 ## 2.2. JPLISAgent
 
 
 ## 2.3. 如何进行类隔离
 
-- 对于同样的类，是不是会加载多次，比如LogFactory
+- 对于同样的类，是不是会加载多次，比如LogFactory,业务代码中有一个，Sandbox自己也有一个
 
 ## 2.4. 同一个类被多个模块增强，字节码会是怎么样
 
