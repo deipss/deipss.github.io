@@ -75,3 +75,7 @@ profiler status
 profiler stop --format html
 
 ```
+
+## dump
+
+下载字节码

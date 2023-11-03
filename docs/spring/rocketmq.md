@@ -98,3 +98,4 @@ abort abort.bak checkpoint commitlog config consumequeue index lock timerwheel
 - 发送时重复
 - 投递时重复
 - 负载时重复（网络抖动、broker重启和扩容、Rebalance）
+
