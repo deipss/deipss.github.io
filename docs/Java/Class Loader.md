@@ -127,7 +127,7 @@ ApplicationModel.instance().setConfig(config);
 
 ## 使用线程上下文打破双亲委派机制
 
-![img.png](class_loader_jdbc_driver.png)
+![img.png](img/class_loader_jdbc_driver.png)
 
 ```
     java.security.AccessController#doPrivileged(java.security.PrivilegedAction<T>)
