@@ -20,6 +20,8 @@ nav_order: 2
 
 ## 1.1. 主要类加载器
 
+![img.png](img/class_load_extend.png)
+
 ### 1.1.1. Bootstrap Class Loader
 
 主要用来加载 JDK 内部的核心类库（ %JAVA_HOME%/lib目录下的 rt.jar、resources.jar、charsets.jar等 jar 包和类）以及被
@@ -34,6 +36,16 @@ nav_order: 2
 面向我们用户的加载器，负责加载当前应用 classpath 下的所有 jar 包和类。
 
 ## 1.2. 双亲委派机制
+
+### 1.2.1. 作用：
+
+- 保存类加载的安全类
+- 避免重复的类
+
+### 1.2.2. 过程
+
+- 向上搜索是否加载过
+- 向下委派去加载（不在我的目录中，让子类去加载）
 
 ```text
 protected Class<?> loadClass(String name, boolean resolve)
@@ -61,7 +73,7 @@ protected Class<?> loadClass(String name, boolean resolve)
                 if (c == null) {
                     // 使用父类和bootstrap还是没有找到，使用findClass去查找
                     long t1 = System.nanoTime();
-                    c = findClass(name);
+                    c = findClass(name); // 此方法中存在一个defineClass()方法，此方法会检查类文件是否合法，如自定义一个java.lang.String会检查有错误
 
                     //记录类加载的信息
                     sun.misc.PerfCounter.getParentDelegationTime().addTime(t1 - t0);
@@ -70,6 +82,7 @@ protected Class<?> loadClass(String name, boolean resolve)
                 }
             }
             if (resolve) {
+            // 解析类，是类的连接阶段工作
                 resolveClass(c);
             }
             return c;
@@ -112,7 +125,29 @@ ApplicationModel.instance().setConfig(config);
  //
 ```
 
-## 1.4. 如何加载一个类
+## 使用线程上下文打破双亲委派机制
+
+![img.png](class_loader_jdbc_driver.png)
+
+```
+    java.security.AccessController#doPrivileged(java.security.PrivilegedAction<T>)
+    static {
+        loadInitialDrivers();
+        println("JDBC DriverManager initialized");
+    }
+    
+    java.util.ServiceLoader#load(java.lang.Class<S>)
+    public static <S> ServiceLoader<S> load(Class<S> service) {
+        // 使用应用程序类加载器来加载驱动程序
+        // 可以手工设置当前的线程上下文的类加载器  Thread.currentThread().setContextClassLoader();
+        ClassLoader cl = Thread.currentThread().getContextClassLoader();
+        return ServiceLoader.load(service, cl);
+    }
+```
+
+## 1.4. 问题讨论
+
+### 1.4.1. 如何加载一个类
 
 从上面的逻辑可以看到，加载的方使用loadClass(),但过程先是使用父类加载，没有加载到，再使用findClass()去查找，所以加载一个类，
 
@@ -125,7 +160,7 @@ ApplicationModel.instance().setConfig(config);
     protected synchronized Class<?> loadClass(String name, boolean resolve) 
 ```
 
-## 1.5. 判定一个类是否被加载
+### 1.4.2. 判定一个类是否被加载
 
 使用findLoadedClass方法
 
@@ -133,7 +168,7 @@ ApplicationModel.instance().setConfig(config);
 final Class<?> loadedClass = findLoadedClass(name);
 ```
 
-## 1.6. 等待一个类加载完成
+### 1.4.3. 等待一个类加载完成
 
 参加sandbox-repeater的实现，
 
@@ -148,6 +183,14 @@ while (isPreloading && --timeout > 0 && ClassloaderBridge.instance().findClassIn
 }
 ```
 
-## 1.7. 参考文献
+### 1.4.4. 重复的类，谁优先加载
+
+启动类加载器，优先级最高，即BootstrapClassLoader
+
+# jdk9的类加载器
+- 启动类加载器，使用java编码，在jdk.
+- 
+
+# 1.5. 参考文献
 
 - https://www.baeldung.com/java-classloaders

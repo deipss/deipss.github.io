@@ -79,3 +79,7 @@ profiler stop --format html
 ## dump
 
 下载字节码
+
+
+## sc 
+sc -d java.lang.String 查看这个类被谁加载 
