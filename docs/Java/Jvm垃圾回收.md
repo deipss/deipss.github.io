@@ -2,7 +2,6 @@
 layout: default
 title: JVM垃圾回收
 parent: Java
-nav_order: 3
 ---
 
 # 方法区

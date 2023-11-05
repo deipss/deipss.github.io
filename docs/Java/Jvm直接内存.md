@@ -1,8 +1,7 @@
 ---
 layout: default
-title: 直接内存
+title: JVM直接内存
 parent: Java
-nav_order: 3
 ---
 
 

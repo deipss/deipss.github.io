@@ -2,7 +2,6 @@
 layout: default
 title: JVM虚拟机
 parent: Java
-nav_order: 5
 ---
 
 # jvm作用

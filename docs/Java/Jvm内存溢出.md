@@ -2,7 +2,6 @@
 layout: default
 title: Jvm内存溢出
 parent: Java
-nav_order: 9
 ---
 
 # 1. 虚拟机栈与本地方法栈溢出

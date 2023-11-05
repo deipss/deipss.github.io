@@ -1,8 +1,7 @@
 ---
 layout: default
-title: 方法区
+title: JVM方法区
 parent: Java
-nav_order: 3
 ---
 
 
