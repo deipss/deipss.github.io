@@ -12,9 +12,9 @@ title: ASM tools
 ---
 stateDiagram-v2
   Spring --> CGLib
-  repeater --> JavaSandbox
-  arthas --> grey
-  grey --> asm
+  jvm_sandbox_repeater --> JavaSandbox
+  arthas --> bytekit
+  bytekit --> asm
   JavaSandbox --> asm
   btrace --> asm
   CGLib --> asm
