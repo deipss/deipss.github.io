@@ -77,9 +77,15 @@ profiler stop --format html
 ```
 
 ## dump
+> dump -d /data/arthas/dump java.lang.String
 
 下载字节码
 
 
 ## sc 
 sc -d java.lang.String 查看这个类被谁加载 
+
+
+# 参考文献
+- OGNL 特殊用法请参考：https://github.com/alibaba/arthas/issues/71
+- OGNL 表达式官方指南：https://commons.apache.org/proper/commons-ognl/language-guide.html
