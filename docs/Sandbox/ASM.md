@@ -6,6 +6,8 @@ nav_order: 1
 ---
 
 
+# 1. 常见框架
+
 ```mermaid
 ---
 title: ASM tools
@@ -25,9 +27,9 @@ stateDiagram-v2
 
 ```
  
----
 
-# ASM
+
+# 2. ASM
 
 - https://asm.ow2.io/
 
@@ -49,7 +51,7 @@ ASM提供了与其他Java字节码框架类似的功能，但更注重性能。
 > 另外除了 ASM 可以操作字节码，还有javassist和Byte-code等，他们比 asm 要简单，但是执行效率还是 asm 高。因为 asm
 > 是直接使用指令来控制字节码。
 
-## Asm两类API
+## 2.1. Asm两类API
 
 ASM API基于访问者模式，为我们提供了ClassVisitor，MethodVisitor，FieldVisitor API接口，每当ASM扫描到类字段是会回调visitField方法，扫描到类方法是会回调MethodVisitor，下面我们看一下API接口
 
@@ -62,31 +64,31 @@ ASM API基于访问者模式，为我们提供了ClassVisitor，MethodVisitor，
   - asm-tree.jar
   - asm-analysis.jar
 
-## 使用Asm技术
+## 2.2. 使用Asm技术
 
 如图所示，业界有许多的技术都使用ASM技术来实现一些提交的插件，主要目的不乏：
 - 面向切面编程 Spring CGlib
 - Jdk lambda 表达式 
 
-## ASM 使用方式
+## 2.3. ASM 使用方式
 - 从0到1写一个Class文件 generate
 - 从1到1 修改一个Class文件 transformer
 - 代码扫描、分析 analysis
 
-## Asm辅助命令
+## 2.4. Asm辅助命令
 ```shell
 javac -g Test.java
 javap -verbose Test.class
 ```
 
-# Java Agent 技术
+# 3. Java Agent 技术
 
 > 「JavaAgent」，是一种探针技术可以通过 premain 方法，在**类加载**的过程中给指定的方法进行字节码增强。
 > 其实你的每一个类最终都是字节码指令的执行，
 > 而这种增强后的方法就可以输出我们想要的信息。
 > 这就相当于你硬编码时候输出了一些方法的耗时，日志等信息。
 
-## 静态Agent
+## 3.1. 静态Agent
 
 - 在jvm调用main方法前，使用premain方法启动的
 - 需要使用java -jar --javaagent /opt/runtime/aaa.jar 的方式来指定agent包，以启动静态代理
@@ -100,12 +102,12 @@ javap -verbose Test.class
 	加载 Java 编程语言代理, 请参阅 java.lang.instrument
 ```
 
-## 动态Agent
+## 3.2. 动态Agent
 
 - 1.6之后，使用agentmain方法启动，在目标程序被加载后执行
 - 使用attach的api来
 
-## 使用java agent技术时需要注意的问题
+## 3.3. 使用java agent技术时需要注意的问题
 
 - 能解决jar包依赖冲突
 - 处理类加载隔离问题
@@ -113,7 +115,7 @@ javap -verbose Test.class
 - 保证后续场景可扩展
 - 保证业务方最低的接入集成成本
 
-# 参考文献
+# 4. 参考文献
 
 - https://www.baeldung.com/java-classloaders 类加载器
 - https://tech.hipac.cn/archives/aeb6e3616cf74e1984b908fc1cd98913#jacoco 多agent治理在海拍客的应用与实践

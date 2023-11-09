@@ -4,7 +4,7 @@ title: devOps
 parent: Spring
 ---
 
-# devops
+# 1. devops
 
 ![devops.png](img%2Fdevops.png)
 
@@ -16,7 +16,7 @@ parent: Spring
 - 将docker镜像生成，上传到habar来管理docker镜像
 - 通知k8s来部署docker容器
 
-# k8s
+# 2. k8s
 
 ![k8s.png](img%2Fk8s.png)
 

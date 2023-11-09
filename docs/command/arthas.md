@@ -49,7 +49,7 @@ monitor -c 1 <类全路径名> <方法名>
 ## 1.5. trace
 
 ```shell script
-# 方法内部调用路径，并输出方法路径上的每个节点上耗时
+# 方法内部调用路径，并输出方法路径上的每个节点上耗时，只观测一个方法内部，不会向下级方法推进
 # 可以指定毫秒数
 trace com-frxs-repeater-receiver-event-consumer-RecieveGeneralMsgConsumer onMessage  -n 5 --skipJDKMethod false '#cost > 3000'
 ```
@@ -67,7 +67,7 @@ classloader -c 3d4eac69
 
 ## 1.7. profile
 
-火焰图查看
+火焰图查看，是使用async-profile这个开源工具，核心代码是C++实现。
 
 ```shell script
 profiler start
@@ -79,7 +79,7 @@ profiler stop --format html
 ## dump
 > dump -d /data/arthas/dump java.lang.String
 
-下载字节码
+下载字节码，但是只能下载原始的字节码，被插桩增强后，没有下载成功
 
 
 ## sc 

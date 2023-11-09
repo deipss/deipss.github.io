@@ -160,4 +160,4 @@ stateDiagram-v2
 
 - https://raft.github.io/
 
-## 3.4. ZAB
+## 3.3. ZAB

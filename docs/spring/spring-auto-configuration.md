@@ -5,7 +5,7 @@ parent: Spring
 nav_order: 4
 ---
 
-# 常用的注解 
+# 1. 常用的注解
 ```text
 @Configuration 标注一个类为配置类
 @AutoConfigureAfter 在某个类配置之后再配置
@@ -14,9 +14,9 @@ nav_order: 4
 @ConditionalOnBean 某个类存在配置
 ``` 
 
-# 常用Configuration配置
+# 2. 常用Configuration配置
 
-## ThreadConfig
+## 2.1. ThreadConfig
 ```java
 
 @Configuration
@@ -89,7 +89,7 @@ public class ThreadConfig {
 }
 ```
 
-## AfterConfig
+## 2.2. AfterConfig
 ```java
 
 @Configuration
@@ -123,7 +123,7 @@ public class AfterConfig {
 
 ```
 
-## BeforeConfig
+## 2.3. BeforeConfig
 ```java
 @Configuration
 @AutoConfigureAfter(ThreadConfig.class)
@@ -141,7 +141,7 @@ public class BeforeConfig {
 }
 ```
 
-## 执行结果
+## 2.4. 执行结果
 ```text
 
 2023-05-10 23:08:03.804  INFO 14274 --- [  restartedMain] e.j.d.s.c.ThreadConfig                   : ThreadConfig 无参构造
