@@ -15,13 +15,14 @@ nav_order: 8
 - chrome
 - 腾讯电脑管家（安装jdk1.8）
 - feem 局域网数据传递 可以跨OS
-- Chocolatey windows的包管理工具
+- Chocolatey windows的包管理工具,国内不好安装，可以在gitee上，下载下来，安装使用
 
 ## 1.2. 编码
 
 - idea
 - pyCharm
 - vscode
+- notepad++
 
 ## 1.3. 构建与版本控制
 
@@ -65,6 +66,7 @@ nav_order: 8
 - NirSoft's password recovery tools 查看windows凭据密码，
 - switch host 主机配置切换
 - simple sticky
+- 
 
 ## 1.7. idea plugin
 
