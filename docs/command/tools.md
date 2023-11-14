@@ -7,7 +7,7 @@ nav_order: 8
 
 # 1. 装机
 
-- https://github.com/jaywcjlove/awesome-mac awesome
+- awesome  https://github.com/jaywcjlove/awesome-mac 
 
 ## 1.1. 办公
 
@@ -66,7 +66,7 @@ nav_order: 8
 - NirSoft's password recovery tools 查看windows凭据密码，
 - switch host 主机配置切换
 - simple sticky
-- 
+
 
 ## 1.7. idea plugin
 

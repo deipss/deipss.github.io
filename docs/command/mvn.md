@@ -11,7 +11,7 @@ nav_order: 6
 
 ![maven_1.png](img%2Fmaven_1.png)
 
-- maven有自己的类加载器
+- maven程序有自己的类加载器
 
 # 2. 依赖冲突
 
