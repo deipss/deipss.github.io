@@ -100,6 +100,9 @@ cat -n textfile1 > textfile2
 cat -b textfile1 textfile2 >> textfile3
 ```
 
+## realpath
+> realpath *java 显示以java结尾的数据的全路径
+
 ## 3.6. grep
 
 Linux grep (global regular expression) 命令用于查找文件里符合条件的字符串或正则表达式。
