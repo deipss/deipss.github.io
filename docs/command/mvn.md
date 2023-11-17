@@ -5,7 +5,7 @@ parent: Command
 nav_order: 6
 ---
 
-> 图片来源=https://www.bilibili.com/video/BV1Ah411S7ZE?p=13&vd_source=f52d9488d7d3c21ed33580e4dce1a022
+- 图片来源=https://www.bilibili.com/video/BV1Ah411S7ZE?p=13&vd_source=f52d9488d7d3c21ed33580e4dce1a022
 
 # 1. maven简介
 
