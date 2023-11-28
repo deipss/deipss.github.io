@@ -215,6 +215,8 @@ private void scheduleExpirationRenewal(long threadId) {
 - 一个失败，其他要全部释放
 - 全部上锁后，要续约一次，使首次上锁与末次上锁的释放时间保持一致
 
+## 5.1 续约
+
 ```shell
 @Override
 org.redisson.RedissonMultiLock#tryLock(long, long, java.util.concurrent.TimeUnit)
