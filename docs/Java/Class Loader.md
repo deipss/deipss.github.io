@@ -152,7 +152,7 @@ ApplicationModel.instance().setConfig(config);
  //
 ```
 
-## 使用线程上下文打破双亲委派机制
+## 1.4. 使用线程上下文打破双亲委派机制
 
 ![img.png](img/class_loader_jdbc_driver.png)
 
@@ -172,9 +172,9 @@ ApplicationModel.instance().setConfig(config);
     }
 ```
 
-## 1.4. 问题讨论
+## 1.5. 问题讨论
 
-### 1.4.1. 如何加载一个类
+### 1.5.1. 如何加载一个类
 
 从上面的逻辑可以看到，加载的方使用loadClass(),但过程先是使用父类加载，没有加载到，再使用findClass()去查找，所以加载一个类，
 
@@ -187,7 +187,7 @@ ApplicationModel.instance().setConfig(config);
     protected synchronized Class<?> loadClass(String name, boolean resolve) 
 ```
 
-### 1.4.2. 判定一个类是否被加载
+### 1.5.2. 判定一个类是否被加载
 
 使用findLoadedClass方法
 
@@ -195,7 +195,7 @@ ApplicationModel.instance().setConfig(config);
 final Class<?> loadedClass = findLoadedClass(name);
 ```
 
-### 1.4.3. 等待一个类加载完成
+### 1.5.3. 等待一个类加载完成
 
 参加sandbox-repeater的实现，
 
@@ -210,11 +210,11 @@ while (isPreloading && --timeout > 0 && ClassloaderBridge.instance().findClassIn
 }
 ```
 
-### 1.4.4. 重复的类，谁优先加载
+### 1.5.4. 重复的类，谁优先加载
 
 启动类加载器，优先级最高，即BootstrapClassLoader
 
-### 类的桥接
+### 1.5.5. 类的桥接
 
 ```mermaid
 classDiagram
@@ -347,10 +347,10 @@ classDiagram
     }
 ```
 
-# jdk9的类加载器
+# 2. jdk9的类加载器
 - 启动类加载器，使用java编码，在jdk.
 
 
-# 1.5. 参考文献
+# 3. 参考文献
 
 - https://www.baeldung.com/java-classloaders

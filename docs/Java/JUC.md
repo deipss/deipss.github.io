@@ -1,6 +1,6 @@
 ---
 layout: default
-title: JUC Demo
+title: JUC
 parent: Java
 nav_order: 6
 ---
