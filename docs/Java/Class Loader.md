@@ -22,6 +22,33 @@ nav_order: 2
 
 ![img.png](img/class_load_extend.png)
 
+```text
+[arthas@56]$ classloader -t
++-BootstrapClassLoader
++-sun.misc.Launcher$ExtClassLoader@1806bc4c
++-com.taobao.arthas.agent.ArthasClassloader@70dbccd0
+| +-com.alibaba.arthas.deps.com.alibaba.fastjson.util.ASMClassLoader@65a9e522
+| +-com.alibaba.arthas.deps.com.alibaba.fastjson.util.ASMClassLoader@366d37d5
++-sun.misc.Launcher$AppClassLoader@18b4aac2
++-SandboxClassLoader[namespace=default;path=/opt/sandbox/lib/sandbox-core.jar;]
++-ModuleJarClassLoader[crc32=1008466651;file=/opt/sandbox/sandbox-module/repeater/repeater-module.jar;]
+| +-com.alibaba.fastjson.util.ASMClassLoader@12a9ccaf
+| +-com.alibaba.fastjson.util.ASMClassLoader@79f0e083
+| +-com.alibaba.jvm.sandbox.repeater.module.classloader.PluginClassLoader@7ac8c463
++-ModuleJarClassLoader[crc32=705482150;file=/opt/sandbox/module/sandbox-mgr-module.jar;]
++-ModuleJarClassLoader[crc32=2819737704;file=/opt/sandbox/sandbox-module/tracking/tracking-module.jar;]
+| +-com.frxs.foundation.tracking.module.classload.TrackingModuleClassLoader@7a356a0d
+| +-com.alibaba.fastjson.util.ASMClassLoader@3bad566f
+| +-com.frxs.foundation.tracking.module.classload.PluginClassLoader@38c9648e
+| +-com.frxs.foundation.tracking.module.classload.PluginClassLoader@4d6f623d
++-com.alibaba.jvm.sandbox.core.classloader.ProviderClassLoader@524f3b3a
++-io.prometheus.jmx.shaded.net.bytebuddy.utility.dispatcher.JavaDispatcher$DynamicClassLoader@4034c28c
++-org.springframework.boot.loader.LaunchedURLClassLoader@3289079a
+| +-com.alibaba.fastjson.util.ASMClassLoader@53f86cc3
+| +-com.alibaba.fastjson.util.ASMClassLoader@19e2db7c
+| +-java.net.URLClassLoader@6d4c18b8
+```
+
 ### 1.1.1. Bootstrap Class Loader
 
 主要用来加载 JDK 内部的核心类库（ %JAVA_HOME%/lib目录下的 rt.jar、resources.jar、charsets.jar等 jar 包和类）以及被
@@ -111,7 +138,7 @@ protected Class<?> loadClass(String name, boolean resolve)
 
 在RepeaterModule中调用上面的方法
 
-```text
+```java
 ApplicationModel.instance().setConfig(config);
  // 特殊路由表;
  PluginClassLoader.Routing[] routingArray = PluginClassRouting.wellKnownRouting(configInfo.getMode() == Mode.AGENT, 20L);
@@ -129,7 +156,7 @@ ApplicationModel.instance().setConfig(config);
 
 ![img.png](img/class_loader_jdbc_driver.png)
 
-```
+```java
     java.security.AccessController#doPrivileged(java.security.PrivilegedAction<T>)
     static {
         loadInitialDrivers();
@@ -187,9 +214,142 @@ while (isPreloading && --timeout > 0 && ClassloaderBridge.instance().findClassIn
 
 启动类加载器，优先级最高，即BootstrapClassLoader
 
+### 类的桥接
+
+```mermaid
+classDiagram
+    class AutoCloseable {
+        <<Interface>>
+    }
+    class ClassLoader {
+        - Map~String, Boolean~ packageAssertionStatus
+        - Vector~Class~?~~ classes
+        - ProtectionDomain defaultDomain
+        - HashMap~String, Package~ packages
+        - boolean defaultAssertionStatus
+        - Certificate[] nocerts
+        - ConcurrentHashMap~String, Object~ parallelLockMap
+        - Vector~String~ loadedLibraryNames
+        - boolean sclSet
+        - Vector~NativeLibrary~ systemNativeLibraries
+        - Map~String, Certificate[]~ package2certs
+        - Stack~NativeLibrary~ nativeLibraryContext
+        ~ Object assertionLock
+        - String[] sys_paths
+        - Vector~NativeLibrary~ nativeLibraries
+        - ClassLoader scl
+        - String[] usr_paths
+        ~ Map~String, Boolean~ classAssertionStatus
+        - ClassLoader parent
+    }
+    class Closeable {
+        <<Interface>>
+    }
+    class ModuleJarClassLoader {
+        - long checksumCRC32
+        - Logger logger
+        - File moduleJarFile
+        - File tempModuleJarFile
+    }
+    class RoutingURLClassLoader {
+        - Logger logger
+        - ClassLoadingLock classLoadingLock
+        - Routing[] routingArray
+    }
+    class SecureClassLoader {
+        - HashMap~CodeSource, ProtectionDomain~ pdcache
+        - Debug debug
+        - boolean initialized
+    }
+    class Stealth
+    class URLClassLoader {
+        - URLClassPath ucp
+        - WeakHashMap~Closeable, Void~ closeables
+        - AccessControlContext acc
+    }
+
+    class DelegateBizClassLoader {
+        super(TomcatEmbeddedWebappClassLoader)
+        super.loadClass()
+    }
+
+    class TomcatEmbeddedWebappClassLoader {
+        loadClass()
+    }
+
+    Closeable --> AutoCloseable 
+    ModuleJarClassLoader --> RoutingURLClassLoader :*****
+    Stealth .. ModuleJarClassLoader
+    RoutingURLClassLoader .. DelegateBizClassLoader :*****
+    RoutingURLClassLoader --> URLClassLoader
+    TomcatEmbeddedWebappClassLoader --> ClassLoader :*****
+    DelegateBizClassLoader --> TomcatEmbeddedWebappClassLoader :*****
+    SecureClassLoader --> ClassLoader
+    DelegateBizClassLoader --> ClassLoader
+    URLClassLoader ..> Closeable
+    URLClassLoader "1" *--> "closeables *" Closeable
+    URLClassLoader --> SecureClassLoader
+
+```
+
+在jvm-sandbox中，希望在沙箱中的代码可以直接调用业务代码中的类。但双方是不同的类
+加载器，所以在沙箱加载中，可以使用业务代码的类代码器，如Spring的LauncherURLClassLoader去
+加载类，如上图中，****线的关联关系。
+
+- DelegateBizClassLoader delegateBizClassLoader = BusinessClassLoaderHolder.getBussinessClassLoader();
+
+下面的代码中，
+```java
+@Override
+    protected Class<?> loadClass(final String javaClassName, final boolean resolve) throws ClassNotFoundException {
+        synchronized (getClassLoadingLock0(javaClassName)){
+            // 优先查询类加载路由表,如果命中路由规则,则优先从路由表中的ClassLoader完成类加载
+            if (ArrayUtils.isNotEmpty(routingArray)) {
+                for (final Routing routing : routingArray) {
+                    if (!routing.isHit(javaClassName)) {
+                        continue;
+                    }
+                    final ClassLoader routingClassLoader = routing.classLoader;
+                    try {
+                        return routingClassLoader.loadClass(javaClassName);
+                    } catch (Exception cause) {
+                        // 如果在当前routingClassLoader中找不到应该优先加载的类(应该不可能，但不排除有就是故意命名成同名类)
+                        // 此时应该忽略异常，继续往下加载
+                        // ignore...
+                    }
+                }
+            }
+
+            // 先走一次已加载类的缓存，如果没有命中，则继续往下加载
+            final Class<?> loadedClass = findLoadedClass(javaClassName);
+            if (loadedClass != null) {
+                return loadedClass;
+            }
+
+            try {
+                Class<?> aClass = findClass(javaClassName);
+                if (resolve) {
+                    resolveClass(aClass);
+                }
+                return aClass;
+            } catch (Exception cause) {
+                DelegateBizClassLoader delegateBizClassLoader = BusinessClassLoaderHolder.getBussinessClassLoader();
+                try {
+                    if(null != delegateBizClassLoader){
+                        return delegateBizClassLoader.loadClass(javaClassName,resolve);
+                    }
+                } catch (Exception e) {
+                    //忽略异常，继续往下加载
+                }
+                return RoutingURLClassLoader.super.loadClass(javaClassName, resolve);
+            }
+        }
+    }
+```
+
 # jdk9的类加载器
 - 启动类加载器，使用java编码，在jdk.
-- 
+
 
 # 1.5. 参考文献
 
