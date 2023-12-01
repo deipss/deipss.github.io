@@ -1,6 +1,6 @@
 ---
 layout: default
-title: ASM
+title: ASM简介
 parent: Sandbox
 nav_order: 1
 ---
@@ -12,7 +12,8 @@ nav_order: 1
 ---
 title: ASM tools
 ---
-stateDiagram-v2
+stateDiagram-v2 
+direction RL
   Spring --> CGLib
   jvm_sandbox_repeater --> JavaSandbox
   arthas --> bytekit
@@ -68,12 +69,12 @@ ASM API基于访问者模式，为我们提供了ClassVisitor，MethodVisitor，
 
 如图所示，业界有许多的技术都使用ASM技术来实现一些提交的插件，主要目的不乏：
 - 面向切面编程 Spring CGlib
-- Jdk lambda 表达式 
+- Jdk lambda 表达式，JDK使用 `jdk.internal.org.objectweb.asm.ClassWriter `来生成一个类，将 lambda 表达式的代码包装起来。
 
 ## 2.3. ASM 使用方式
-- 从0到1写一个Class文件 generate
-- 从1到1 修改一个Class文件 transformer
-- 代码扫描、分析 analysis
+- generate 从0到1写一个Class文件 
+- transformer 从1到1 修改一个Class文件 
+- analysis 代码扫描、分析 
 
 ## 2.4. Asm辅助命令
 ```shell
