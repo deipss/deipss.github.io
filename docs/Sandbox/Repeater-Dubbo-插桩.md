@@ -10,7 +10,7 @@ parent: Sandbox
 `org.apache.dubbo.rpc.filter.GenericImplFilter`
 进行插桩，代码如下：
 
-```css
+```java
 {
 // EnhanceModel onResponse = EnhanceModel.builder().classPattern("org.apache.dubbo.rpc.filter.ConsumerContextFilter$ConsumerContextListener")
 // .methodPatterns(EnhanceModel.MethodPattern.transform("onResponse"))

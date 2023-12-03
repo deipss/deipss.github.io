@@ -60,6 +60,69 @@ premain和attach两种方式都会调用这个方法，这个方法上的static�
 
 ### 1.4.1. asm
 - CodeLock 代码锁
+- EventWeaver 事件编织者,类图如下
+```mermaid
+classDiagram
+direction BT
+class AsmMethods {
+<<Interface>>
+
+}
+class AsmTypes {
+<<Interface>>
+
+}
+class ClassVisitor {
+  + visitNestHost(String) void
+  + visitModule(String, int, String) ModuleVisitor
+  + visitInnerClass(String, String, String, int) void
+  + visitField(int, String, String, String, Object) FieldVisitor
+  + visitMethod(int, String, String, String, String[]) MethodVisitor
+  + visitSource(String, String) void
+  + visitTypeAnnotation(int, TypePath, String, boolean) AnnotationVisitor
+  + visitOuterClass(String, String, String) void
+  + visitEnd() void
+  + visit(int, int, String, String, String, String[]) void
+  + visitNestMember(String) void
+  + visitAnnotation(String, boolean) AnnotationVisitor
+  + visitAttribute(Attribute) void
+}
+class EventWeaver {
+  + visitMethod(int, String, String, String, String[]) MethodVisitor
+  - isMatchedBehavior(String) boolean
+  - getBehaviorSignCode(String, String) String
+  + visitEnd() void
+}
+class Opcodes {
+<<Interface>>
+
+}
+
+EventWeaver  ..>  AsmMethods 
+EventWeaver  ..>  AsmTypes 
+EventWeaver  -->  ClassVisitor 
+EventWeaver  ..>  Opcodes 
+
+```
+调用时序图
+```mermaid
+sequenceDiagram
+    autonumber
+    EventWeaver ->> EventWeaver: visitMethod
+    EventWeaver ->> EventWeaver: visitEnd
+    EventWeaver ->> AsmMethods: invokeStatic
+    AsmMethods ->> Spy: handleOnBefore
+    Spy ->> EventListenerHandler: handleOnBefore
+    EventListenerHandler ->> EventProcessor: handleOnBefore
+    EventListenerHandler ->> EventListenerHandler: mappingOfEventProcessor.get(listenerId)
+    EventListenerHandler ->> EventListenerHandler: processor.processRef.get()
+    rect rgb(200, 150, 255)
+        EventListenerHandler ->> EventListenerHandler: BusinessClassLoaderHolder.setBussinessClassLoader(javaClassLoader)
+    end
+    EventListenerHandler ->> EventListenerHandler: handleEvent
+    EventListenerHandler ->> EventListenerHandler: com.alibaba.jvm.sandbox.core.enhance.weaver.EventListenerHandler#handleEvent
+    EventListenerHandler ->> EventListener: onEvent()
+```
 
 ## 1.5. sandbox-debug-module
 
@@ -132,6 +195,8 @@ public static void spyMethodOnCallThrows(final String throwException,
 - 代码锁
 
 ## 2.6. 同一类被多个模块增强后，同步命中，多个事件是否存在顺序
+
+
 
 # 3. 参考文献
 
