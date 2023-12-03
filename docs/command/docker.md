@@ -34,6 +34,18 @@ sudo systemctl start docker
 #开机启动
 sudo systemctl enable docker 
 ```
+## 开启远程启动
+- https://docs.docker.com/config/daemon/remote-access/
+```shell
+sudo su
+find / -name "*docker.ser*"
+vim docker.server 
+ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2375
+sudo systemctl daemon-reload 
+sudo systemctl restart docker.service
+sudo netstat -lntp | grep dockerd
+```
+
 
 ## 1.3. docker 加速
 

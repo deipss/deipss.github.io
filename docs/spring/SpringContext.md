@@ -145,6 +145,17 @@ classDiagram
     ApplicationEventPublisher ..> SimpleApplicationEventMulticaster
 ```
 
+调用时序图如下
+```mermaid
+sequenceDiagram
+    ApplicationEventPublisher ->> ApplicationEventPublisher : publishEvent(Object event)
+    ApplicationEventPublisher ->> ApplicationEventPublisher : getApplicationEventMulticaster()
+    ApplicationEventPublisher ->> SimpleApplicationEventMulticaster : multicastEvent()
+    SimpleApplicationEventMulticaster ->> SimpleApplicationEventMulticaster : invokeListener()
+    SimpleApplicationEventMulticaster ->> SimpleApplicationEventMulticaster : doInvokeListener()
+    SimpleApplicationEventMulticaster ->> ApplicationListener :onApplicationEvent()
+```
+
 ## 6.2. 异步发布事件
 
 Spring 发布事件是使用这个类来发布事件，可以指定线程池来异步发布事件
