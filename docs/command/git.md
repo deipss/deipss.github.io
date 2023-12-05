@@ -103,3 +103,52 @@ git remote set-url origin https://gitee.com/xx/xx.git [新地址]
 git log
 
 ```
+
+
+# ignore
+
+## eg.1
+
+```ignorelang
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.DS_Store
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+**/.flattened-pom.xml
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+*.log
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+/logs
+
+### VS Code ###
+.vscode/
+
+logs/
+
+
+*.versionsBackup
+```
