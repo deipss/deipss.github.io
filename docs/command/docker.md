@@ -14,15 +14,18 @@ nav_order: 2
 - https://docs.docker.com/engine/install/ubuntu/
 
 ```shell
+
 sudo snap install docker         # version 20.10.24, or
 sudo apt  install docker.io      # version 24.0.5-0ubuntu1~22.04.1
 sudo apt  install podman-docker  # version 3.4.4+ds1-1ubuntu1.22.04.2
 See 'snap info docker' for additional versions.
+
 ```
 
 ## 1.2. install docker on centos
 
 ```shell
+
 #查看内核版本
 uname -r
 #确保 yum 包更新到最新
@@ -33,10 +36,15 @@ curl >fsSL [https://get.docker.com](https://get.docker.com) >o get>[docker.sh](h
 sudo systemctl start docker
 #开机启动
 sudo systemctl enable docker 
+
 ```
+
 ## 开启远程启动
+
 - https://docs.docker.com/config/daemon/remote-access/
+
 ```shell
+
 sudo su
 find / -name "*docker.ser*"
 vim docker.server 
@@ -44,8 +52,8 @@ ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2375
 sudo systemctl daemon-reload 
 sudo systemctl restart docker.service
 sudo netstat -lntp | grep dockerd
-```
 
+```
 
 ## 1.3. docker 加速
 
@@ -64,6 +72,7 @@ sudo netstat -lntp | grep dockerd
 > https://programlife.net/2020/09/12/ubuntu-snap-docker-registry-mirrors/
 
 ```shell
+
 #新版的ubuntu使用snap来管理一些软件，所以重启使用snap的命令
 sudo systemctl list-units --type=service
 
@@ -74,6 +83,7 @@ sudo systemctl list-units --type=service
 文档 https://hub.docker.com/
 
 ```shell
+
 #查看镜像
 docker image ls
 docker images -a
@@ -87,6 +97,7 @@ docker imamges rm
 ## 1.6. 容器启动
 
 ```bash
+
 #虚拟内存设置大一点
 sysctl -w vm.max_map_count=262144
 
@@ -95,15 +106,18 @@ docker run -p 27017:27017  -d mongo --restart=always
 docker run -p 6379:6379  -d redis redis-server --appendonly yes --restart=always
 #自动启动
 docker update --restart=always 01a07d12cfec
+
 ```
 
 ## 1.7. 删除未启动的容器
 
 ```bash
+
 #删除容器
 docker rm $( docker ps -a -q)
 #删除镜像
 docker rm $( docker images -a -q)
+
 ```
 
 ## 1.8. 查看端口映射
@@ -116,6 +130,7 @@ docker port [容器id]
 ## 1.9. 进行容器
 
 ```shell
+
 docker exec -it [容器ID] /bin/bash
 
 ```
@@ -123,13 +138,17 @@ docker exec -it [容器ID] /bin/bash
 ## 1.10. 日志查看
 
 ```shell
+
 docker logs -f bf08b7f2cd89
+
 ```
 
 ## 1.11. 观测某个容器
 
 ```shell
+
 docker inspect [容器ID]
+
 ```
 
 # 2. 常见服务
@@ -137,6 +156,7 @@ docker inspect [容器ID]
 ## 2.1. mysql
 
 ```bash
+
 docker run --name mysql_1 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=deipss -d mysql:latest
 docker exec -it mysql_1 bash
 mysql -u root -p -h localhost
@@ -145,6 +165,7 @@ ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'mysql_Xh7Z62';
 FLUSH PRIVILEGES;
 commit;
 select Host,User,plugin from mysql.user;
+
 ```
 
 - [https://www.cnblogs.com/limingxie/p/8655457.html](https://www.cnblogs.com/limingxie/p/8655457.html) 【使用docker运行mysql】
@@ -233,8 +254,8 @@ docker pull docker.elastic.co/kibana/kibana:7.17.9
 docker run --name kib01-test --net elastic -p 127.0.0.1:5601:5601 -e "ELASTICSEARCH_HOSTS=http://{本地ip}:9200" docker.elastic.co/kibana/kibana:7.17.9
 ```
 
-
 ### 2.5.3. 7.10.2 compose方式来启动ES和KIBANA
+
 ```yaml
 version: "3.7"
 services:
@@ -270,6 +291,7 @@ services:
 volumes:
   es-data-es01: { }
 ```
+
 ## 2.6. redis
 
 ```bash
