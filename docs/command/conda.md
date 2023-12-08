@@ -9,26 +9,30 @@ nav_order: 1
 
 ## 1.1. 预备依赖软件
 
-```
+```shell
 sudo dpkg --add-architecture i386
 sudo apt update
 sudo apt install build-essential libc6:i386
 sudo apt-get install dkms build-essential linux-headers-generic
+
 ```
 
 ## 1.2. 先卸载原有N卡驱动
 
 ```shell
+
 #for case1: original driver installed by apt-get:
 sudo apt-get remove --purge nvidia*
 #for case2: original driver installed by runfile:
 sudo chmod +x *.run
 sudo ./NVIDIA-Linux-x86_64-384.59.run --uninstall
+
 ```
 
 ## 1.3. 禁用自带的 nouveau nvidia驱动
 
 ```shell
+
 sudo gedit /etc/modprobe.d/blacklist.conf
 #并添加如下内容:
 blacklist nouveau
@@ -43,18 +47,22 @@ lsmod | grep nouveau
 
 ## 1.4. 禁用X-Window服务
 
-```
+``` shell
+
 #这会关闭图形界面，但不用紧张
 sudo service lightdm stop 
 Ctrl-Alt+F1进入命令行界面，输入用户名和密码登录即可。
 在命令行输入：sudo service lightdm start ，然后按Ctrl-Alt+F7即可恢复到图形界面
+
 ```
 
 ## 1.5. 命令行安装驱动
 
-```
+```shell
+
 sudo chmod +x NVIDIA-Linux-x86_64-384.59.run
 sudo ./NVIDIA-Linux-x86_64-384.59.run –no-x-check -no-nouveau-check -no-opengl-files
+
 ```
 
 - no-opengl-files：表示只安装驱动文件，不安装OpenGL文件。这个参数不可省略，否则会导致登陆界面死循环，英语一般称为”login

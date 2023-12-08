@@ -116,6 +116,48 @@ javap -verbose Test.class
 - 保证后续场景可扩展
 - 保证业务方最低的接入集成成本
 
+# 代码编写
+```java
+import org.objectweb.asm.*;  
+  
+public class DynamicClassGenerator {  
+    public static void main(String[] args) throws Exception {  
+        // 创建ClassWriter对象，生成类的字节码  
+        ClassWriter cw = new ClassWriter(0);  
+        cw.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, "Dynamic/MyClass", null, "java/lang/Object", null);  
+  
+        // 创建MethodVisitor对象，生成构造方法  
+        MethodVisitor constructor = cw.visitMethod(Opcodes.ACC_PUBLIC, "<init>", "()V", null, null);  
+        constructor.visitVarInsn(Opcodes.ALOAD, 0);  
+        constructor.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>", "()V", false);  
+        constructor.visitInsn(Opcodes.RETURN);  
+        constructor.visitMaxs(1, 1);  
+        constructor.visitEnd();  
+  
+        // 创建MethodVisitor对象，生成一个方法  
+        MethodVisitor method = cw.visitMethod(Opcodes.ACC_PUBLIC, "myMethod", "()V", null, null);  
+        method.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");  
+        method.visitLdcInsn("Hello from MyClass!");  
+        method.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);  
+        method.visitInsn(Opcodes.RETURN);  
+        method.visitMaxs(2, 1);  
+        method.visitEnd();  
+  
+        // 创建FieldVisitor对象，生成一个静态字段  
+        FieldVisitor field = cw.visitField(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC, "myField", "I", null, null);  
+        field.visitEnd();  
+  
+        // 完成类的生成  
+        cw.visitEnd();  
+  
+        // 获取生成的类的字节码，并加载到类加载器中  
+        byte[] bytes = cw.toByteArray();  
+        URLClassLoader classLoader = URLClassLoader.newInstance(new URL[]{new File("").toURI().toURL()});  
+        Class<?> myClass = ClassLoader.defineClass("Dynamic/MyClass", bytes);  
+        myClass.getMethods()[0].invoke(null);  // 调用生成的myMethod方法，因为它是静态的，所以可以直接调用  
+    }  
+}
+```
 # 4. 参考文献
 
 - https://www.baeldung.com/java-classloaders 类加载器

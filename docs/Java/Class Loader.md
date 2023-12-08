@@ -350,6 +350,8 @@ classDiagram
 # 2. jdk9的类加载器
 - 启动类加载器，使用java编码，在jdk.
 
+# Internal Name
+在 .java 文件中，我们使用 Java 语言来编写代码，使用类名的形式是Fully Qualified Class Name，例如 java.lang.String；将 .java 文件编译之后，就会生成 .class 文件；在 .class 文件中，类名的形式会发生变化，称之为Internal Name，例如 java/lang/String。因此，将Fully Qualified Class Name转换成Internal Name的方式就是，将 . 字符转换成 / 字符。
 
 # 3. 参考文献
 
