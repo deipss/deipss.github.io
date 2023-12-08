@@ -55,7 +55,7 @@ monitor -c 1 <类全路径名> <方法名>
 
 ## 1.5. trace
 
-```shell script
+```shell 
 
 # 方法内部调用路径，并输出方法路径上的每个节点上耗时，只观测一个方法内部，不会向下级方法推进
 # 可以指定毫秒数
@@ -80,7 +80,7 @@ classloader -c 3d4eac69
 
 火焰图查看，是使用async-profile这个开源工具，核心代码是C++实现。
 
-```shell script
+```shell
 
 profiler start
 profiler status

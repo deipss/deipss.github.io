@@ -41,7 +41,7 @@ git初始化的一些配置
 
 # 2. 合并分支
 
-```shell script
+```shell 
 git merge 分支名/节点哈希值
 git rebase 分支名/节点哈希值
 git cherry-pick 节点哈希值
@@ -49,7 +49,7 @@ git cherry-pick 节点哈希值
 
 # 3. 分支管理
 
-```shell script
+```shell 
 git pull
 git status
 git push
