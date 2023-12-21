@@ -13,7 +13,7 @@ nav_order: 3
 在这个文件中搜索相关的关键字，如kafka，可以看kafka自动配置的入口类
 ```
 自定义的 @Configuration如下
-![auto-config-metainfo.png](img%2Fauto-config-metainfo.png)
+![auto-config-meta-info.png](img%2Fauto-config-meta-info.png)
 
 ## 1.1. Kafka
 
@@ -75,3 +75,10 @@ class JedisConnectionConfiguration extends RedisConnectionConfiguration {
         return this.createJedisConnectionFactory(builderCustomizers);
     }
 ```
+
+## 文件加载
+使用Spring中的PathMatchingResourcePatternResolver类，来加载多个资源，这些资源是在包中的某个路径下：
+- sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:auto/test/dal/mapper/xml/*.xml"));
+
+使用线程上下文的中类加载器，去加载资源，这个资源需要在resource目录下，这样maven打包后，数据才会和在根目录中
+- InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.json")) 

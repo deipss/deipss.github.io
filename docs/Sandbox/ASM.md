@@ -5,30 +5,27 @@ parent: Sandbox
 nav_order: 1
 ---
 
-
 # 1. 常见框架
 
 ```mermaid
 ---
 title: ASM tools
 ---
-stateDiagram-v2 
-direction RL
-  Spring --> CGLib
-  jvm_sandbox_repeater --> JavaSandbox
-  arthas --> bytekit
-  bytekit --> asm
-  JavaSandbox --> asm
-  btrace --> asm
-  CGLib --> asm
-  ByteBuddy --> asm
-  asm --> JavaAgent
-  jdk(lambda) --> asm
+stateDiagram-v2
+    direction RL
+    Spring --> CGLib
+    jvm_sandbox_repeater --> JavaSandbox
+    arthas --> bytekit
+    bytekit --> asm
+    JavaSandbox --> asm
+    btrace --> asm
+    CGLib --> asm
+    ByteBuddy --> asm
+    asm --> JavaAgent
+    jdk(lambda) --> asm
 
 
 ```
- 
-
 
 # 2. ASM
 
@@ -54,29 +51,32 @@ ASM提供了与其他Java字节码框架类似的功能，但更注重性能。
 
 ## 2.1. Asm两类API
 
-ASM API基于访问者模式，为我们提供了ClassVisitor，MethodVisitor，FieldVisitor API接口，每当ASM扫描到类字段是会回调visitField方法，扫描到类方法是会回调MethodVisitor，下面我们看一下API接口
-
+ASM API基于访问者模式，为我们提供了ClassVisitor，MethodVisitor，FieldVisitor
+API接口，每当ASM扫描到类字段是会回调visitField方法，扫描到类方法是会回调MethodVisitor，下面我们看一下API接口
 
 - Core Api
-  - asm.jar
-  - asm-util.jar 通用工具类
-  - asm-commons.jar 具体场景的工具类
+    - asm.jar
+    - asm-util.jar 通用工具类
+    - asm-commons.jar 具体场景的工具类
 - Tree Api
-  - asm-tree.jar
-  - asm-analysis.jar
+    - asm-tree.jar
+    - asm-analysis.jar
 
 ## 2.2. 使用Asm技术
 
 如图所示，业界有许多的技术都使用ASM技术来实现一些提交的插件，主要目的不乏：
+
 - 面向切面编程 Spring CGlib
 - Jdk lambda 表达式，JDK使用 `jdk.internal.org.objectweb.asm.ClassWriter `来生成一个类，将 lambda 表达式的代码包装起来。
 
 ## 2.3. ASM 使用方式
-- generate 从0到1写一个Class文件 
-- transformer 从1到1 修改一个Class文件 
-- analysis 代码扫描、分析 
+
+- generate 从0到1写一个Class文件
+- transformer 从1到1 修改一个Class文件
+- analysis 代码扫描、分析
 
 ## 2.4. Asm辅助命令
+
 ```shell
 javac -g Test.java
 javap -verbose Test.class
@@ -116,49 +116,150 @@ javap -verbose Test.class
 - 保证后续场景可扩展
 - 保证业务方最低的接入集成成本
 
-# 代码编写
+# 4. 代码编写
+
+## 4.1. ClassVisitor
+
+- int api 指出了当前使用的 ASM 版本，其可取值为Opcodes.ASM4~Opcodes.ASM9。
+
+```mermaid
+
+classDiagram
+    direction BT
+    class ClassVisitor {
+        + ClassVisitor(int, ClassVisitor)
+        + ClassVisitor(int)
+        # ClassVisitor cv
+        # int api
+        + visitAttribute(Attribute) void
+        + visitInnerClass(String, String, String, int) void
+        + visitRecordComponent(String, String, String) RecordComponentVisitor
+        + visitModule(String, int, String) ModuleVisitor
+        + visitSource(String, String) void
+        + visitTypeAnnotation(int, TypePath, String, boolean) AnnotationVisitor
+        + visitMethod(int, String, String, String, String[]) MethodVisitor
+        + visitOuterClass(String, String, String) void
+        + visitAnnotation(String, boolean) AnnotationVisitor
+        + visitNestMember(String) void
+        + visit(int, int, String, String, String, String[]) void
+        + visitNestHost(String) void
+        + visitPermittedSubclass(String) void
+        + visitField(int, String, String, String, Object) FieldVisitor
+        + visitEnd() void
+    }
+
+
+```
+
+上面的方法，在调用时，需要注意的是先后顺序，一般就是：先调用 visit() 方法，接着调用 visitField() 方法或 visitMethod() 方法，最后调用
+visitEnd() 方法。
+
 ```java
-import org.objectweb.asm.*;  
-  
-public class DynamicClassGenerator {  
-    public static void main(String[] args) throws Exception {  
+import org.objectweb.asm.*;
+
+public class DynamicClassGenerator {
+    public static void main(String[] args) throws Exception {
         // 创建ClassWriter对象，生成类的字节码  
-        ClassWriter cw = new ClassWriter(0);  
-        cw.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, "Dynamic/MyClass", null, "java/lang/Object", null);  
-  
+        ClassWriter cw = new ClassWriter(0);
+        cw.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, "Dynamic/MyClass", null, "java/lang/Object", null);
+
         // 创建MethodVisitor对象，生成构造方法  
-        MethodVisitor constructor = cw.visitMethod(Opcodes.ACC_PUBLIC, "<init>", "()V", null, null);  
-        constructor.visitVarInsn(Opcodes.ALOAD, 0);  
-        constructor.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>", "()V", false);  
-        constructor.visitInsn(Opcodes.RETURN);  
-        constructor.visitMaxs(1, 1);  
-        constructor.visitEnd();  
-  
+        MethodVisitor constructor = cw.visitMethod(Opcodes.ACC_PUBLIC, "<init>", "()V", null, null);
+        constructor.visitVarInsn(Opcodes.ALOAD, 0);
+        constructor.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>", "()V", false);
+        constructor.visitInsn(Opcodes.RETURN);
+        constructor.visitMaxs(1, 1);
+        constructor.visitEnd();
+
         // 创建MethodVisitor对象，生成一个方法  
-        MethodVisitor method = cw.visitMethod(Opcodes.ACC_PUBLIC, "myMethod", "()V", null, null);  
-        method.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");  
-        method.visitLdcInsn("Hello from MyClass!");  
-        method.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);  
-        method.visitInsn(Opcodes.RETURN);  
-        method.visitMaxs(2, 1);  
-        method.visitEnd();  
-  
+        MethodVisitor method = cw.visitMethod(Opcodes.ACC_PUBLIC, "myMethod", "()V", null, null);
+        method.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+        method.visitLdcInsn("Hello from MyClass!");
+        method.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
+        method.visitInsn(Opcodes.RETURN);
+        method.visitMaxs(2, 1);
+        method.visitEnd();
+
         // 创建FieldVisitor对象，生成一个静态字段  
-        FieldVisitor field = cw.visitField(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC, "myField", "I", null, null);  
-        field.visitEnd();  
-  
+        FieldVisitor field = cw.visitField(Opcodes.ACC_PUBLIC | Opcodes.ACC_STATIC, "myField", "I", null, null);
+        field.visitEnd();
+
         // 完成类的生成  
-        cw.visitEnd();  
-  
+        cw.visitEnd();
+
         // 获取生成的类的字节码，并加载到类加载器中  
-        byte[] bytes = cw.toByteArray();  
-        URLClassLoader classLoader = URLClassLoader.newInstance(new URL[]{new File("").toURI().toURL()});  
-        Class<?> myClass = ClassLoader.defineClass("Dynamic/MyClass", bytes);  
+        byte[] bytes = cw.toByteArray();
+        URLClassLoader classLoader = URLClassLoader.newInstance(new URL[]{new File("").toURI().toURL()});
+        Class<?> myClass = ClassLoader.defineClass("Dynamic/MyClass", bytes);
         myClass.getMethods()[0].invoke(null);  // 调用生成的myMethod方法，因为它是静态的，所以可以直接调用  
-    }  
+    }
+}
+
+```
+
+## 4.2. ClassWriter
+
+- 继承自ClassVisitor类，
+- 构造函数中，有一个int型数据，COMPUTE_MAXS=1，COMPUTE_FRAMES=2，推荐使用2。
+    - COMPUTE_MAXS: 计算 max stack 和 max local 信息。
+    - COMPUTE_MAXS: 计算 max stack 和 max local 信息。
+- toByteArray() 方法：将所有visitXXX方法，转换为遵循ClassFile结构的byte[]数据
+
+## 4.3. ClassReader
+
+- 继承自Object类，
+- .class 文件 --> ClassReader --> byte[] --> 经过各种转换 --> ClassWriter --> byte[] --> .class 文件
+- accept()：这个方法接收一个 ClassVisitor 类型的参数，因此 accept() 方法是将 ClassReader 和 ClassVisitor
+  进行连接的“桥梁”。accept() 方法的代码逻辑就是按照一定的顺序来调用 ClassVisitor 当中的 visitXxx() 方法。
+
+### 4.3.1. 代码示例
+
+- .class --> ClassReader --> ClassVisitor1 ... --> ClassVisitorN --> ClassWriter --> .class 文件
+
+```java
+public class HelloWorldTransformCore {
+    public static void main(String[] args) {
+        String relative_path = "sample/HelloWorld.class";
+        String filepath = FileUtils.getFilePath(relative_path);
+        byte[] bytes1 = FileUtils.readBytes(filepath);
+
+        //（1）构建 ClassReader
+        ClassReader cr = new ClassReader(bytes1);
+
+        //（2）构建 ClassWriter
+        ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
+
+        //（3）串连 ClassVisitor
+        int api = Opcodes.ASM9;
+        ClassVisitor cv = new ClassVisitor(api, cw) { /**/
+        };
+
+        //（4）结合 ClassReader 和 ClassVisitor
+        int parsingOptions = ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES;
+        cr.accept(cv, parsingOptions);
+
+        //（5）生成 byte[]
+        byte[] bytes2 = cw.toByteArray();
+
+        FileUtils.writeBytes(filepath, bytes2);
+    }
 }
 ```
-# 4. 参考文献
+
+## 4.4. FiledVisitor
+
+## 4.5. MethodVisitor
+
+## 4.6. Frame
+
+## 4.7. Opcodes
+
+## 4.8. Label
+
+面向对象等高级语言中，有以下三种逻辑结构：顺序、循环、分支。
+在字节码层面，只有顺序和跳转两类
+
+# 5. 参考文献
 
 - https://www.baeldung.com/java-classloaders 类加载器
 - https://tech.hipac.cn/archives/aeb6e3616cf74e1984b908fc1cd98913#jacoco 多agent治理在海拍客的应用与实践

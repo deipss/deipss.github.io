@@ -27,6 +27,24 @@ ognl -c 2e1ef60 '#context=@oorg.apache.dubbo.config.spring.extension.SpringExten
 context.getBean("umsTradeBillSplitJob")-execute(null)' -x 3
 # 可以使用new construct() 构造函数来声明一个变量 #a=new java-lang-Object(1)，注意使用要带上#号
 
+
+
+```
+
+### 调用elastic job任务
+
+```shell
+curl -O https://arthas.aliyun.com/arthas-boot.jar && java -jar arthas-boot.jar
+sc -d 'org.apache.dubbo.config.spring.extension.SpringExtensionFactory' 
+
+{"startDate":"2023-11-16","endDate":"2023-11-16","test":"TEST"}
+
+ognl -c  7d151a  '#context=@org.apache.dubbo.config.spring.extension.SpringExtensionFactory@getContexts().iterator.next,
+#params=new java.util.HashMap(),
+#shardingContexts=new com.dangdang.ddframe.job.executor.ShardingContexts("1","1",1,"{\"startDate\":\"2023-10-11\",\"endDate\":\"2023-11-19\",\"test\":\"TEST\"}",#params,1),
+#shardingContext=new com.dangdang.ddframe.job.api.ShardingContext(#shardingContexts,1),
+#context.getBean("buildMessageCreateJob").execute(#shardingContext)' -x 3
+
 ```
 
 ## 1.3. thread

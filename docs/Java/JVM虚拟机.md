@@ -74,7 +74,14 @@ hsdb工具查询jvm内存信息：java -cp sa-jdi.jar sun.jvm.hotspot.HSDB
 - 执行静态代码块，为静态变量赋值,静态代码块和静态变量值的赋值顺序与代码的先后顺序一致
 ![img.png](img/static_filed_put_value.png)
 
-### 3.3.1. 以下几种方式会引发初始化：
+### 3.3.1. <init>() 和 <clinit>() 方法
+
+对于一个类（Class）来说，如果没有提供任何构造方法，Java 编译器会自动生成一个默认构造方法。在所有的 .class 文件中，构造方法的名字是 <init>()。
+另外，如果在 .class 文件中包含静态代码块，那么就会有一个 <clinit>() 方法。
+
+
+
+### 3.3.2. 以下几种方式会引发初始化：
 - 访问一个类的静态变量或静态方法（final修饰过的字段或方法，是在连接阶段初始化了）【优先级最高】
 - 调用Class.forName(String className)
 - new 一个类
@@ -84,7 +91,7 @@ hsdb工具查询jvm内存信息：java -cp sa-jdi.jar sun.jvm.hotspot.HSDB
 
 > -XX:TraceClassLoading 参数可以打印出加载并初始化的类
 
-### 3.3.2. 以下几种情况不会进行初始化指令（clinit）的执行
+### 3.3.3. 以下几种情况不会进行初始化指令（clinit）的执行
 - 无静态代码块且无静态变量赋值语句
 - 有静态变量的声明，但是没有赋值
 - 静态变量定义成final
