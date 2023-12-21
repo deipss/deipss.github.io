@@ -25,7 +25,6 @@ premain和attach两种方式都会调用这个方法，这个方法上的static�
 
 ```
 
-
 #### 1.1.2.1. premain 方式
 
 - premain方式启动时，loadOrDefineClassLoader()会使用SandboxClassLoader来加载sandbox-core这个模块的jar文件，做到与工程代码的类加载器隔离
@@ -59,52 +58,53 @@ premain和attach两种方式都会调用这个方法，这个方法上的static�
 - classloader 类加载器
 
 ### 1.4.1. asm
+
 - CodeLock 代码锁
 - EventWeaver 事件编织者,类图如下
+
 ```mermaid
 classDiagram
-direction BT
-class AsmMethods {
-<<Interface>>
+    direction BT
+    class AsmMethods {
+        <<Interface>>
+    }
+    class AsmTypes {
+        <<Interface>>
+    }
+    class ClassVisitor {
+        + visitNestHost(String) void
+        + visitModule(String, int, String) ModuleVisitor
+        + visitInnerClass(String, String, String, int) void
+        + visitField(int, String, String, String, Object) FieldVisitor
+        + visitMethod(int, String, String, String, String[]) MethodVisitor
+        + visitSource(String, String) void
+        + visitTypeAnnotation(int, TypePath, String, boolean) AnnotationVisitor
+        + visitOuterClass(String, String, String) void
+        + visitEnd() void
+        + visit(int, int, String, String, String, String[]) void
+        + visitNestMember(String) void
+        + visitAnnotation(String, boolean) AnnotationVisitor
+        + visitAttribute(Attribute) void
+    }
+    class EventWeaver {
+        + visitMethod(int, String, String, String, String[]) MethodVisitor
+        - isMatchedBehavior(String) boolean
+        - getBehaviorSignCode(String, String) String
+        + visitEnd() void
+    }
+    class Opcodes {
+        <<Interface>>
+    }
 
-}
-class AsmTypes {
-<<Interface>>
-
-}
-class ClassVisitor {
-  + visitNestHost(String) void
-  + visitModule(String, int, String) ModuleVisitor
-  + visitInnerClass(String, String, String, int) void
-  + visitField(int, String, String, String, Object) FieldVisitor
-  + visitMethod(int, String, String, String, String[]) MethodVisitor
-  + visitSource(String, String) void
-  + visitTypeAnnotation(int, TypePath, String, boolean) AnnotationVisitor
-  + visitOuterClass(String, String, String) void
-  + visitEnd() void
-  + visit(int, int, String, String, String, String[]) void
-  + visitNestMember(String) void
-  + visitAnnotation(String, boolean) AnnotationVisitor
-  + visitAttribute(Attribute) void
-}
-class EventWeaver {
-  + visitMethod(int, String, String, String, String[]) MethodVisitor
-  - isMatchedBehavior(String) boolean
-  - getBehaviorSignCode(String, String) String
-  + visitEnd() void
-}
-class Opcodes {
-<<Interface>>
-
-}
-
-EventWeaver  ..>  AsmMethods 
-EventWeaver  ..>  AsmTypes 
-EventWeaver  -->  ClassVisitor 
-EventWeaver  ..>  Opcodes 
+    EventWeaver ..> AsmMethods
+    EventWeaver ..> AsmTypes
+    EventWeaver --> ClassVisitor
+    EventWeaver ..> Opcodes
 
 ```
+
 调用时序图
+
 ```mermaid
 sequenceDiagram
     autonumber
@@ -174,15 +174,17 @@ public static void spyMethodOnCallThrows(final String throwException,
     );
 ```
 
-
 # 2. 源代码细节
 
 ## 2.1. JVMTI
-- JVMTI（JVM Tool Interface）是 Java 虚拟机所提供的 native 编程接口，是 JVMPI（Java Virtual Machine Profiler Interface）和 JVMDI（Java Virtual Machine Debug Interface）的替代版本。
-> VMTI只是一套接口，我们要开发JVM工具就需要写一个Agent程序来使用这些接口。Agent程序其实就是一个C/C++语言编写的**动态链接库**。
+
+- JVMTI（JVM Tool Interface）是 Java 虚拟机所提供的 native 编程接口，是 JVMPI（Java Virtual Machine Profiler Interface）和
+  JVMDI（Java Virtual Machine Debug Interface）的替代版本。
+
+> VMTI只是一套接口，我们要开发JVM工具就需要写一个Agent程序来使用这些接口。Agent程序其实就是一个C/C++语言编写的**动态链接库
+**。
 
 ## 2.2. JPLISAgent
-
 
 ## 2.3. 如何进行类隔离
 
@@ -190,13 +192,11 @@ public static void spyMethodOnCallThrows(final String throwException,
 
 ## 2.4. 同一个类被多个模块增强，字节码会是怎么样
 
-
 ## 2.5. 同一个类被多个模块同步增强，是否会出现ABA问题，如何应对这类问题
+
 - 代码锁
 
 ## 2.6. 同一类被多个模块增强后，同步命中，多个事件是否存在顺序
-
-
 
 # 3. 参考文献
 
