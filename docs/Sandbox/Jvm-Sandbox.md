@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Java Sandbox
+title: Java-Sandbox
 parent: Sandbox
 nav_order: 2
 ---

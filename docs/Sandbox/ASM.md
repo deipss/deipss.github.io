@@ -249,10 +249,15 @@ public class HelloWorldTransformCore {
 ## 4.4. FiledVisitor
 
 ## 4.5. MethodVisitor
+- https://lsieun.github.io/java-asm-01/method-visitor-intro.html
 
 ## 4.6. Frame
 
+线程在执行时，会有自己的独有的栈空间，这个栈中，存放的就是Stock Frame。
+
 ## 4.7. Opcodes
+
+定义了一系列的枚举字段，来标识版本、访问标识、类型
 
 ## 4.8. Label
 
