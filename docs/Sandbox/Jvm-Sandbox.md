@@ -20,6 +20,7 @@ nav_order: 2
 - 会不会两个命令同时写一个文件，产生竞争，发生ABA？
 
 ```text
+
 private static synchronized InetSocketAddress install(final Map<String, String> featureMap, final Instrumentation inst)
 premain和attach两种方式都会调用这个方法，这个方法上的static锁。
 
@@ -64,64 +65,66 @@ premain和attach两种方式都会调用这个方法，这个方法上的static�
 
 ```mermaid
 classDiagram
-    direction BT
-    class AsmMethods {
-        <<Interface>>
-    }
-    class AsmTypes {
-        <<Interface>>
-    }
-    class ClassVisitor {
-        + visitNestHost(String) void
-        + visitModule(String, int, String) ModuleVisitor
-        + visitInnerClass(String, String, String, int) void
-        + visitField(int, String, String, String, Object) FieldVisitor
-        + visitMethod(int, String, String, String, String[]) MethodVisitor
-        + visitSource(String, String) void
-        + visitTypeAnnotation(int, TypePath, String, boolean) AnnotationVisitor
-        + visitOuterClass(String, String, String) void
-        + visitEnd() void
-        + visit(int, int, String, String, String, String[]) void
-        + visitNestMember(String) void
-        + visitAnnotation(String, boolean) AnnotationVisitor
-        + visitAttribute(Attribute) void
-    }
-    class EventWeaver {
-        + visitMethod(int, String, String, String, String[]) MethodVisitor
-        - isMatchedBehavior(String) boolean
-        - getBehaviorSignCode(String, String) String
-        + visitEnd() void
-    }
-    class Opcodes {
-        <<Interface>>
-    }
+  direction BT
+  class AsmMethods {
+    <<Interface>>
+  }
+  class AsmTypes {
+    <<Interface>>
+  }
+  class ClassVisitor {
+    + visitNestHost(String) void
+    + visitModule(String, int, String) ModuleVisitor
+    + visitInnerClass(String, String, String, int) void
+    + visitField(int, String, String, String, Object) FieldVisitor
+    + visitMethod(int, String, String, String, String[]) MethodVisitor
+    + visitSource(String, String) void
+    + visitTypeAnnotation(int, TypePath, String, boolean) AnnotationVisitor
+    + visitOuterClass(String, String, String) void
+    + visitEnd() void
+    + visit(int, int, String, String, String, String[]) void
+    + visitNestMember(String) void
+    + visitAnnotation(String, boolean) AnnotationVisitor
+    + visitAttribute(Attribute) void
+  }
+  class EventWeaver {
+    + visitMethod(int, String, String, String, String[]) MethodVisitor
+    - isMatchedBehavior(String) boolean
+    - getBehaviorSignCode(String, String) String
+    + visitEnd() void
+  }
+  class Opcodes {
+    <<Interface>>
+  }
 
-    EventWeaver ..> AsmMethods
-    EventWeaver ..> AsmTypes
-    EventWeaver --> ClassVisitor
-    EventWeaver ..> Opcodes
+  EventWeaver ..> AsmMethods
+  EventWeaver ..> AsmTypes
+  EventWeaver --> ClassVisitor
+  EventWeaver ..> Opcodes
 
 ```
 
 调用时序图
 
 ```mermaid
+
 sequenceDiagram
-    autonumber
-    EventWeaver ->> EventWeaver: visitMethod
-    EventWeaver ->> EventWeaver: visitEnd
-    EventWeaver ->> AsmMethods: invokeStatic
-    AsmMethods ->> Spy: handleOnBefore
-    Spy ->> EventListenerHandler: handleOnBefore
-    EventListenerHandler ->> EventProcessor: handleOnBefore
-    EventListenerHandler ->> EventListenerHandler: mappingOfEventProcessor.get(listenerId)
-    EventListenerHandler ->> EventListenerHandler: processor.processRef.get()
-    rect rgb(200, 150, 255)
-        EventListenerHandler ->> EventListenerHandler: BusinessClassLoaderHolder.setBussinessClassLoader(javaClassLoader)
-    end
-    EventListenerHandler ->> EventListenerHandler: handleEvent
-    EventListenerHandler ->> EventListenerHandler: com.alibaba.jvm.sandbox.core.enhance.weaver.EventListenerHandler#handleEvent
-    EventListenerHandler ->> EventListener: onEvent()
+  autonumber
+  EventWeaver ->> EventWeaver: visitMethod
+  EventWeaver ->> EventWeaver: visitEnd
+  EventWeaver ->> AsmMethods: invokeStatic
+  AsmMethods ->> Spy: handleOnBefore
+  Spy ->> EventListenerHandler: handleOnBefore
+  EventListenerHandler ->> EventProcessor: handleOnBefore
+  EventListenerHandler ->> EventListenerHandler: mappingOfEventProcessor.get(listenerId)
+  EventListenerHandler ->> EventListenerHandler: processor.processRef.get()
+  rect rgb(200, 150, 255)
+    EventListenerHandler ->> EventListenerHandler: BusinessClassLoaderHolder.setBussinessClassLoader(javaClassLoader)
+  end
+  EventListenerHandler ->> EventListenerHandler: handleEvent
+  EventListenerHandler ->> EventListenerHandler: com.alibaba.jvm.sandbox.core.enhance.weaver.EventListenerHandler#handleEvent
+  EventListenerHandler ->> EventListener: onEvent()
+
 ```
 
 ## 1.5. sandbox-debug-module
@@ -181,8 +184,7 @@ public static void spyMethodOnCallThrows(final String throwException,
 - JVMTI（JVM Tool Interface）是 Java 虚拟机所提供的 native 编程接口，是 JVMPI（Java Virtual Machine Profiler Interface）和
   JVMDI（Java Virtual Machine Debug Interface）的替代版本。
 
-> VMTI只是一套接口，我们要开发JVM工具就需要写一个Agent程序来使用这些接口。Agent程序其实就是一个C/C++语言编写的**动态链接库
-**。
+> VMTI只是一套接口，我们要开发JVM工具就需要写一个Agent程序来使用这些接口。Agent程序其实就是一个C/C++语言编写的动态链接库。
 
 ## 2.2. JPLISAgent
 
