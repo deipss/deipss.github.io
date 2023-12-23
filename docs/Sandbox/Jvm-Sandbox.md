@@ -200,6 +200,9 @@ public static void spyMethodOnCallThrows(final String throwException,
 
 ## 2.6. 同一类被多个模块增强后，同步命中，多个事件是否存在顺序
 
+
+## 2.7. 同一个类，在同一个模块，多次增强
+
 # 3. 参考文献
 
 - https://www.baeldung.com/java-classloaders 类加载器
