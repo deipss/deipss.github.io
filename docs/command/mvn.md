@@ -2,7 +2,6 @@
 layout: default
 title: mvn
 parent: Command
-nav_order: 6
 ---
 
 - 图片来源=https://www.bilibili.com/video/BV1Ah411S7ZE?p=13&vd_source=f52d9488d7d3c21ed33580e4dce1a022
@@ -112,21 +111,22 @@ mvn deploy:deploy-file
 
 
 ```
+
 ### 4.5.1. 仅在dev的profile中，开启SNAPSHOT的仓库
 
 ```xml
 <!--  -->
-    <repositories>
-        <repository>
-            <id>nexus-snapshots</id>
-            <name>Nexus Local Repository</name>
-            <url>http://nexus.xsyxsc.com/repository/maven-snapshots/</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
-    </repositories>
+<repositories>
+    <repository>
+        <id>nexus-snapshots</id>
+        <name>Nexus Local Repository</name>
+        <url>http://nexus.xsyxsc.com/repository/maven-snapshots/</url>
+        <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+        </snapshots>
+    </repository>
+</repositories>
 ```
 
 ## 4.6. 安装在本地
@@ -140,9 +140,7 @@ mvn clean package  '-Dmaven.test.skip=true'
 
 ## 4.7. mvn配置文件
 
-```text
-<package></package>标签 可以有pom或是jar,默认是jar,在有父子继续关系时，一般父pom文件使用pom包
-```
+- <package></package>标签 可以有pom或是jar,默认是jar,在有父子继续关系时，一般父pom文件使用pom包
 
 ## 4.8. 源码下载
 
@@ -165,7 +163,9 @@ nexus里可以配置3种类型的仓库，分别是proxy、hosted、group 。
 - proxy是远程仓库的代理。比如说在nexus中配置了一个central
   repository的proxy，当用户向这个proxy请求一个artifact，这个proxy就会先在本地查找，如果找不到的话，就会从远程仓库下载，然后返回给用户，相当于起到一个中转的作用。
 - hosted是宿主仓库，用户可以把自己的artifact、proxy下载不到的artifact，deploy到hosted中。
-- group是仓库组，目的是将上述多个仓库聚合，对用户暴露统一的地址，这样用户就不需要在pom中配置多个地址，只要统一配置group的地址就可以了 。
+-
+
+group是仓库组，目的是将上述多个仓库聚合，对用户暴露统一的地址，这样用户就不需要在pom中配置多个地址，只要统一配置group的地址就可以了 。
 
 # 6. plugins
 
