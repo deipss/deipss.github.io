@@ -11,24 +11,6 @@
 
 ```
 
----
-` `
-{: .label .label-white }
-
-你来啦！
-{: .label .label-black }
-
-Here you are .
-{: .label .label-green }
-
-Ты здесь.
-{: .label .label-purple }
-
-Tu es là aussi.
-{: .label .label-yellow }
-
-いらっしゃい。
-{: .label .label-red }
 
 --- 
 Ok,Let's Go……
@@ -38,7 +20,7 @@ Ok,Let's Go……
 
 --- 
 
-[It is my git.](https://github.com/deipss){: .btn .btn-blue .float-right}
+
 
 
 

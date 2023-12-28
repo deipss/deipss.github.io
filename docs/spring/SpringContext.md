@@ -4,80 +4,69 @@ title: SpringContext
 parent: Spring
 ---
 
-
 # 1. ConfigurableApplicationContext的结构
 
 ```mermaid
+---
+title: Spring Context
+---
 classDiagram
-direction BT
-class ApplicationContext {
-<<Interface>>
+    direction BT
+    class ApplicationContext {
+        <<Interface>>
+    }
+    class ApplicationEventPublisher {
+        <<Interface>>
+    }
+    class AutoCloseable {
+        <<Interface>>
+    }
+    class BeanFactory {
+        <<Interface>>
+    }
+    class Closeable {
+        <<Interface>>
+    }
+    class ConfigurableApplicationContext {
+        <<Interface>>
+    }
+    class EnvironmentCapable {
+        <<Interface>>
+    }
+    class FunctionalInterface
+    class HierarchicalBeanFactory {
+        <<Interface>>
+    }
+    class Lifecycle {
+        <<Interface>>
+    }
+    class ListableBeanFactory {
+        <<Interface>>
+    }
+    class MessageSource {
+        <<Interface>>
+    }
+    class ResourceLoader {
+        <<Interface>>
+    }
+    class ResourcePatternResolver {
+        <<Interface>>
+    }
 
-}
-class ApplicationEventPublisher {
-<<Interface>>
-
-}
-class AutoCloseable {
-<<Interface>>
-
-}
-class BeanFactory {
-<<Interface>>
-
-}
-class Closeable {
-<<Interface>>
-
-}
-class ConfigurableApplicationContext {
-<<Interface>>
-
-}
-class EnvironmentCapable {
-<<Interface>>
-
-}
-class FunctionalInterface
-class HierarchicalBeanFactory {
-<<Interface>>
-
-}
-class Lifecycle {
-<<Interface>>
-
-}
-class ListableBeanFactory {
-<<Interface>>
-
-}
-class MessageSource {
-<<Interface>>
-
-}
-class ResourceLoader {
-<<Interface>>
-
-}
-class ResourcePatternResolver {
-<<Interface>>
-
-}
-
-ApplicationContext  -->  ApplicationEventPublisher 
-ApplicationContext  -->  EnvironmentCapable 
-ApplicationContext  -->  HierarchicalBeanFactory 
-ApplicationContext  -->  ListableBeanFactory 
-ApplicationContext  -->  MessageSource 
-ApplicationContext  -->  ResourcePatternResolver 
-FunctionalInterface  ..  ApplicationEventPublisher 
-Closeable  -->  AutoCloseable 
-ConfigurableApplicationContext  -->  ApplicationContext 
-ConfigurableApplicationContext  -->  Closeable 
-ConfigurableApplicationContext  -->  Lifecycle 
-HierarchicalBeanFactory  -->  BeanFactory 
-ListableBeanFactory  -->  BeanFactory 
-ResourcePatternResolver  -->  ResourceLoader 
+    ApplicationContext --> ApplicationEventPublisher
+    ApplicationContext --> EnvironmentCapable
+    ApplicationContext --> HierarchicalBeanFactory
+    ApplicationContext --> ListableBeanFactory
+    ApplicationContext --> MessageSource
+    ApplicationContext --> ResourcePatternResolver
+    FunctionalInterface .. ApplicationEventPublisher
+    Closeable --> AutoCloseable
+    ConfigurableApplicationContext --> ApplicationContext
+    ConfigurableApplicationContext --> Closeable
+    ConfigurableApplicationContext --> Lifecycle
+    HierarchicalBeanFactory --> BeanFactory
+    ListableBeanFactory --> BeanFactory
+    ResourcePatternResolver --> ResourceLoader
 
 ```
 
@@ -86,15 +75,9 @@ BeanFactory本身功能并不充分，通过一系列的后置处理器来完善
 
 # 2. Spring 上下文初始化过程
 
-
 # 3. Spring常见的一些后置处理器
 
-
 # 4. Spring 上下文类型
-
-
-
-
 
 # 5. Aware接口
 
@@ -146,20 +129,22 @@ classDiagram
 ```
 
 调用时序图如下
+
 ```mermaid
 sequenceDiagram
-    ApplicationEventPublisher ->> ApplicationEventPublisher : publishEvent(Object event)
-    ApplicationEventPublisher ->> ApplicationEventPublisher : getApplicationEventMulticaster()
-    ApplicationEventPublisher ->> SimpleApplicationEventMulticaster : multicastEvent()
-    SimpleApplicationEventMulticaster ->> SimpleApplicationEventMulticaster : invokeListener()
-    SimpleApplicationEventMulticaster ->> SimpleApplicationEventMulticaster : doInvokeListener()
-    SimpleApplicationEventMulticaster ->> ApplicationListener :onApplicationEvent()
+    ApplicationEventPublisher ->> ApplicationEventPublisher: publishEvent(Object event)
+    ApplicationEventPublisher ->> ApplicationEventPublisher: getApplicationEventMulticaster()
+    ApplicationEventPublisher ->> SimpleApplicationEventMulticaster: multicastEvent()
+    SimpleApplicationEventMulticaster ->> SimpleApplicationEventMulticaster: invokeListener()
+    SimpleApplicationEventMulticaster ->> SimpleApplicationEventMulticaster: doInvokeListener()
+    SimpleApplicationEventMulticaster ->> ApplicationListener: onApplicationEvent()
 ```
 
 ## 6.2. 异步发布事件
 
 Spring 发布事件是使用这个类来发布事件，可以指定线程池来异步发布事件
 org.springframework.context.event.SimpleApplicationEventMulticaster
+
 ```sqlite-psql
 @Override
 	public void multicastEvent(final ApplicationEvent event, @Nullable ResolvableType eventType) {
@@ -178,6 +163,7 @@ org.springframework.context.event.SimpleApplicationEventMulticaster
 ```
 
 ```java
+
 @Configuration
 public class Config {
 
@@ -192,11 +178,25 @@ public class Config {
 ```
 
 # 7. spring中的资源
-```sqlite-psql
+
+## 7.1. 使用线程上下文
+
+使用maven在打包时，resource文件夹的文件，默认是打包在模块的根目录下。
+可以使用线程的上下文获取
+
+- InputStream resourceAsStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(path);
+
+## 7.2. 使用Spring的ApplicationContext
+
+但文件是在包路径下面的某个文件夹中，就需要添加相应的文件路程
+
+```java
 // 从类路径下
-Resource [] list = context.getResource("classpath:");
-Resource [] list = context.getResource("classpath:*");
-Resource [] list = context.getResource("classpath:*/META-INF");
+Resource[]list=context.getResource("classpath:");
+        Resource[]list=context.getResource("classpath:*");
+        new PathMatchingResourcePatternResolver().getResources("classpath*:mapper/classicmodel/*.xml")
+        redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource("test.lua")));
+        Resource[]list=context.getResource("classpath:*/META-INF");
 // 从文件路径下
-Resource [] listcontext.getResource("file:");
+        Resource[]listcontext.getResource("file:");
 ```
