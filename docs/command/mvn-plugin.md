@@ -1,6 +1,6 @@
 ---
 layout: default
-title: mvn
+title: mvn plugin
 parent: Command
 ---
 
