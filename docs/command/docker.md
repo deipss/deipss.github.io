@@ -39,7 +39,7 @@ sudo systemctl enable docker
 
 ```
 
-## 开启远程启动
+## 1.3. 开启远程启动
 
 - https://docs.docker.com/config/daemon/remote-access/
 
@@ -55,7 +55,7 @@ sudo netstat -lntp | grep dockerd
 
 ```
 
-## 1.3. docker 加速
+## 1.4. docker 加速
 
 - 镜像加速：新版的Docker使用 /etc/docker/daemon.json
 
@@ -67,7 +67,7 @@ sudo netstat -lntp | grep dockerd
 }
 ```
 
-## 1.4. ubuntu snap install docker 后镜像加速
+## 1.5. ubuntu snap install docker 后镜像加速
 
 > https://programlife.net/2020/09/12/ubuntu-snap-docker-registry-mirrors/
 
@@ -78,7 +78,7 @@ sudo systemctl list-units --type=service
 
 ```
 
-## 1.5. 查询docker镜像
+## 1.6. 查询docker镜像
 
 文档 https://hub.docker.com/
 
@@ -94,7 +94,7 @@ docker imamges rm
 
 ```
 
-## 1.6. 容器启动
+## 1.7. 容器启动
 
 ```bash
 
@@ -109,7 +109,7 @@ docker update --restart=always 01a07d12cfec
 
 ```
 
-## 1.7. 删除未启动的容器
+## 1.8. 删除未启动的容器
 
 ```bash
 
@@ -120,14 +120,14 @@ docker rm $( docker images -a -q)
 
 ```
 
-## 1.8. 查看端口映射
+## 1.9. 查看端口映射
 
 ```shell
 docker port [容器id]
 
 ```
 
-## 1.9. 进行容器
+## 1.10. 进行容器
 
 ```shell
 
@@ -135,7 +135,7 @@ docker exec -it [容器ID] /bin/bash
 
 ```
 
-## 1.10. 日志查看
+## 1.11. 日志查看
 
 ```shell
 
@@ -143,7 +143,7 @@ docker logs -f bf08b7f2cd89
 
 ```
 
-## 1.11. 观测某个容器
+## 1.12. 观测某个容器
 
 ```shell
 
@@ -358,4 +358,34 @@ Docker 构建的早期需要 DockerFile，就是 Docker 构建了一个命令文
 10）COPY 复制，类似 ADD
 11）EXPOSE 暴露端口
 12）ENTRYPOINT 入口，命令，只有一个不能被 Run 覆盖
+```
+
+## 3.1. 示例：jdk启动应用
+
+```dockerfile
+FROM centos:7
+
+MAINTAINER deipss666@gmail.com
+
+RUN yum update -y && \
+yum install -y wget && \
+yum install -y unzip && \
+yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel && \
+yum clean all
+
+# Set environment variables.
+ENV HOME /root
+VOLUME /tmp
+
+# Define working directory.
+WORKDIR /root
+
+
+# Define default command.
+CMD ["bash"]
+CMD ["wget -P /opt https://ompc.oss-cn-hangzhou.aliyuncs.com/jvm-sandbox/release/sandbox-1.4.0-bin.zip "]
+CMD ["unzip sandbox-1.4.0-bin.zip "]
+COPY java-edu-web/target/java-edu-web-1.0.1-SNAPSHOT.jar /root/java-edu-web.jar
+EXPOSE 8088
+ENTRYPOINT ["java","-jar","/root/java-edu-web.jar -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"]
 ```
