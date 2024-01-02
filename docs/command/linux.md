@@ -24,6 +24,20 @@ systemctl is-enabled nginx
 systemctl is-enabled supervisord
 ```
 
+# ubuntu install jdk
+```shell
+# 安装jdk8
+sudo apt install openjdk-8-jdk
+whereis java
+
+# 配置jre等包
+vim ~/.profile
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export JRE_HOME=$JAVA_HOME/jre
+export CLASSPATH=$JAVA_HOME/lib:$JRE_HOME/lib:$CLASSPATH
+export PATH=$JAVA_HOME/bin:$JRE_HOME/bin:$PATH
+```
+
 # 3. log
 
 - [https://cloud.tencent.com/developer/article/1579977](https://cloud.tencent.com/developer/article/1579977)
