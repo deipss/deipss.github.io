@@ -84,15 +84,15 @@ $ source ~/.bash_profile #Zsh应改为 source ~/.zshrc
 
 ```
 
-# 2. Tabby 远程登陆
+# 2. tabby 远程登陆
 
-# 3. SCROLL REVERSER
+# 3. scroll reverser
 
 用于鼠标与触摸板的转换
 
-# 4. Logi Optional 罗技鼠键
+# 4. logi optional 罗技鼠键
 
-# 5. CPU
+# 5. cpu
 
 用来操作计算单元的控制单元的指令集合就是CPU指令集，有X86、RAM、MIPS、IA64，可以分成复杂指令集和
 精简指令集两类，CISC和RISC。

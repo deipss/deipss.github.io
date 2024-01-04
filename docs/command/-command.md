@@ -16,8 +16,8 @@ command
 
 ```mermaid
 graph TD;
-    A-->B;
-    A-->C;
-    B-->D;
-    C-->D;
+    cd-->ls;
+    ls-->cat;
+    cat-->echo;
+    cd-->ps;
 ```

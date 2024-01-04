@@ -69,7 +69,7 @@ sudo netstat -lntp | grep dockerd
 
 ## 1.5. ubuntu snap install docker 后镜像加速
 
-> https://programlife.net/2020/09/12/ubuntu-snap-docker-registry-mirrors/
+- https://programlife.net/2020/09/12/ubuntu-snap-docker-registry-mirrors/
 
 ```shell
 

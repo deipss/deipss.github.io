@@ -4,45 +4,13 @@ title: linux
 parent: Command
 nav_order: 5
 ---
+ 
 
-# 1. ubuntu show version
-
-```shell
-lsb_release -a
-lscpu
-```
-
-# 2. ubuntu start on reboot
-```shell
-systemctl enable nginx.service       
-systemctl enable supervisord
-
-systemctl disable nginx.service
-systemctl disable supervisord
-
-systemctl is-enabled nginx
-systemctl is-enabled supervisord
-```
-
-# ubuntu install jdk
-```shell
-# 安装jdk8
-sudo apt install openjdk-8-jdk
-whereis java
-
-# 配置jre等包
-vim ~/.profile
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-export JRE_HOME=$JAVA_HOME/jre
-export CLASSPATH=$JAVA_HOME/lib:$JRE_HOME/lib:$CLASSPATH
-export PATH=$JAVA_HOME/bin:$JRE_HOME/bin:$PATH
-```
-
-# 3. log
+# 1. log
 
 - [https://cloud.tencent.com/developer/article/1579977](https://cloud.tencent.com/developer/article/1579977)
 
-## 3.1. tail
+## 1.1. tail
 
 ```bash
 命令格式: tail[必要参数][选择参数][文件]
@@ -57,19 +25,20 @@ export PATH=$JAVA_HOME/bin:$JRE_HOME/bin:$PATH
 tail -fn 1000 test.log | grep '关键字'
 ```
 
-## 3.2. head
+## 1.2. head
 
 ```bash
 head -n  10  test.log   查询日志文件中的头10行日志;
 head -n -10  test.log   查询日志文件除了最后10行的其他所有日志;
 ```
 
-## 3.3. less
+## 1.3. less
 
 less命令在查询日志时，less与more类似，使用less可以随意浏览文件，
 **而more仅能向前移动，不能向后移动**,而且 less 在查看之前不会加载整个文件。
 
 ```bash
+
 less -mN log2013.log 
 -g 只标志最后搜索的关键词
 -m 显示类似more命令的百分比
@@ -87,23 +56,24 @@ y 向前滚动一行
 空格键 滚动一页
 回车键 滚动一行
 G 跳到末行
+
 ```
 
-## 3.4. more
+## 1.4. more
 
 more命令是一个基于vi编辑器文本过滤器，它以全屏幕的方式按页显示文本文件的内容，
 支持vi中的关键字定位操作。
 more内置了若干快捷键，常用的有H（获得帮助信息），
 
-- Enter（向下翻滚一行），
-- 空格（向下滚动一屏），
-- Q（退出命令）。
-- more命令从前向后读取文件，因此在启动时就加载整个文件。
+- Enter（向下翻滚一行）
+- 空格（向下滚动一屏）
+- Q（退出命令）
+- more命令从前向后读取文件，因此在启动时就加载整个文件
 
 该命令一次显示一屏文本，
 满屏后停下来，并且在屏幕的底部出现一个提示信息，给出至今己显示的该文件的百分比：
 
-## 3.5. cat
+## 1.5. cat
 
 cat（英文全拼：concatenate）命令用于连接文件并打印到标准输出设备上。
 
@@ -114,10 +84,11 @@ cat -n textfile1 > textfile2
 cat -b textfile1 textfile2 >> textfile3
 ```
 
-## realpath
+## 1.6. realpath
+
 > realpath *java 显示以java结尾的数据的全路径
 
-## 3.6. grep
+## 1.7. grep
 
 Linux grep (global regular expression) 命令用于查找文件里符合条件的字符串或正则表达式。
 
@@ -126,33 +97,33 @@ grep "字符串" 文件名 | grep "字符串"
 grep "^字符串" 文件名
 
 
-从文件内容查找匹配指定字符串的行： 
+#从文件内容查找匹配指定字符串的行： 
 grep "被查找的字符串" 文件名
 
-从文件内容查找与正则表达式匹配的行： 
+#从文件内容查找与正则表达式匹配的行： 
 grep –e “正则表达式” 文件名
 
-查找时不区分大小写： 
+#查找时不区分大小写： 
 grep –i "被查找的字符串" 文件名
 
-查找匹配的行数： 
+#查找匹配的行数： 
 grep -c "被查找的字符串" 文件名
 
-从文件内容查找不匹配指定字符串的行：  
+#从文件内容查找不匹配指定字符串的行：  
 grep –v "被查找的字符串" 文件名
 
-从根目录开始查找所有扩展名为.log的文本文件，并找出包含”ERROR”的行 
+#从根目录开始查找所有扩展名为.log的文本文件，并找出包含”ERROR”的行 
 find / -type f -name "*.log" | xargs grep "ERROR"
 
-倒序输出搜索到的内容
+#倒序输出搜索到的内容
 grep "ERROR" app-repeater-receiver-2022-05-06-1.log | grep "saveRecord" | sort -k2 -n -r -t:
 ```
 
-# 4. 文件查找
+# 2. 文件查找
 
 - http://www.ruanyifeng.com/blog/2009/10/5_ways_to_search_for_files_using_the_terminal.html
 
-## 4.1. find
+## 2.1. find
 
 ```bash
 find . -name 'my*'
@@ -162,7 +133,7 @@ find -type f -mmin 10
 find / -name "my*" 从根目录开始查找
 ```
 
-## 4.2. locate
+## 2.2. locate
 
 类似于find -name，但是效率比find高
 
@@ -170,7 +141,7 @@ find / -name "my*" 从根目录开始查找
 locate /etc/my
 ```
 
-## 4.3. whereis
+## 2.3. whereis
 
 只查找bin文件，即一些命令
 
@@ -179,7 +150,7 @@ whereis java
 where grep
 ```
 
-## 4.4. which
+## 2.4. which
 
 从PATH中查找
 
@@ -188,19 +159,19 @@ which java
 which grep
 ```
 
-# 5. 网络信息查询
+# 3. 网络信息查询
 
-## 5.1. ifconfig
+## 3.1. ifconfig
 
 ```shell
 ifconfig -address
 ```
 
-## 5.2. telnet ip port
+## 3.2. telnet ip port
 
 检查某个服务的port是否启动
 
-## 5.3. tcpdump
+## 3.3. tcpdump
 
 ```shell
 yum install tcpdump
@@ -208,7 +179,7 @@ yum install tcpdump
 tcpdump -w package.cap  
 ```
 
-## 5.4. netstat
+## 3.4. netstat
 
 ```shell
 netstat -s | egrep "listen|LISTEN" 
@@ -218,40 +189,24 @@ netstat -nap | grep port 将会显示使用该端口的应用程序的进程 id
 netstat -g 将会显示该主机订阅的所有多播网络。
 ```
 
-## 5.5. traceroute
+## 3.5. traceroute
 
 ```shell
 traceroute baidu.com
 ```
 
-## 5.6. ss
+## 3.6. ss
 
 ```bash
 ss -int
 ```
+ 
 
-## 5.7. ubuntu网络防火端设置信息
+## 3.7. 内网穿透
 
-```shell
-sudo ufw allow 22/tcp
-sudo ufw allow 21/tcp
-sudo ufw allow 23/tcp
-sudo ufw allow 80/tcp
-sudo ufw allow from 59.75.133.222
-sudo ufw enable|disable
+# 4. 硬盘使用
 
-
-sudo ufw delete allow 22/tcp
-sudo ufw delete allow 21/tcp
-sudo ufw delete allow 23/tcp
-sudo ufw delete allow 80/tcp
-```
-
-## 5.8. 内网穿透
-
-# 6. 硬盘使用
-
-## 6.1. df
+## 4.1. df
 
 df（英文全称：disk free）：列出文件系统的整体磁盘使用量
 
@@ -260,7 +215,7 @@ df -hf
 df -h /etc
 ```
 
-## 6.2. du
+## 4.2. du
 
 - h或--human-readable 以K，M，G为单位，提高信息的可读性。
 - -s或--summarize 仅显示总计。
@@ -269,20 +224,20 @@ df -h /etc
 du * sh 
 ```
 
-## 6.3. cpu memory disk
+## 4.3. cpu memory disk
 ```shell
 lshw -class memory
 lshw -class cpu
 lshw -class disk
 ```
 
-# 7. 系统环境
+# 5. 系统环境
 
 - https://www.cnblogs.com/youyoui/p/10680329.html
 
-## 7.1. 修改环建变量
+## 5.1. 修改环建变量
 
-### 7.1.1. Linux环境变量配置方法一：export PATH
+### 5.1.1. Linux环境变量配置方法一：export PATH
 
 ```shell
 export PATH=/home/uusama/mysql/bin:$PATH
@@ -297,7 +252,7 @@ export PATH=$PATH:/home/uusama/mysql/bin
 
 ```
 
-### 7.1.2. Linux环境变量配置方法二：vim ~/.bashrc
+### 5.1.2. Linux环境变量配置方法二：vim ~/.bashrc
 
 ```shell
 vim ~/.bashrc
@@ -313,7 +268,7 @@ export PATH=$PATH:/home/uusama/mysql/bin
 
 ```
 
-### 7.1.3. Linux环境变量配置方法三：vim ~/.bash_profile
+### 5.1.3. Linux环境变量配置方法三：vim ~/.bash_profile
 
 ```shell
 和修改~/.bashrc文件类似，也是要在文件最后加上新的路径即可：
@@ -330,7 +285,7 @@ export PATH=$PATH:/home/uusama/mysql/bin
 如果没有~/.bash_profile文件，则可以编辑~/.profile文件或者新建一个
 ```
 
-### 7.1.4. Linux环境变量配置方法四：vim /etc/bashrc
+### 5.1.4. Linux环境变量配置方法四：vim /etc/bashrc
 
 ```shell
 该方法是修改系统配置，需要管理员权限（如root）或者对该文件的写入权限：
@@ -350,7 +305,7 @@ export PATH=$PATH:/home/uusama/mysql/bin
 
 ```
 
-### 7.1.5. Linux环境变量配置方法五：vim /etc/profile
+### 5.1.5. Linux环境变量配置方法五：vim /etc/profile
 
 ```shell
 该方法修改系统配置，需要管理员权限或者对该文件的写入权限，和vim /etc/bashrc类似：
@@ -369,7 +324,7 @@ export PATH=$PATH:/home/uusama/mysql/bin
 生效范围：对所有用户有效
 ```
 
-## 7.2. 环境变量分类
+## 5.2. 环境变量分类
 
 环境变量可以简单的分成用户自定义的环境变量以及系统级别的环境变量。
 
@@ -387,7 +342,7 @@ Linux加载环境变量的顺序如下：
 ~/.bashrc
 ```
 
-## 7.3. 查看环境变量
+## 5.3. 查看环境变量
 
 - env 查看当前主机的所有环境环境
 - export命令显示当前系统定义的所有环境变量
@@ -397,9 +352,9 @@ Linux加载环境变量的顺序如下：
 env | grep -i 'env' 在环境变量中查找包括env字符的行
 ```
 
-# 8. 进程
+# 6. 进程
 
-## 8.1. ps
+## 6.1. ps
 
 ```shell
 
@@ -412,28 +367,28 @@ ps -L <pid>
 
 ```
 
-## 8.2. lsof (list open files)列出当前系统打开文件
+## 6.2. lsof (list open files)列出当前系统打开文件
 
 ```shell
 lsof -i:<端口号>
 lsof -i
 ```
 
-## 8.3. kill
+## 6.3. kill
 
 - kill -9
 - kill -15
 
 - https://www.runoob.com/linux/linux-comm-kill.html 菜鸟
 
-## 8.4. dmseg
+## 6.4. dmseg
 
 Linux dmesg（英文全称：display message）命令用于显示开机信息。
 - dmseg -t > dmseg1.log
 
-# 9. 其他
+# 7. 其他
 
-## 9.1. nohup
+## 7.1. nohup
 
 ```shell
 nohup /root/runoob.sh > runoob.log 2>&1 &

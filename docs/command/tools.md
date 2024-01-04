@@ -81,13 +81,11 @@ nav_order: 8
 - markdown editor
 - markdown index
 - Maven辅助神器：Maven Helper
-- Mybatis 工具 MybatisX
-- Mybatis 工具 MybatisX with mapper
 - MyBatisCodeHelperPro
 - package check
 - package search
 - plant uml 画图工具
-- RESTFul 服务开发辅助工具集: RestfulToolkit
+- RestfulToolkit : RESTFul 服务开发辅助工具集
 - Spring Assistant
 - VisualVM
 - Vuesion Theme 主题
