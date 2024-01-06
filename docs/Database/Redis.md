@@ -60,7 +60,7 @@ redis启动时会加载这个.aof文件重新构建数据。为避免.aof文件�
 
 # 3. 数据类型
 
-## 3.1. reids中的key
+## 3.1. redis中的key
 
 - keys * ：列出当前库中所有的key
 - exists 为：判断key_name是滞存在
