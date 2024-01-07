@@ -245,16 +245,13 @@ Resource[]list=context.getResource("classpath:");
         Resource[]listcontext.getResource("file:");
 ```
 
-# aop失效
+# 8. aop失效
 
 
 - AOP代理对象失效：在类内部方法中调用同一个类中定义的方法，则调用的是当前的对象，而不是代理对象，则代理失效，注解失效。
 - 要增强的类或方法没被spring管理：例如，把Aop的实现类注入到了spring容器中，而要切的类方法是在Controller层，即springmvc容器中的东西。在这种情况下，aop在初始化时会在自己的容器中寻找能够匹配的类方法，因为这些类和方法是在springmvc容器中管理的，因此就没有代理成功。
 
-## 解决方法
+## 8.1. 解决方法
 - 可以采取的解决办法包括将需要进行AOP管理的方法放在独立的类中定义；
 - 将Aop的配置切点移到springmvc容器的xml中；
 - 使用AopContext.currentProxy()获得当前切面的代理对象，通过这个代理对象来调用方法等。但需要加上配置：@EnableAspectJAutoProxy(exposeProxy = true)
-
-
-
