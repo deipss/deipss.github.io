@@ -80,7 +80,8 @@ export JAVA_HOME=$JAVA_8_HOME# alias命令动态切换JDK版本
 alias jdk8="export JAVA_HOME=$JAVA_8_HOME"
 alias jdk13="export JAVA_HOME=$JAVA_13_HOME"export PATH=$JAVA_HOME/bin:$PATH:.
 export CLASSPATH=$JAVA_HOME/lib/tools.jar:$JAVA_HOME/lib/dt.jar:.
-$ source ~/.bash_profile #Zsh应改为 source ~/.zshrc
+$ source ~/.bash_profile 
+#Zsh应改为 source ~/.zshrc
 
 ```
 
@@ -111,3 +112,31 @@ PC端主要是X86，移动端主是要RAM。
 uname -pa
         
 ```
+
+# 6. 目录
+
+## 6.1. Mac 的文件目录结构
+
+- /System 文件夹，系统文件夹。与Windows 之中的 C:\windows32 等文件夹类似。
+  - Library 系统资料库，其中的 Caches 可以删除。
+  - iOSSupport 提供了系统的 iOS 支持。
+- /Applications GUI软件文件夹，共享的所有软件包都存放在此。
+- /Library 应用资料库，包括了大部分非核心的系统组件。Caches 可删除。
+- /Users 文件夹，与 Linux 之中的 /home 文件夹功能类似。而mac 之中的 /home 只是为了与 Linux 兼容，一般不放任何东西。
+- /Network 和 /net 网络相关，空的。
+- /Volumes 与 /mnt 类似，其中挂载了全部硬盘、网络硬盘等。
+- /sbin，/bin，/usr /dev文件夹，与 Linux 基本一致。与 Linux 兼容。
+- /etc, /var /tmp 文件夹，是位于 /private 之中对应文件夹的软连接。存放系统配置、数据库、缓存等。用于与 Linux 文件结构兼容。
+
+## 6.2. Brew 软件位置
+
+Mac 不自带包管理。但是可以很方便的获取 brew 包管理工具。brew 自身位于 /usr/local/Homebrew 目录。
+其软件安装包没有安装在系统目录之下，而是位于 /usr/local/Cellar 里面。
+举个例子，brew 安装的 Python3 位于 /usr/local/Cellar/python/3.7.1/ 之中，而 go 则可能位于 /usr/local/Cellar/go/1.12.1 之中。
+
+但是这些软件位置互相独立，PAYH，LIBRARY 等环境变量管理较为麻烦，因此 brew 又维护了一个映射关系，
+将所有文件软链接到 /usr/local 的 bin, etc, lib, var 等文件夹之中。
+正是这个道理 mysql 安装的数据库的位置可能就位于 /usr/local/var/db 之中。
+
+另外，Mac 的 GUI软件（即 Cocoa 软件）全部是按照软件包的形式发放，没有分散的文件。
+brew 也可以安装 chrome 等这类 GUI 软件，此时位置全部放置在默认位置 /Applications 之中。

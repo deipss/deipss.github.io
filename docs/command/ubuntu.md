@@ -30,7 +30,7 @@ systemctl is-enabled supervisord
 sudo apt install openjdk-8-jdk
 whereis java
 
-# 配置jre等包
+# 配置jre等包,不配置的话，运行的java程序，会找不到CLASSPATH下的包，导致一些功能不能正常使用，比如远程debug
 vim ~/.profile
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 export JRE_HOME=$JAVA_HOME/jre

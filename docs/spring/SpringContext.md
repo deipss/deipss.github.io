@@ -74,6 +74,83 @@ BeanFactory本身功能并不充分，通过一系列的后置处理器来完善
 具体增强哪些功能，在每个Bean定义时，去指定具体的接口，来完成具体的功能。
 
 # 2. Spring 上下文初始化过程
+- https://www.cnblogs.com/Createsequence/p/16585528.html
+- https://www.cnblogs.com/Createsequence/p/16585530.html
+- https://www.cnblogs.com/Createsequence/p/16585531.html
+## 2.1. org.springframework.context.support.AbstractApplicationContext#refresh
+```java
+@Override
+	public void refresh() throws BeansException, IllegalStateException {
+		synchronized (this.startupShutdownMonitor) {
+        // ================= 一、上下文的初始化 =================
+
+        // Prepare this context for refreshing.
+			prepareRefresh();
+
+			// Tell the subclass to refresh the internal bean factory.
+			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
+
+			// Prepare the bean factory for use in this context.
+			prepareBeanFactory(beanFactory);
+
+			try {
+        // ================= 二、BeanFactory的初始化 =================
+
+        // Allows post-processing of the bean factory in context subclasses.
+				postProcessBeanFactory(beanFactory);
+
+				// Invoke factory processors registered as beans in the context.
+				invokeBeanFactoryPostProcessors(beanFactory);
+
+				// Register bean processors that intercept bean creation.
+				registerBeanPostProcessors(beanFactory);
+        // ================= 三、事件，Bean及其他配置的初始化 =================
+
+				// Initialize message source for this context.
+				initMessageSource();
+
+				// Initialize event multicaster for this context.
+				initApplicationEventMulticaster();
+
+				// Initialize other special beans in specific context subclasses.
+				onRefresh();
+
+				// Check for listener beans and register them.
+				registerListeners();
+
+				// Instantiate all remaining (non-lazy-init) singletons.
+				finishBeanFactoryInitialization(beanFactory);
+
+				// Last step: publish corresponding event.
+				finishRefresh();
+			}
+
+			catch (BeansException ex) {
+				if (logger.isWarnEnabled()) {
+					logger.warn("Exception encountered during context initialization - " +
+							"cancelling refresh attempt: " + ex);
+				}
+
+				// Destroy already created singletons to avoid dangling resources.
+				destroyBeans();
+
+				// Reset 'active' flag.
+				cancelRefresh(ex);
+
+				// Propagate exception to caller.
+				throw ex;
+			}
+
+			finally {
+        // 重置内部的一些元数据缓存
+
+        // Reset common introspection caches in Spring's core, since we
+				// might not ever need metadata for singleton beans anymore...
+				resetCommonCaches();
+			}
+		}
+	}
+```
 
 # 3. Spring常见的一些后置处理器
 
