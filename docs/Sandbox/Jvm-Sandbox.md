@@ -65,42 +65,42 @@ premain和attach两种方式都会调用这个方法，这个方法上的static�
 
 ```mermaid
 classDiagram
-  direction BT
-  class AsmMethods {
-    <<Interface>>
-  }
-  class AsmTypes {
-    <<Interface>>
-  }
-  class ClassVisitor {
-    + visitNestHost(String) void
-    + visitModule(String, int, String) ModuleVisitor
-    + visitInnerClass(String, String, String, int) void
-    + visitField(int, String, String, String, Object) FieldVisitor
-    + visitMethod(int, String, String, String, String[]) MethodVisitor
-    + visitSource(String, String) void
-    + visitTypeAnnotation(int, TypePath, String, boolean) AnnotationVisitor
-    + visitOuterClass(String, String, String) void
-    + visitEnd() void
-    + visit(int, int, String, String, String, String[]) void
-    + visitNestMember(String) void
-    + visitAnnotation(String, boolean) AnnotationVisitor
-    + visitAttribute(Attribute) void
-  }
-  class EventWeaver {
-    + visitMethod(int, String, String, String, String[]) MethodVisitor
-    - isMatchedBehavior(String) boolean
-    - getBehaviorSignCode(String, String) String
-    + visitEnd() void
-  }
-  class Opcodes {
-    <<Interface>>
-  }
+    direction BT
+    class AsmMethods {
+        <<Interface>>
+    }
+    class AsmTypes {
+        <<Interface>>
+    }
+    class ClassVisitor {
+        + visitNestHost(String) void
+        + visitModule(String, int, String) ModuleVisitor
+        + visitInnerClass(String, String, String, int) void
+        + visitField(int, String, String, String, Object) FieldVisitor
+        + visitMethod(int, String, String, String, String[]) MethodVisitor
+        + visitSource(String, String) void
+        + visitTypeAnnotation(int, TypePath, String, boolean) AnnotationVisitor
+        + visitOuterClass(String, String, String) void
+        + visitEnd() void
+        + visit(int, int, String, String, String, String[]) void
+        + visitNestMember(String) void
+        + visitAnnotation(String, boolean) AnnotationVisitor
+        + visitAttribute(Attribute) void
+    }
+    class EventWeaver {
+        + visitMethod(int, String, String, String, String[]) MethodVisitor
+        - isMatchedBehavior(String) boolean
+        - getBehaviorSignCode(String, String) String
+        + visitEnd() void
+    }
+    class Opcodes {
+        <<Interface>>
+    }
 
-  EventWeaver ..> AsmMethods
-  EventWeaver ..> AsmTypes
-  EventWeaver --> ClassVisitor
-  EventWeaver ..> Opcodes
+    EventWeaver ..> AsmMethods
+    EventWeaver ..> AsmTypes
+    EventWeaver --> ClassVisitor
+    EventWeaver ..> Opcodes
 
 ```
 
@@ -109,21 +109,21 @@ classDiagram
 ```mermaid
 
 sequenceDiagram
-  autonumber
-  EventWeaver ->> EventWeaver: visitMethod
-  EventWeaver ->> EventWeaver: visitEnd
-  EventWeaver ->> AsmMethods: invokeStatic
-  AsmMethods ->> Spy: handleOnBefore
-  Spy ->> EventListenerHandler: handleOnBefore
-  EventListenerHandler ->> EventProcessor: handleOnBefore
-  EventListenerHandler ->> EventListenerHandler: mappingOfEventProcessor.get(listenerId)
-  EventListenerHandler ->> EventListenerHandler: processor.processRef.get()
-  rect rgb(200, 150, 255)
-    EventListenerHandler ->> EventListenerHandler: BusinessClassLoaderHolder.setBussinessClassLoader(javaClassLoader)
-  end
-  EventListenerHandler ->> EventListenerHandler: handleEvent
-  EventListenerHandler ->> EventListenerHandler: com.alibaba.jvm.sandbox.core.enhance.weaver.EventListenerHandler#handleEvent
-  EventListenerHandler ->> EventListener: onEvent()
+    autonumber
+    EventWeaver ->> EventWeaver: visitMethod
+    EventWeaver ->> EventWeaver: visitEnd
+    EventWeaver ->> AsmMethods: invokeStatic
+    AsmMethods ->> Spy: handleOnBefore
+    Spy ->> EventListenerHandler: handleOnBefore
+    EventListenerHandler ->> EventProcessor: handleOnBefore
+    EventListenerHandler ->> EventListenerHandler: mappingOfEventProcessor.get(listenerId)
+    EventListenerHandler ->> EventListenerHandler: processor.processRef.get()
+    rect rgb(200, 150, 255)
+        EventListenerHandler ->> EventListenerHandler: BusinessClassLoaderHolder.setBussinessClassLoader(javaClassLoader)
+    end
+    EventListenerHandler ->> EventListenerHandler: handleEvent
+    EventListenerHandler ->> EventListenerHandler: com.alibaba.jvm.sandbox.core.enhance.weaver.EventListenerHandler#handleEvent
+    EventListenerHandler ->> EventListener: onEvent()
 
 ```
 
@@ -179,29 +179,94 @@ public static void spyMethodOnCallThrows(final String throwException,
 
 # 2. 源代码细节
 
-## 2.1. JVMTI
+## 2.1. 生命周期
+
+```java
+package com.alibaba.jvm.sandbox.api;
+
+/**
+ * 沙箱模块生命周期
+ *
+ * @author luanjia@taobao.com
+ */
+public interface ModuleLifecycle extends LoadCompleted {
+
+    /**
+     * 模块加载，模块开始加载之前调用！
+     * <p>
+     * 模块加载是模块生命周期的开始，在模块生命中期中有且只会调用一次。
+     * 这里抛出异常将会是阻止模块被加载的唯一方式，如果模块判定加载失败，将会释放掉所有预申请的资源，模块也不会被沙箱所感知
+     * </p>
+     *
+     * @throws Throwable 加载模块失败
+     */
+    void onLoad() throws Throwable;
+
+
+    /**
+     * 模块卸载，模块开始卸载之前调用！
+     * <p>
+     * 模块卸载是模块生命周期的结束，在模块生命中期中有且只会调用一次。
+     * 这里抛出异常将会是阻止模块被卸载的唯一方式，如果模块判定卸载失败，将不会造成任何资源的提前关闭与释放，模块将能继续正常工作
+     * </p>
+     *
+     * @throws Throwable 卸载模块失败
+     */
+    void onUnload() throws Throwable;
+
+    /**
+     * 模块激活
+     * <p>
+     * 模块被激活后，模块所增强的类将会被激活，所有{@link com.alibaba.jvm.sandbox.api.listener.EventListener}将开始收到对应的事件
+     * </p>
+     * <p>
+     * 这里抛出异常将会是阻止模块被激活的唯一方式
+     * </p>
+     *
+     * @throws Throwable 模块激活失败
+     */
+    void onActive() throws Throwable;
+
+    /**
+     * 模块冻结
+     * <p>
+     * 模块被冻结后，模块所持有的所有{@link com.alibaba.jvm.sandbox.api.listener.EventListener}将被静默，无法收到对应的事件。
+     * 需要注意的是，模块冻结后虽然不再收到相关事件，但沙箱给对应类织入的增强代码仍然还在。
+     * </p>
+     * <p>
+     * 这里抛出异常将会是阻止模块被冻结的唯一方式
+     * </p>
+     *
+     * @throws Throwable 模块冻结失败
+     */
+    void onFrozen() throws Throwable;
+
+}
+
+```
+
+## 2.2. JVMTI
 
 - JVMTI（JVM Tool Interface）是 Java 虚拟机所提供的 native 编程接口，是 JVMPI（Java Virtual Machine Profiler Interface）和
   JVMDI（Java Virtual Machine Debug Interface）的替代版本。
 
 > VMTI只是一套接口，我们要开发JVM工具就需要写一个Agent程序来使用这些接口。Agent程序其实就是一个C/C++语言编写的动态链接库。
 
-## 2.2. JPLISAgent
+## 2.3. JPLISAgent
 
-## 2.3. 如何进行类隔离
+## 2.4. 如何进行类隔离
 
 - 对于同样的类，是不是会加载多次，比如LogFactory,业务代码中有一个，Sandbox自己也有一个
 
-## 2.4. 同一个类被多个模块增强，字节码会是怎么样
+## 2.5. 同一个类被多个模块增强，字节码会是怎么样
 
-## 2.5. 同一个类被多个模块同步增强，是否会出现ABA问题，如何应对这类问题
+## 2.6. 同一个类被多个模块同步增强，是否会出现ABA问题，如何应对这类问题
 
 - 代码锁
 
-## 2.6. 同一类被多个模块增强后，同步命中，多个事件是否存在顺序
+## 2.7. 同一类被多个模块增强后，同步命中，多个事件是否存在顺序
 
-
-## 2.7. 同一个类，在同一个模块，多次增强
+## 2.8. 同一个类，在同一个模块，多次增强
 
 # 3. 参考文献
 
