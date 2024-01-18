@@ -16,6 +16,8 @@ parent: Database
 - 单个KEY的VALUE小于10KB
 - 对于集合类型的KEY，建议元素数量小于1000
 
+- [如何处理Redis集群数据倾斜](https://help.aliyun.com/zh/redis/user-guide/deal-with-data-skew-issues)
+
 ## 2.1. BIG KEY的问题
 
 - 网络阻塞：BIG KEY 在少量的QPS也会占用大量网络带宽
