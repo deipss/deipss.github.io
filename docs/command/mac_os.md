@@ -18,6 +18,9 @@ brew list
 # 诊断
 brew doctor
 
+# 清理不必要的安装包
+brew cleanup
+
 ```
 
 ## 1.2. 镜像加速
