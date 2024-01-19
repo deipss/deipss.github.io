@@ -16,6 +16,11 @@ parent: Java
 
 # 2. 堆
 
+> JVM堆是Java堆内存，它是Java堆中对象分配的空间。
+> JVM堆的大小由最大堆大小（-Xmx）和初始堆大小（-Xms）参数控制。
+> JVM堆的默认大小取决于JDK版本和操作系统。在某些JDK版本中，
+> JVM堆的默认最大堆大小为1GB，初始堆大小为物理内存的1/64。
+
 ## 2.1. 引用计数与可达性分析
 
 - 引用计数在循环引用时，会出现无法回收的情况
@@ -32,7 +37,7 @@ parent: Java
 # 3. 引用
 
 - 软引用：常用于缓存中，当内存不足时，使用软引用 SoftReference，回收可以放在一个软引用队列中，ReferenceQueue
-- 虚引用：不能通过引用去获取饮食的对象，唯一用途是内存释放时，可以收到一个通知。PhantomReference
+- 虚引用：不能通过引用去获取使用的对象，唯一用途是内存释放时，可以收到一个通知。PhantomReference
 - 弱引用：不管GC时内存够不够，都会被回收，WeakReference，一般用于ThreadLocal中
 - 终结引用：对象需要被回收时，会将关联的对象放在一个finalize队列中，第二次回收时，才会真正回收，但是真正回收前
   ，可以关联对象再关联对一个强引用，又不会回收。
@@ -112,3 +117,37 @@ From中剩下的数据，就是要被清除的
 ## 5.5. G1
 - 分为Eden， Survivor， old
 - 默认分为2048个区域
+
+
+# jvm GC 配置
+
+> -server -Xmx13G -Xms13G -Xss4M -XX:+UseG1GC -XX:MaxGCPauseMillis=100 -XX:+UseStringDeduplication
+-XX:+DisableExplicitGC -XX:+ScavengeBeforeFullGC -XX:+ExplicitGCInvokesConcurrent -XX:+PrintGCDetails
+-XX:+PrintGCDateStamps -XX:+PrintGCApplicationConcurrentTime -XX:+PrintHeapAtGC -XX:+HeapDumpOnOutOfMemoryError
+-XX:HeapDumpPath=/root/logs/dump.bin -XX:ErrorFile=/root/logs/dump-error.log
+-Xloggc:/root/logs/gc.log -XX:-OmitStackTraceInFastThrow -Dproject.name=xsyx-repeater-datasyn
+-DappName=xsyx-repeater-datasyn -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005  
+-DinsightConsoleUrl=http://insight-console.cs-test.xsyxsc.cn
+
+ - server 
+ - Xmx13G 
+ - Xms13G 
+ - Xss4M 
+ - XX:+UseG1GC 
+ - XX:MaxGCPauseMillis=100 
+ - XX:+UseStringDeduplication
+ - XX:+DisableExplicitGC 
+ - XX:+ScavengeBeforeFullGC 
+ - XX:+ExplicitGCInvokesConcurrent 
+ - XX:+PrintGCDetails
+ - XX:+PrintGCDateStamps 
+ - XX:+PrintGCApplicationConcurrentTime 
+ - XX:+PrintHeapAtGC 
+ - XX:+HeapDumpOnOutOfMemoryError
+ - XX:HeapDumpPath=/root/logs/dump.bin 
+ - XX:ErrorFile=/root/logs/dump-error.log
+ - Xloggc:/root/logs/gc.log 
+ - XX:-OmitStackTraceInFastThrow 
+ - Dproject.name=good-test-man
+ - DappName=good-test-man 
+ - agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005  
