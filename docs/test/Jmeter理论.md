@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Jmeter理论
-parent: test
+parent: Test
 ---
 
 ## JMeter的工作原理是什么？

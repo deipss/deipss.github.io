@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Jmeter
-parent: test
+parent: Test
 ---
 
 # 1. install
