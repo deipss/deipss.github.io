@@ -24,7 +24,7 @@ jmap -dump,format=b,file=<file-path> <pid>
 ## 元空间内存泄漏
 
 - 序列化与反序列化时，类加载器加载元信息过多，没有回收,例如 https://github.com/alibaba/fastjson2/issues/2109
--
+
 
 ## 堆OOM
 
