@@ -241,7 +241,7 @@ docker run --name kib-01 --net elastic -p 5601:5601 docker.elastic.co/kibana/kib
 
 ```
 
-### 2.5.2. 7.7版本
+### 2.5.2. 7.17版本
 
 - https://www.elastic.co/guide/en/kibana/7.17/docker.html
 
@@ -291,6 +291,12 @@ services:
 volumes:
   es-data-es01: { }
 ```
+
+#### 2.5.3.1. 通过以下命令来启动
+
+- find / -name "docker-compose.yml"
+- cd /home/deipss/docker-yaml/
+- docker-compose up -d
 
 ## 2.6. redis
 
