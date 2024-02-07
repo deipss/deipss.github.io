@@ -11,12 +11,43 @@ nav_order: 10
 
 ## 1.1. command
 
+- Formulae：软件包，包括了这个软件的依赖、源码位置及编译方法等；
+
+> brew install 是下载源码解压，然后 ./configure && make install ，同时会包含相关依存库，并自动配置好各种环境变量。
+
+- Casks：已经编译好的应用包，如图形界面程序等。
+
+> brew cask 是针对已经编译好了的应用包（.dmg/.pkg）下载解压，然后放在统一的目录中（Caskroom），省掉了自己下载、解压、安装等步骤。
+
+brew install 用来安装一些不带界面的命令行工具和第三方库。
+
+brew cask install 用来安装一些带界面的应用软件。
+
 ```shell
-brew -v 
-brew search jdk
-brew install
-brew uninstall
+
+
+# 查看brew版本：
+brew -v
+# 更新brew版本：
+brew update
+# 本地软件库列表：
 brew list
+# 查看软件库版本：
+brew list --versions
+# 查找软件包：
+brew search xxx （xxx为要查找软件的关键词）
+# 安装软件包：
+brew install xxx （xxx为软件包名称）
+# 卸载软件包：
+brew uninstall xxx
+# 安装软件：
+brew cask install xxx（xxx为软件名称）
+# 卸载软件：
+brew cask uninstall xxx
+# 查找软件安装位置：
+which xxx （xxx为软件名称）
+
+
 # 诊断
 brew doctor
 
@@ -49,49 +80,56 @@ brew update
 
 ```
 
-## 1.3. jdk
+## 1.3. 使用brew安装多版本jdk
 
-- 查看本地安装的java版本 /usr/libexec/java_home -V
-
-- mac上的默认目录 /Library/Java/JavaVirtualMachines/jdk-1.8.jdk/Contents/Home
+### 1.3.1. 查看可以安装的版本
 
 ```shell
 
-brew install homebrew/cask-versions/openjdk@17
+deipss@deipssdeMacBook-Air ~ % brew search jdk 
+==> Formulae
+openjdk ✔         openjdk@11 ✔      openjdk@17        openjdk@8         jd                mdk               cdk
 
-# 跳转到根目录显示查看所有.a配置文件
-cd
-ls -a
+==> Casks
+adoptopenjdk                                                     oracle-jdk
+homebrew/cask-versions/adoptopenjdk8                             oracle-jdk-javadoc
+gama-jdk                                                         homebrew/cask-versions/oracle-jdk17
+graalvm-jdk                                                      sapmachine-jdk
+homebrew/cask-versions/graalvm-jdk17                             semeru-jdk-open
+jdk-mission-control                                              homebrew/cask-versions/semeru-jdk11-open
+microsoft-openjdk                                                homebrew/cask-versions/semeru-jdk17-open
+homebrew/cask-versions/microsoft-openjdk11                       homebrew/cask-versions/semeru-jdk8-open
+homebrew/cask-versions/microsoft-openjdk17
+deipss@deipssdeMacBook-Air ~ % 
+```
 
-# 添加java_home到.bash_profile文件中
-touch .bash_profile
-# 使用vim编辑器编辑 .bash_profile文件
-vi .bash_profile
+### 1.3.2. 查看已安装的jdk
 
-# 添加下面代码
-export JAVA_HOME=$(/usr/libexec/java_home)
+- brew list --version | grep jdk
+- 查看本地安装的java版本 /usr/libexec/java_home -V
+- mac上的默认目录 /Library/Java/JavaVirtualMachines/jdk-1.8.jdk/Contents/Home
+
+### 1.3.3. 多版本bash配置
+
+
+```shell
+
+
+export JAVA_8_HOME=/Library/Java/JavaVirtualMachines/jdk-1.8.jdk/Contents/Home
+export JAVA_11_HOME=/Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home
+export JAVA_HOME=$JAVA_8_HOME
 export PATH=$JAVA_HOME/bin:$PATH
 export CLASS_PATH=$JAVA_HOME/lib
-
-# 添加完后点按esc(确认输入无效)后输入“:wq”(没引号)
-是配置生效
-$source .bash_profile
-
-echo "source ~/.bash_profile" >>~/.zshrc
-
-# JDK 13
-JAVA_11_HOME=/Library/Java/JavaVirtualMachines/jdk-11.0.1.jdk/Contents/Home/
-
-# JDK 8
-JAVA_8_HOME=/Library/Java/JavaVirtualMachines/jdk-1.8.jdk/Contents/Home
-export JAVA_HOME=$JAVA_8_HOME# alias命令动态切换JDK版本
+export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
+export HOMEBREW_NO_AUTO_UPDATE=1
 alias jdk8="export JAVA_HOME=$JAVA_8_HOME"
-alias jdk13="export JAVA_HOME=$JAVA_13_HOME"export PATH=$JAVA_HOME/bin:$PATH:.
-export CLASSPATH=$JAVA_HOME/lib/tools.jar:$JAVA_HOME/lib/dt.jar:.
-$ source ~/.bash_profile 
-#Zsh应改为 source ~/.zshrc
+alias jdk11="export JAVA_HOME=$JAVA_11_HOME"
+alias ll='ls -alrth'
 
 ```
+> source ~/.bash_profile
+> 
+> Zsh应改为 source ~/.zshrc
 
 # 2. cpu
 
@@ -124,19 +162,6 @@ PC端主要是X86，移动端主是要RAM。
 - /Volumes 与 /mnt 类似，其中挂载了全部硬盘、网络硬盘等。
 - /sbin，/bin，/usr /dev文件夹，与 Linux 基本一致。与 Linux 兼容。
 - /etc, /var /tmp 文件夹，是位于 /private 之中对应文件夹的软连接。存放系统配置、数据库、缓存等。用于与 Linux 文件结构兼容。
-
-## 3.2. Brew 软件位置
-
-Mac 不自带包管理。但是可以很方便的获取 brew 包管理工具。brew 自身位于 /usr/local/Homebrew 目录。
-其软件安装包没有安装在系统目录之下，而是位于 /usr/local/Cellar 里面。
-举个例子，brew 安装的 Python3 位于 /usr/local/Cellar/python/3.7.1/ 之中，而 go 则可能位于 /usr/local/Cellar/go/1.12.1 之中。
-
-但是这些软件位置互相独立，PAYH，LIBRARY 等环境变量管理较为麻烦，因此 brew 又维护了一个映射关系，
-将所有文件软链接到 /usr/local 的 bin, etc, lib, var 等文件夹之中。
-正是这个道理 mysql 安装的数据库的位置可能就位于 /usr/local/var/db 之中。
-
-另外，Mac 的 GUI软件（即 Cocoa 软件）全部是按照软件包的形式发放，没有分散的文件。
-brew 也可以安装 chrome 等这类 GUI 软件，此时位置全部放置在默认位置 /Applications 之中。
 
 # 4. 其他常用软件
 
