@@ -17,7 +17,7 @@ parent: Command
 ![maven_conflict.png](img%2Fmaven_conflict.png)
 
 - 可以使用`<optional>true</optional>`取消依赖的传递
-- `<exclusion>` 不用写版本号
+- `<exclusion>` 来排除某个依赖，不用写版本号
 
 # 3. 依赖范围
 
@@ -64,11 +64,9 @@ mvn versions:set -D newVersion=1.5.0-SNAPSHOT
 - 执行 `mvn -Dattr=newattr clean package`，则pom.xml内attr的实际值将被替换成newattr
 
 ```xml
-
 <properties>
     <attr>defaultattr</attr>
 </properties>
-
 ```
 
 - -U 代表强制更新（update）
@@ -115,7 +113,6 @@ mvn deploy:deploy-file
 ### 4.5.1. 仅在dev的profile中，开启SNAPSHOT的仓库
 
 ```xml
-<!--  -->
 <repositories>
     <repository>
         <id>nexus-snapshots</id>
@@ -132,7 +129,8 @@ mvn deploy:deploy-file
 ## 4.6. 安装在本地
 
 ```shell
-mvn install 会将包安装在本地的仓库
+#会将包安装在本地的仓库
+mvn clean install -Dmaven.test.skip=true
 mvn clean compile install deploy  -Dmaven.test.skip=true
 mvn clean package  '-Dmaven.test.skip=true'
 
@@ -140,7 +138,7 @@ mvn clean package  '-Dmaven.test.skip=true'
 
 ## 4.7. mvn配置文件
 
-- <package></package>标签 可以有pom或是jar,默认是jar,在有父子继续关系时，一般父pom文件使用pom包
+- `<package></package>`标签可以有pom或是jar,默认是jar,在有父子继续关系时，一般父pom文件使用pom包
 
 ## 4.8. 源码下载
 
@@ -153,19 +151,19 @@ mvn dependency:sources dependency:resolve -Dclassifier=javadoc
 ## 4.9. mvn 仓库优先级
 
 ```shell
-本地仓库 > 私服 （profile）> 远程仓库（repository）和 镜像 （mirror） > 中央仓库 （central）
+本地仓库 > 私服（profile）> 远程仓库（repository）和 镜像（mirror） > 中央仓库（central）
 ```
 
 # 5. nexus
 
-nexus里可以配置3种类型的仓库，分别是proxy、hosted、group 。
+nexus里可以配置3种类型的仓库，分别是proxy、hosted、group:
 
 - proxy是远程仓库的代理。比如说在nexus中配置了一个central
   repository的proxy，当用户向这个proxy请求一个artifact，这个proxy就会先在本地查找，如果找不到的话，就会从远程仓库下载，然后返回给用户，相当于起到一个中转的作用。
-- hosted是宿主仓库，用户可以把自己的artifact、proxy下载不到的artifact，deploy到hosted中。
--
 
-group是仓库组，目的是将上述多个仓库聚合，对用户暴露统一的地址，这样用户就不需要在pom中配置多个地址，只要统一配置group的地址就可以了 。
+- hosted是宿主仓库，用户可以把自己的artifact、proxy下载不到的artifact，deploy到hosted中。
+
+- group是仓库组，目的是将上述多个仓库聚合，对用户暴露统一的地址，这样用户就不需要在pom中配置多个地址，只要统一配置group的地址就可以了 。
 
 # 6. plugins
 

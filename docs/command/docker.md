@@ -13,19 +13,18 @@ nav_order: 2
 
 - https://docs.docker.com/engine/install/ubuntu/
 
-```shell
+snap是ubuntu上的一个软件管理工具
 
+```shell
 sudo snap install docker         # version 20.10.24, or
 sudo apt  install docker.io      # version 24.0.5-0ubuntu1~22.04.1
 sudo apt  install podman-docker  # version 3.4.4+ds1-1ubuntu1.22.04.2
 See 'snap info docker' for additional versions.
-
 ```
 
 ## 1.2. install docker on centos
 
 ```shell
-
 #查看内核版本
 uname -r
 #确保 yum 包更新到最新
@@ -36,7 +35,6 @@ curl >fsSL [https://get.docker.com](https://get.docker.com) >o get>[docker.sh](h
 sudo systemctl start docker
 #开机启动
 sudo systemctl enable docker 
-
 ```
 
 ## 1.3. 开启远程启动
@@ -44,7 +42,6 @@ sudo systemctl enable docker
 - https://docs.docker.com/config/daemon/remote-access/
 
 ```shell
-
 sudo su
 find / -name "*docker.ser*"
 vim docker.server 
@@ -52,7 +49,6 @@ ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2375
 sudo systemctl daemon-reload 
 sudo systemctl restart docker.service
 sudo netstat -lntp | grep dockerd
-
 ```
 
 ## 1.4. docker 加速
@@ -72,10 +68,8 @@ sudo netstat -lntp | grep dockerd
 - https://programlife.net/2020/09/12/ubuntu-snap-docker-registry-mirrors/
 
 ```shell
-
 #新版的ubuntu使用snap来管理一些软件，所以重启使用snap的命令
 sudo systemctl list-units --type=service
-
 ```
 
 ## 1.6. 查询docker镜像
@@ -83,7 +77,6 @@ sudo systemctl list-units --type=service
 文档 https://hub.docker.com/
 
 ```shell
-
 #查看镜像
 docker image ls
 docker images -a
@@ -91,13 +84,11 @@ docker images -a
 docker images
 #删除镜像
 docker imamges rm
-
 ```
 
 ## 1.7. 容器启动
 
 ```bash
-
 #虚拟内存设置大一点
 sysctl -w vm.max_map_count=262144
 
@@ -106,49 +97,39 @@ docker run -p 27017:27017  -d mongo --restart=always
 docker run -p 6379:6379  -d redis redis-server --appendonly yes --restart=always
 #自动启动
 docker update --restart=always 01a07d12cfec
-
 ```
 
 ## 1.8. 删除未启动的容器
 
 ```bash
-
 #删除容器
 docker rm $( docker ps -a -q)
 #删除镜像
 docker rm $( docker images -a -q)
-
 ```
 
 ## 1.9. 查看端口映射
 
 ```shell
 docker port [容器id]
-
 ```
 
 ## 1.10. 进行容器
 
 ```shell
-
 docker exec -it [容器ID] /bin/bash
-
 ```
 
 ## 1.11. 日志查看
 
 ```shell
-
 docker logs -f bf08b7f2cd89
-
 ```
 
 ## 1.12. 观测某个容器
 
 ```shell
-
 docker inspect [容器ID]
-
 ```
 
 # 2. 常见服务
@@ -156,8 +137,7 @@ docker inspect [容器ID]
 ## 2.1. mysql
 
 ```bash
-
-docker run --name mysql_1 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=deipss -d mysql:latest
+docker run --name mysql_1 -p 3306:3306 -e MYSQL_ROOT_PASSWORD=deipss --restart=always  -d mysql:latest
 docker exec -it mysql_1 bash
 mysql -u root -p -h localhost
 ALTER USER 'root'@'%' IDENTIFIED BY 'mysql_Xh7Z62' PASSWORD EXPIRE NEVER;
@@ -165,12 +145,11 @@ ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'mysql_Xh7Z62';
 FLUSH PRIVILEGES;
 commit;
 select Host,User,plugin from mysql.user;
-
 ```
 
-- [https://www.cnblogs.com/limingxie/p/8655457.html](https://www.cnblogs.com/limingxie/p/8655457.html) 【使用docker运行mysql】
-- [https://www.cnblogs.com/lifan1998/p/9177731.html](https://www.cnblogs.com/lifan1998/p/9177731.html) 【2059错误】
-- [https://blog.csdn.net/ora_dy/article/details/80251487](https://blog.csdn.net/ora_dy/article/details/80251487)【2059错误】
+- [使用docker运行mysql](https://www.cnblogs.com/limingxie/p/8655457.html) 
+- [2059错误](https://www.cnblogs.com/lifan1998/p/9177731.html) 
+- [2059错误](https://blog.csdn.net/ora_dy/article/details/80251487)
 
 ## 2.2. zookeeper kafka
 
@@ -222,7 +201,8 @@ rabbitmqctl  set_user_tags admin administrator
 
 - https://www.elastic.co/guide/en/kibana/current/docker.html
 - https://levelup.gitconnected.com/docker-compose-made-easy-with-elasticsearch-and-kibana-4cb4110a80dd
-- 还要安装kibana
+
+还要安装kibana
 
 ```bash
 If you want to set this permanently, you need to edit /etc/sysctl.conf and set vm.max_map_count to 262144.
@@ -238,7 +218,6 @@ docker exec -it es-node01 /usr/share/elasticsearch/bin/elasticsearch-create-enro
 # kibana 
 docker pull docker.elastic.co/kibana/kibana:8.6.2
 docker run --name kib-01 --net elastic -p 5601:5601 docker.elastic.co/kibana/kibana:8.6.2
-
 ```
 
 ### 2.5.2. 7.17版本
@@ -255,6 +234,8 @@ docker run --name kib01-test --net elastic -p 127.0.0.1:5601:5601 -e "ELASTICSEA
 ```
 
 ### 2.5.3. 7.10.2 compose方式来启动ES和KIBANA
+
+#### 2.5.3.1. 创建 docker-compose.yml
 
 ```yaml
 version: "3.7"
@@ -290,9 +271,11 @@ services:
       ES_JAVA_OPTS: -Xmx512m -Xms512m
 volumes:
   es-data-es01: { }
+restart: 
+  always
 ```
 
-#### 2.5.3.1. 通过以下命令来启动
+#### 2.5.3.2. 通过以下命令来启动
 
 - find / -name "docker-compose.yml"
 - cd /home/deipss/docker-yaml/
@@ -335,7 +318,6 @@ docker run -itd \
 
 ```shell
 docker pull bitnami/zookeeper:latest
-
 docker run --name=main-zk  --restart=always  -e ALLOW_ANONYMOUS_LOGIN=yes  -p 2181:2181  bitnami/zookeeper:latest 
 ```
 
@@ -350,7 +332,7 @@ Docker 构建的早期需要 DockerFile，就是 Docker 构建了一个命令文
 - 5）这些命令应用于基础镜像
 - 6）并最终创建一个新的镜像
 
-重新指令
+重要指令
 
 ```text
 1）FROM 指定基础镜像文件

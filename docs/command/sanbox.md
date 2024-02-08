@@ -42,8 +42,6 @@ cd ～/sandbox/bin
 关闭某个jvm进程的sandbox增强 
 ./sandbox.sh -p 66 -S 
 
-
 显示加载了哪些模块
 ./sandbox.sh -p 66 -l
-
 ```

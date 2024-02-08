@@ -6,7 +6,7 @@ parent: Command
 
 # 常用的打包插件
 
-- maven-jar-plugin：maven 默认打包插件【springboot默认使用该方式打包】，用来创建 project jar
+- maven-jar-plugin：maven 默认打包插件`springboot默认使用该方式打包`，用来创建 project jar
 - maven-shade-plugin：用来打可执行包，executable(fat) jar
 - maven-assembly-plugin： 支持定制化打包方式，例如 apache 项目的打包方式
 
@@ -47,4 +47,6 @@ parent: Command
 </build>
 ```
 
-如上XML配置，如果没有使用maven-assembly-plugin插件的话，不会将maven中的其他dependencies打入到jar包中。存在jvm运行jar时，提示类不存在的信息。
+如上XML配置，如果没有使用maven-assembly-plugin插件的话，
+不会将maven中的其他dependencies打入到jar包中。
+存在jvm运行jar时，提示类不存在的信息。

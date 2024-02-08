@@ -62,8 +62,6 @@ jmap -dump:file=filename-dump <pid>
 jmap -dump:format=b,file=heapdump.phrof <pid>
 #使用jhat命令
 jhat -port 9998 filename-dump
-
- 
 ```
 
 - 在windows可以使用jvisualvm-exe命令,加载文件分析
@@ -166,6 +164,6 @@ javap -verbose -p Main-class
 
 # 5. jvm启动获取参数
 
-- 系统主机中的参数
-- jvm 进程启动时参数
-- main 函数中获取
+- 系统主机中的参数 `System.getProperty()`
+- jvm 进程启动时参数 `java -d`
+- main 函数中获取 `String [] args`
