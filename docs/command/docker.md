@@ -321,6 +321,24 @@ docker pull bitnami/zookeeper:latest
 docker run --name=main-zk  --restart=always  -e ALLOW_ANONYMOUS_LOGIN=yes  -p 2181:2181  bitnami/zookeeper:latest 
 ```
 
+## dubbo admin
+- git文档地址 https://github.com/apache/dubbo-admin?tab=readme-ov-file#12-run-with-docker
+
+
+```shell
+# 创建目录和文件 
+mkdir /docker/dubbo-admin/
+vim application.properties
+# 在文件中添加配置文件
+admin.registry.address=zookeeper://127.0.0.1:2181
+admin.config-center=zookeeper://127.0.0.1:2181
+admin.root.user.name=root
+admin.root.user.password=root
+admin.check.signSecret=86295dd0c4ef69a1036b0b0c15158d77
+# 启动容器
+docker run -itd --net=host --name dubbo-admin -v /docker/dubbo-admin/:/config apache/dubbo-admin --restart=always
+```
+
 # 3. Docker file
 
 Docker 构建的早期需要 DockerFile，就是 Docker 构建了一个命令文件。Docker基于这个文件构建镜像并且打包镜像。

@@ -26,7 +26,9 @@ public void set(T value) {
     }
 ```
 
-### 1.1.2. 内部维护一个static class ThreadLocalMap 这样一个静态内部类，而这个ThreadLocalMap类中，还有一个静态内部类
+### 1.1.2. 原理
+
+内部维护一个`static class ThreadLocalMap` 这样一个静态内部类，而这个ThreadLocalMap类中，还有一个静态内部类
 
 ```shell
 static class Entry extends WeakReference<ThreadLocal<?>> {
@@ -40,7 +42,8 @@ static class Entry extends WeakReference<ThreadLocal<?>> {
 private Entry[] table;
 ```
 
-### 1.1.3. ThreadLocalMap中的set()方法，在出现key为null的情况下，会调用replaceStaleEntry()方法，将这个对象替换掉
+### 1.1.3.  set 
+ThreadLocalMap中的set()方法，在出现key为null的情况下，会调用replaceStaleEntry()方法，将这个对象替换掉
 
 ```shell
 private void set(ThreadLocal<?> key, Object value) {

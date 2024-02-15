@@ -79,7 +79,6 @@ import java.util.Objects;
 import java.util.concurrent.*;
 
 /**
- * @author ：xuelin.hxl
  * @description ：ThreadLocalDemo
  * @data ：2021/7/23 下午7:38
  */
@@ -226,6 +225,7 @@ Integer.SIZE - 3) | 0 = -536870912`，是一个很小的负数。<br />之所以
 
 
 # 4. Java线程
+
 线程库就是为开发人员提供创建和管理线程的一套 API。不同操作系统是有不同的线程库
 - 1）POSIX Pthreads：可以作为用户或内核库提供，作为 POSIX 标准的扩展
 - 2）Win32 线程：用于 Window 操作系统的内核级线程库

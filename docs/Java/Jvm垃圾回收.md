@@ -12,7 +12,7 @@ parent: Java
 - 2 类的加载器被回收
 - 3 Class对象没有被任何数据引用
 
-每个jps文件都有一个唯一的类加载器。
+每个jsp文件都有一个唯一的类加载器
 
 # 2. 堆
 
@@ -119,7 +119,7 @@ From中剩下的数据，就是要被清除的
 - 默认分为2048个区域
 
 
-# jvm GC 配置
+# 6. jvm GC 配置
 
 > -server -Xmx13G -Xms13G -Xss4M -XX:+UseG1GC -XX:MaxGCPauseMillis=100 -XX:+UseStringDeduplication
 -XX:+DisableExplicitGC -XX:+ScavengeBeforeFullGC -XX:+ExplicitGCInvokesConcurrent -XX:+PrintGCDetails

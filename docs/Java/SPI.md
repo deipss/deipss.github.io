@@ -5,23 +5,23 @@ parent: Java
 
 ---
 
-# maven库
+# 1. maven库
+
+使用这个库，加上注解的类，编译后，在META-INFO目录下，生成配置文件
 
 ```xml
-
 <dependency>
     <groupId>org.kohsuke.metainf-services</groupId>
     <artifactId>metainf-services</artifactId>
     <version>${metainf-services.version}</version>
     <scope>compile</scope>
 </dependency>
-
 ```
 
 > @MetaInfServices(InspectorPlugin.class)
 
 
-# java加载SPI
+# 2. java加载SPI
 
 Java的SPI机制就是指：针对一个接口，我们需要加载外部对该接口的实现，
 只要约定好将该实现配置在classPath路径下的META-INF/services文件夹的文件，使用方就可以自动加载文件里所定义的类。
@@ -81,5 +81,3 @@ private List<InspectorPlugin> loadInspectorPluginBySPI( ClassLoader classLoader)
 
 
 ```
-
-

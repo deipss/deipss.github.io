@@ -30,7 +30,7 @@ nav_order: 6
 - 默认情况下，Elasticsearch 文档每个字段都会被索引。如果某些字段不需要支持查询，可以在映射中配置 "index": false
   ，减少存储空间占用，并且提升写入速度。
 
-# translog
+# 3. translog
 
 - https://www.elastic.co/guide/en/elasticsearch/reference/current/index-modules-translog.html
 

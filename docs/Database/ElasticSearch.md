@@ -8,7 +8,7 @@ nav_order: 2
 # 1. ES集群常用命令
 
 ```shell
-#获取整个 cluster 的状态。
+#获取整个 cluster 的状态
 GET _cluster/state
 #集群健康状态 API
 GET _cluster/health?pretty
@@ -22,7 +22,6 @@ GET _cat/master?pretty&v
 GET _stats?pretty
 #节点状态信息统计 API
 GET _nodes/stats?pretty
-
 ```
 
 # 2. 索引常用命令
