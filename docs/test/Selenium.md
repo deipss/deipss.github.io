@@ -32,6 +32,8 @@ Selenium Grid
 功能：Grid是Selenium的测试辅助工具，主要用于分布式测试。它允许你在多台计算机上并行执行多个测试任务，从而显著提高测试效率。通过Grid，你可以轻松地对多种浏览器/操作系统组合运行测试，并从一个中心点管理多个测试环境。
 ```
 
+![selenium-components.png](img%2Fselenium-components.png)
+
 ## 3. 你如何理解Selenium WebDriver的工作原理？
 
 ```text
