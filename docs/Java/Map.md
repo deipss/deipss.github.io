@@ -112,3 +112,21 @@ final Node<K,V> getNode(int hash, Object key) {
 # 3. LinkedHashMap
 
 可用于LRU(最近最少使用)算法的实现，还有一种实现方式就是MAP加上LinkedList（双向链表）。
+
+
+
+# 4. ConcurrentHashMap
+
+
+## 4.1. ConcurrentHashMap 是如何保证线程安全的？
+
+通过使用分段锁（在 Java 7 及之前的版本中）和 CAS（Compare-And-Swap）操作（在 Java 8 及之后的版本中）来实现线程安全。
+
+在 Java 7 及之前的版本中，ConcurrentHashMap 使用分段锁来提高并发性能。每个 segment 是一个独立的哈希表，拥有自己的锁，允许多个线程同时读写不同的 segment。
+
+在 Java 8 中，ConcurrentHashMap 的实现发生了重大变化，放弃了分段锁的设计，采用了基于 Node 数组 + CAS + Synchronized 的方式来实现线程安全。这种新的设计在减少内存消耗和提高并发性能方面有所优化。
+
+
+## 4.2. 与 Hashtable 和 Collections.synchronizedMap() 相比，ConcurrentHashMap 有哪些优势？
+
+Hashtable 在整个表上加锁，影响并发性能；Collections.synchronizedMap() 返回的 Map 也是线程安全的，但它也是在整个表上加锁。而 ConcurrentHashMap 通过分段锁或 CAS 操作实现了更细粒度的锁控制，提高了并发性能。
