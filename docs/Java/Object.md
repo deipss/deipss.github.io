@@ -20,7 +20,7 @@ nav_order: 3
 
 # 2. Object
 
-```text
+```java
 //本地方法的注册
 private static native void registerNatives();
     static {
@@ -37,7 +37,8 @@ public native int hashCode();
 public boolean equals(Object obj) {
         return (this == obj);
     }
-//克隆一个对象，注意浅拷贝的深拷贝，被克隆的对象的类要实现Cloneable接口    
+//克隆一个对象，注意浅拷贝的深拷贝，
+// 被克隆的对象的类要实现Cloneable接口    
 protected native Object clone() throws CloneNotSupportedException;
 
 //将一个类打印出来 ，默认是类名加上hash地址
@@ -45,7 +46,8 @@ public String toString() {
         return getClass().getName() + "@" + Integer.toHexString(hashCode());
     }
     
-//调用某个对象的notify()方法能够唤醒一个正在等待这个对象的monitor的线程，如果有多个线程都在等待这个对象的monitor，则只能唤醒其中一个线程；
+//调用某个对象的notify()方法能够唤醒一个正在等待这个对象的monitor的线程，
+// 如果有多个线程都在等待这个对象的monitor，则只能唤醒其中一个线程；
 public final native void notify();
 
 //调用notifyAll()方法能够唤醒所有正在等待这个对象的monitor的线程；
@@ -55,7 +57,8 @@ public final native void wait(long timeout) throws InterruptedException;
 public final void wait(long timeout, int nanos) throws InterruptedException 
 public final void wait() throws InterruptedException
 
-//当GC被执行时，会执行对象的finalize()方法 ，可能让子类重写这个方法，完成合适的操作。
+//当GC被执行时，会执行对象的finalize()方法 ，
+// 可能让子类重写这个方法，完成合适的操作。
 protected void finalize() throws Throwable { }
 ```
 
@@ -66,4 +69,5 @@ protected void finalize() throws Throwable { }
 上面已经提到，如果调用某个对象的wait()方法，当前线程必须拥有这个对象的monitor（即锁），
 因此调用wait()方法必须在同步块或者同步方法中进行（synchronized块或者synchronized方法）。
 调用某个对象的wait()方法，相当于让当前线程交出此对象的monitor锁，然后进入等待状态，
-等待后续再次获得此对象的锁（Thread类中的sleep方法使当前线程暂停执行一段时间，从而让其他线程有机会占用CPU执行代码，但它并不释放对象锁）；
+等待后续再次获得此对象的锁（Thread类中的sleep方法使当前线程暂停执行一段时间，
+从而让其他线程有机会占用CPU执行代码，但它并不释放对象锁）；

@@ -5,9 +5,9 @@ parent: Sandbox
 ---
 
 
-# 原因分析
+# 1. 原因分析
 
-## 分析1
+## 1.1. 分析1
 对比了1.4.0和1.3.0的代码，有以下代码，看着像是把业务类与sandbox类分离，后来发现在搞错了，这个是为了增强一类native本地方法的
 ```java
 // 如果未开启unsafe开关，是不允许增强来自BootStrapClassLoader的类
@@ -18,9 +18,11 @@ logger.debug("transform ignore {}, class from bootstrap but unsafe.enable=false.
 }
 ```
 
-## 分析2
-对比了1.4.0和1.3.0的代码，发现BusinessClassLoaderHolder类被移除了，因为每次增强被触发后，是以事件监听器来处理的，所以1.3.3版本是
-在EventListenerHandler类中以如下代码。这串代码在1.4.0中移除了。所以在EventListenerHandler（这个类处在sandbox.core包下）执行时，
+## 1.2. 分析2
+对比了1.4.0和1.3.0的代码，发现BusinessClassLoaderHolder类被移除了，
+因为每次增强被触发后，是以事件监听器来处理的，所以1.3.3版本是
+在EventListenerHandler类中以如下代码。这串代码在1.4.0中移除了。
+所以在EventListenerHandler（这个类处在sandbox.core包下）执行时，
 线程的上下文不是业务类加载器，是jvm-sandbox的类加载器。
 ```java
 package com.alibaba.jvm.sandbox.core.classloader;
@@ -64,15 +66,16 @@ public class BusinessClassLoaderHolder {
 }
 
 ```
-在类加载中，在事件处置中，将参数的类加载器，置入,代码如下：
+**在类加载中，在事件处置中，将参数的类加载器，置入,代码如下：**
 
-```sql
-final ClassLoader javaClassLoader = ObjectIDs.instance.getObject(targetClassLoaderObjectID);
+```java
+final ClassLoader javaClassLoader=ObjectIDs.instance.getObject(targetClassLoaderObjectID);
         //放置业务类加载器
         BusinessClassLoaderHolder.setBussinessClassLoader(javaClassLoader);
-        
+
 ```
-这个加载器使用，类加载的时机
+**这个加载器使用，类加载的时机**
+
 ```java
 @Override
     protected Class<?> loadClass(final String javaClassName, final boolean resolve) throws ClassNotFoundException {

@@ -15,14 +15,14 @@ public class TransientTest {
     @AllArgsConstructor
     @NoArgsConstructor
     @Data
-    public static class InnerBO{
+    public static class InnerBO {
         private String name;
         private int age;
         private transient int temp;
     }
 
     @Test
-    public void test(){
+    public void test() {
         InnerBO innerBO = new InnerBO();
         innerBO.setName("1");
         innerBO.setAge(1);
@@ -34,7 +34,11 @@ public class TransientTest {
 ```
 
 输出后
+
 ```json
-{"age":1,"name":"1"}
+{
+  "age": 1,
+  "name": "1"
+}
 
 ```

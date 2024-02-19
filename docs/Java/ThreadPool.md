@@ -78,10 +78,6 @@ import java.util.LinkedList;
 import java.util.Objects;
 import java.util.concurrent.*;
 
-/**
- * @description ：ThreadLocalDemo
- * @data ：2021/7/23 下午7:38
- */
 public class ThreadLocalDemo {
 
     private static ThreadLocal<String> threadLocal = new ThreadLocal<String>();
@@ -125,7 +121,6 @@ public class ThreadLocalDemo {
 
 ## 2.1. 线程池的结构
 
-
 - Executor是一个顶级接口，内部就一个 `void execute(Runnable command);` 方法
 - ExecutorService也一个接口，主要定义了 `shutdown() submit() invoke() awaitTermination()` 等方法
 - AbstractExecutorService是一个抽象类，是对ExecutorService的一种不完全实现，内部没有实现 *execute()*方法
@@ -133,8 +128,10 @@ public class ThreadLocalDemo {
 
 ## 2.2. 为什么在用线程池
 
-在并发的线程数量很多的情况下，不断反复地创建和销毁线程， 上示的代码中，threadPoolTest()使用了线程池，threadTest()
-没有使用线程池，二者的运行时间差别相当大。前者花了46秒，后者花了3000多秒，差距之所以这么大，是因为二者的run方法中的操作都非常的单一，是密集型的IO操作。
+在并发的线程数量很多的情况下，不断反复地创建和销毁线程，
+上示的代码中，threadPoolTest()使用了线程池，threadTest()
+没有使用线程池，二者的运行时间差别相当大。前者花了46秒，后者花了3000多秒，差距之所以这么大，
+是因为二者的run方法中的操作都非常的单一，是密集型的IO操作。
 
 ## 2.3. 线程池的状态
 
@@ -191,9 +188,10 @@ Integer.SIZE - 3) | 0 = -536870912`，是一个很小的负数。<br />之所以
 - public static class DiscardOldestPolicy implements
   RejectedExecutionHandler：在线程池终止前，以FIFO的方式放弃池中没有被执行的任务，把这个新任务再次尝试执行execute()方法
 
-## 2.7. 创建方式
+## 2.7. 快速创建方式
 
 除了文章开头那种new方式可以创建，一般常用创建线程池的方式是Executors这样一个工具类，里面实现对许多线程池的创建。
+[参考文档](https://www.cnblogs.com/dolphin0520/p/3932921.html)
 
 - newFixedThreadPool：一个固定大小的线程池
 - newWorkStealingPool：1.8以后新增的，会以多队列的方式减少对锁的竞争，其真实的线程数会动态的调整，这类线程不保证执行顺序与提交顺序一致。
@@ -201,16 +199,17 @@ Integer.SIZE - 3) | 0 = -536870912`，是一个很小的负数。<br />之所以
 - newSingleThreadScheduledExecutor：会重复使用池内现有的线程
 - newCachedThreadPool：创建一个定长线程池，支持定时及周期性任务执行。
 - newScheduledThreadPool：创建一个定长线程池，支持定时及周期性任务执行。
-- [https://www.cnblogs.com/dolphin0520/p/3932921.html](https://www.cnblogs.com/dolphin0520/p/3932921.html)
 
 # 3. 操作系统中的线程
 
 ## 3.1. 用户空间的线程
+
 所有线程都是在用户空间下的，操作系统只能看到用户空间的中进程，看不到线程。
 缺点是线程只在用户态，没有中断机制，对于IO消耗过长的线程，会长期占用cpu，整体CPU的吞吐率不高；
 当出现缺页中断时，阻塞也是整体进程，而不是线程。
 
 ## 3.2. 内核空间的线程
+
 线程的生命周期全部在内核空间。
 
 ### 3.2.1. 多对一线程模型：
@@ -218,17 +217,23 @@ Integer.SIZE - 3) | 0 = -536870912`，是一个很小的负数。<br />之所以
 多个用户线程对应一个内核线程
 
 ### 3.2.2. 一对一线程模型：
+
 一个用户线程对应一个内核线程
 
 ### 3.2.3. 多对多线程模型：
-多对多模型将任意数量的用户线程复用到相同或更少数量的内核线程上，结合了一对一和多对一模型的最佳特性
 
+多对多模型将任意数量的用户线程复用到相同或更少数量的内核线程上，结合了一对一和多对一模型的最佳特性
 
 # 4. Java线程
 
 线程库就是为开发人员提供创建和管理线程的一套 API。不同操作系统是有不同的线程库
+
 - 1）POSIX Pthreads：可以作为用户或内核库提供，作为 POSIX 标准的扩展
 - 2）Win32 线程：用于 Window 操作系统的内核级线程库
-- 3）Java 线程：Java 线程 API 通常采用宿主系统的线程库来实现，也就是说在 Win 系统上，Java 线程 API 通常采用 Win API 来实现，在 UNIX 类系统上，采用 Pthread 来实现。
+- 3）Java 线程：Java 线程 API 通常采用宿主系统的线程库来实现，
+  也就是说在 Win 系统上，Java 线程 API 通常采用 Win API 来实现，在 UNIX 类系统上，
+  采用 Pthread 来实现。
 
-现今 Java 中线程的本质，其实就是操作系统中的线程，其线程库和线程模型很大程度上依赖于操作系统（宿主系统）的具体实现，比如在 Windows 中 Java 就是基于 Wind32 线程库来管理线程，且 Windows 采用的是一对一的线程模型。
+现今 Java 中线程的本质，其实就是操作系统中的线程，
+其线程库和线程模型很大程度上依赖于操作系统（宿主系统）的具体实现，比如在
+Windows 中 Java 就是基于 Wind32 线程库来管理线程，且 Windows 采用的是一对一的线程模型。

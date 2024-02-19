@@ -7,6 +7,7 @@ nav_order: 3
 
 # 1. Auto Configuration
 
+查看Spring-boot自身集成的配套类
 ```text
 找到 spring-boot-autoconfigure-2.3.4.RELEASE.jar 这个jar包，下面的META-INFO文件夹
 找到spring.factories文件
@@ -28,8 +29,13 @@ SLF4J: Found binding in [jar:file:/C:/Users/deips/.m2/repository/org/slf4j/slf4j
 SLF4J: Found binding in [jar:file:/C:/Users/deips/.m2/repository/org/apache/logging/log4j/log4j-slf4j-impl/2.13.3/log4j-slf4j-impl-2.13.3.jar!/org/slf4j/impl/StaticLoggerBinder.class]
 SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
 SLF4J: Actual binding is of type [ch.qos.logback.classic.util.ContextSelectorStaticBinder]
-找到了多个binding类，将不需要去除
 ```
+
+如上日志所未，找到了多个binding类，将不需要去除，日志中存在了3个StaticLoggerBinder类，要在maven中去除2个，只留下一个。
+1. slf4j-log4j12/1.7.30
+2. log4j-slf4j-impl/2.13.3
+3. logback-classic/1.2.3
+可以根据版本号来确认出maven的坐标，进行排除
 
 ## 1.3. Dubbo
 
@@ -38,15 +44,16 @@ SLF4J: Actual binding is of type [ch.qos.logback.classic.util.ContextSelectorSta
 dubbo>curator>zookeeper
 这样的一种调用关系
 
-
 ## 1.4. Redis
 
 从spring-boot-autoconfigure-2.3.4.RELEASE.jar中找到了redis相关的配置类
+
 ```shell
 org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration,\
 org.springframework.boot.autoconfigure.data.redis.RedisReactiveAutoConfiguration,\
 org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration,\
 ```
+
 其中RedisAutoConfiguration中，用到了几个关键类  **RedisProperties** **JedisConnectionConfiguration**
 ```shell
 @Configuration(
@@ -78,7 +85,7 @@ class JedisConnectionConfiguration extends RedisConnectionConfiguration {
 
 ## 文件加载
 使用Spring中的PathMatchingResourcePatternResolver类，来加载多个资源，这些资源是在包中的某个路径下：
-- sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:auto/test/dal/mapper/xml/*.xml"));
+> sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:auto/test/dal/mapper/xml/*.xml"));
 
 使用线程上下文的中类加载器，去加载资源，这个资源需要在resource目录下，这样maven打包后，数据才会和在根目录中
-- InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.json")) 
+> InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream("test.json")) 

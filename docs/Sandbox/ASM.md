@@ -32,9 +32,19 @@ stateDiagram-v2
 - https://asm.ow2.io/
 
 ```text
-ASM is an all purpose Java bytecode manipulation and analysis framework. It can be used to modify existing classes or to dynamically generate classes, directly in binary form. ASM provides some common bytecode transformations and analysis algorithms from which custom complex transformations and code analysis tools can be built. ASM offers similar functionality as other Java bytecode frameworks, but is focused on performance. Because it was designed and implemented to be as small and as fast as possible, it is well suited for use in dynamic systems (but can of course be used in a static way too, e.g. in compilers).
+ASM is an all purpose Java bytecode manipulation and analysis framework. 
+It can be used to modify existing classes or to dynamically generate classes, 
+directly in binary form. ASM provides some common bytecode transformations 
+and analysis algorithms from which custom complex transformations 
+and code analysis tools can be built. 
+ASM offers similar functionality as other Java bytecode frameworks, 
+but is focused on performance. 
+Because it was designed and implemented to be as small and as fast as possible, 
+it is well suited for use in dynamic systems 
+(but can of course be used in a static way too, e.g. in compilers).
 
-ASM是一个通用的Java字节码操作和分析框架。它可用于修改现有类或直接以二进制形式动态生成类。ASM提供了一些通用的字节码转换和分析算法，
+ASM是一个通用的Java字节码操作和分析框架。它可用于修改现有类或直接以二进制形式动态生成类。
+ASM提供了一些通用的字节码转换和分析算法，
 可以从这些算法中构建定制的复杂转换和代码分析工具。
 ASM提供了与其他Java字节码框架类似的功能，但更注重性能。
 因为它的设计和实现是尽可能的小和快，
@@ -151,7 +161,8 @@ classDiagram
 
 ```
 
-上面的方法，在调用时，需要注意的是先后顺序，一般就是：先调用 visit() 方法，接着调用 visitField() 方法或 visitMethod() 方法，最后调用
+上面的方法，在调用时，需要注意的是先后顺序，一般就是：先调用 visit() 方法，
+接着调用 visitField() 方法或 visitMethod() 方法，最后调用
 visitEnd() 方法。
 
 ```java
@@ -249,6 +260,7 @@ public class HelloWorldTransformCore {
 ## 4.4. FiledVisitor
 
 ## 4.5. MethodVisitor
+
 - https://lsieun.github.io/java-asm-01/method-visitor-intro.html
 
 ## 4.6. Frame
@@ -266,11 +278,11 @@ public class HelloWorldTransformCore {
 
 # 5. 参考文献
 
-- https://www.baeldung.com/java-classloaders 类加载器
-- https://tech.hipac.cn/archives/aeb6e3616cf74e1984b908fc1cd98913#jacoco 多agent治理在海拍客的应用与实践
-- https://arthas.aliyun.com/doc/agent.html 通常 Arthas 是以动态 attach 的方式来诊断应用，但从3.2.0版本起，Arthas 支持直接以
-  java agent 的方式启动。
-- https://www.cnblogs.com/rickiyang/p/11368932.html agent代码精解
-- https://juejin.cn/post/7018237356532563999 代码示例
-- https://developer.aliyun.com/article/854428 代码示例
-- https://zhuanlan.zhihu.com/p/448871215
+1. https://www.baeldung.com/java-classloaders 类加载器
+2. https://tech.hipac.cn/archives/aeb6e3616cf74e1984b908fc1cd98913#jacoco 多agent治理在海拍客的应用与实践
+3. https://arthas.aliyun.com/doc/agent.html 通常 Arthas 是以动态 attach 的方式来诊断应用，但从3.2.0版本起，Arthas 支持直接以
+   java agent 的方式启动。
+4. https://www.cnblogs.com/rickiyang/p/11368932.html agent代码精解
+5. https://juejin.cn/post/7018237356532563999 代码示例
+6. https://developer.aliyun.com/article/854428 代码示例
+7. https://zhuanlan.zhihu.com/p/448871215

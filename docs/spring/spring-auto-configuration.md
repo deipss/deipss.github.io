@@ -6,6 +6,7 @@ nav_order: 4
 ---
 
 # 1. 常用的注解
+
 ```text
 @Configuration 标注一个类为配置类
 @AutoConfigureAfter 在某个类配置之后再配置
@@ -17,6 +18,7 @@ nav_order: 4
 # 2. 常用Configuration配置
 
 ## 2.1. ThreadConfig
+
 ```java
 
 @Configuration
@@ -32,7 +34,7 @@ public class ThreadConfig {
     }
 
     @PostConstruct
-    public void init(){
+    public void init() {
         log.info("ThreadConfig PostConstruct()");
     }
 
@@ -89,7 +91,10 @@ public class ThreadConfig {
 }
 ```
 
-## 2.2. AfterConfig
+# 3. 配置示例
+
+## 3.1. AfterConfig
+
 ```java
 
 @Configuration
@@ -101,21 +106,21 @@ public class AfterConfig {
     }
 
     @PostConstruct
-    public void init(){
+    public void init() {
         log.info("AfterConfig PostConstruct()");
     }
 
 
     @Bean
     @ConditionalOnMissingBean(ThreadConfig.class)
-    public ThreadConfig threadConfig(){
+    public ThreadConfig threadConfig() {
         log.info("不会执行，因为AfterConfig在ThreadConfig之后了");
         return new ThreadConfig();
     }
 
     @Bean
     @ConditionalOnBean(ThreadConfig.class)
-    public Object object(){
+    public Object object() {
         log.info("会执行，因为需要ThreadConfig");
         return new Object();
     }
@@ -123,8 +128,10 @@ public class AfterConfig {
 
 ```
 
-## 2.3. BeforeConfig
+## 3.2. BeforeConfig
+
 ```java
+
 @Configuration
 @AutoConfigureAfter(ThreadConfig.class)
 @Slf4j
@@ -135,13 +142,14 @@ public class BeforeConfig {
 
 
     @PostConstruct
-    public void init(){
+    public void init() {
         log.info("BeforeConfig PostConstruct()");
     }
 }
 ```
 
-## 2.4. 执行结果
+## 3.3. 执行结果
+
 ```text
 
 2023-05-10 23:08:03.804  INFO 14274 --- [  restartedMain] e.j.d.s.c.ThreadConfig                   : ThreadConfig 无参构造

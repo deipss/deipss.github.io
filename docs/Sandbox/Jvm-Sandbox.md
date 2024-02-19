@@ -26,12 +26,12 @@ premain和attach两种方式都会调用这个方法，这个方法上的static�
 
 ```
 
-#### 1.1.2.1. premain 方式
+**premain 方式**
 
 - premain方式启动时，loadOrDefineClassLoader()会使用SandboxClassLoader来加载sandbox-core这个模块的jar文件，做到与工程代码的类加载器隔离
 - inst.appendToBootstrapClassLoaderSearch(new JarFile(new File(getSandboxSpyJarPath(home)  将Spy注入到BootstrapClassLoader
 
-#### 1.1.2.2. attach
+**attach 方式**
 
 ## 1.2. sandbox-api
 
@@ -104,7 +104,7 @@ classDiagram
 
 ```
 
-调用时序图
+**调用时序图**
 
 ```mermaid
 
@@ -151,29 +151,29 @@ sequenceDiagram
 
 - 流程扭转中间类 SpyHandler Spy
 
-```shell
-Spy类的方法，其实是ASM增强后，调用的
+```java
+//Spy类的方法，其实是ASM增强后，调用的
 
 public static void spyMethodOnCallThrows(final String throwException,
-                                             final String namespace,
-                                             final int listenerId) throws Throwable {
-        try {
-            final SpyHandler spyHandler = namespaceSpyHandlerMap.get(namespace);
-            if (null != spyHandler) {
-                spyHandler.handleOnCallThrows(listenerId, throwException);
-            }
-        } catch (Throwable cause) {
-            handleException(cause);
+final String namespace,
+final int listenerId)throws Throwable{
+        try{
+final SpyHandler spyHandler=namespaceSpyHandlerMap.get(namespace);
+        if(null!=spyHandler){
+        spyHandler.handleOnCallThrows(listenerId,throwException);
         }
-    }
+        }catch(Throwable cause){
+        handleException(cause);
+        }
+        }
 
-    /**
-     * asm method of {@link Spy#spyMethodOnCallThrows(String, String, int)}
-     */
-    Method ASM_METHOD_Spy$spyMethodOnCallThrows = getAsmMethod(
-            Spy.class,
-            "spyMethodOnCallThrows",
-            String.class, String.class, int.class
+        /**
+         * asm method of {@link Spy#spyMethodOnCallThrows(String, String, int)}
+         */
+        Method ASM_METHOD_Spy$spyMethodOnCallThrows=getAsmMethod(
+        Spy.class,
+        "spyMethodOnCallThrows",
+        String.class,String.class,int.class
     );
 ```
 
@@ -270,11 +270,11 @@ public interface ModuleLifecycle extends LoadCompleted {
 
 # 3. 参考文献
 
-- https://www.baeldung.com/java-classloaders 类加载器
-- https://tech.hipac.cn/archives/aeb6e3616cf74e1984b908fc1cd98913#jacoco 多agent治理在海拍客的应用与实践
-- https://arthas.aliyun.com/doc/agent.html 通常 Arthas 是以动态 attach 的方式来诊断应用，但从3.2.0版本起，Arthas 支持直接以
-  java agent 的方式启动。
-- https://www.cnblogs.com/rickiyang/p/11368932.html agent代码精解
-- https://juejin.cn/post/7018237356532563999 代码示例
-- https://developer.aliyun.com/article/854428 代码示例
-- https://zhuanlan.zhihu.com/p/448871215
+1. https://www.baeldung.com/java-classloaders 类加载器
+2. https://tech.hipac.cn/archives/aeb6e3616cf74e1984b908fc1cd98913#jacoco 多agent治理在海拍客的应用与实践
+3. https://arthas.aliyun.com/doc/agent.html 通常 Arthas 是以动态 attach 的方式来诊断应用，但从3.2.0版本起，Arthas 支持直接以
+   java agent 的方式启动。
+4. https://www.cnblogs.com/rickiyang/p/11368932.html agent代码精解
+5. https://juejin.cn/post/7018237356532563999 代码示例
+6. https://developer.aliyun.com/article/854428 代码示例
+7. https://zhuanlan.zhihu.com/p/448871215

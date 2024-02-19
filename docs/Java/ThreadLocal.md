@@ -7,9 +7,10 @@ nav_order: 7
 
 # 1. ThreadLocal
 
-- 提供了本地线程的实例，即每个使用该变量的线程都会初始化一个完全独立的实例副本。ThreadLocal变量通常`private static`
-  修饰。当一个线程结束时，它所使用的所有ThreadLocal所生成的实例副本也会被回收。
-- 这样做，就会让这些实例副本在线程之间完全独立，而ThreadLocal类实例在线程之间共享，通过具体的方法共享访问。
+提供了本地线程的实例，即每个使用该变量的线程都会初始化一个完全独立的实例副本。
+ThreadLocal变量通常`private static`修饰。当一个线程结束时，
+它所使用的所有ThreadLocal所生成的实例副本也会被回收。
+这样做，就会让这些实例副本在线程之间完全独立，而ThreadLocal类实例在线程之间共享，通过具体的方法共享访问。
 
 ## 1.1. 实现
 
@@ -42,7 +43,8 @@ static class Entry extends WeakReference<ThreadLocal<?>> {
 private Entry[] table;
 ```
 
-### 1.1.3.  set 
+### 1.1.3. set
+
 ThreadLocalMap中的set()方法，在出现key为null的情况下，会调用replaceStaleEntry()方法，将这个对象替换掉
 
 ```shell
@@ -83,13 +85,16 @@ private void set(ThreadLocal<?> key, Object value) {
 
 注意到Entry是继承自WeakReference这个弱引用的，当system.GC()时，无法此时JVM中内存是否足够，都要被回收。
 
-#### 1.1.3.1. 存在的问题
+**存在的问题**
 
-- 线程安全问题：新增线程或销毁线程都要读写ThreadLocal的中map,如何确保线程安全；可以用锁，但把map维护交由thread处理，而不是ThreadLocal。即每个Thread只访问自己的map，就不存在写的问题。
-- 内存问题：当一个线程结束，它在ThreadLocal里面的键是弱引用，但值还存在强引用的话，GC无法回收这个内存。在调用 set()、get()
-  、remove() 方法的时候，会清理掉 key 为 null 的记录，即调用 replaceStaleEntry()方法。
+- 线程安全问题：新增线程或销毁线程都要读写ThreadLocal的中map,如何确保线程安全；
+  可以用锁，但把map维护交由thread处理，而不是ThreadLocal。
+  即每个Thread只访问自己的map，就不存在写的问题。
+- 内存问题：当一个线程结束，它在ThreadLocal里面的键是弱引用，但值还存在强引用的话，
+  GC无法回收这个内存。在调用 set()、get()  、remove() 方法的时候，
+  会清理掉 key 为 null 的记录，即调用 replaceStaleEntry()方法。
 
-#### 1.1.3.2. 应用场景
+## 1.2. 应用场景
 
 - session会话
 
@@ -165,7 +170,7 @@ public class InheritableThreadLocal<T> extends ThreadLocal<T> {
 ```
 
 整个InheritableThreadLocal就是这三个方法，其他都是使用从父类继承的方法，因此，真正实现InheritableThreadLocal的过程是在Thread类中的Ini()
-方法中。<br />每个Thread类实例都有如下 两个成员变量：
+方法中。每个Thread类实例都有如下 两个成员变量：
 
 ```shell
 // 每个线程都拥有这两个成员变量
@@ -208,7 +213,7 @@ private ThreadLocalMap(ThreadLocalMap parentMap) {
         }
 ```
 
-- [https://my.oschina.net/xinxingegeya/blog/911883](https://my.oschina.net/xinxingegeya/blog/911883)
+- [参考文档](https://my.oschina.net/xinxingegeya/blog/911883)
 
 ## 2.1. 示例
 
