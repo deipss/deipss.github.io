@@ -72,6 +72,7 @@ EXPLAIN SELECT * FROM users WHERE age > 25;
 * **select_type**: 查询的类型（例如 SIMPLE, SUBQUERY, DERIVED 等）。
 * **table**: 输出的表名。
 * **type**: 访问类型（例如 ALL, index, range, ref, eq_ref, const, system, NULL）。
+  https://www.cnblogs.com/xxoome/p/14434061.html **务必浏览此文档**
 * **possible_keys**: 可能使用的索引。
 * **key**: 实际使用的索引。
 * **key_len**: 使用的索引的长度。
@@ -80,3 +81,21 @@ EXPLAIN SELECT * FROM users WHERE age > 25;
 * **Extra**: 额外的信息，如 "Using where", "Using index", "Using temporary", "Using filesort" 等。
 
 为了获得最佳的性能，你应该经常使用 `EXPLAIN` 来检查你的查询，并根据其建议进行优化。
+
+
+# 4. InnoDB和MyISAM的区别
+
+InnoDB和MyISAM是MySQL数据库管理系统中最常用的两种存储引擎，它们在处理数据库事务、锁定机制、存储方式等方面有一些显著的区别。
+
+1. 事务处理：InnoDB支持事务处理，具有ACID特性，提供了更好的数据完整性和并发性能。
+   而MyISAM不支持事务处理，这意味着它无法提供数据的原子性、一致性、隔离性和持久性保证。
+2. 锁定机制：InnoDB支持行级锁定，这可以提高并发访问的性能，因为它允许多个事务同时访问不同的数据行。
+   而MyISAM只支持表级锁定，当对一个表进行操作时，会锁定整个表，这可能会降低并发性能。
+3. 存储方式：InnoDB将数据存储在磁盘上的InnoDB表空间数据文件中，表的大小只受限于操作系统文件的大小。
+   而MyISAM将数据存储在三个文件中，包括表定义文件（.frm）、数据文件（.MYD）和索引文件（.MYI）。
+4. 外键支持：InnoDB支持外键约束，这有助于维护数据的引用完整性。而MyISAM则不支持外键。
+5. 性能：在某些情况下，MyISAM的性能可能会比InnoDB更好，尤其是在执行大量的SELECT查询时。
+   这是因为MyISAM的表强调的是性能，其执行速度比InnoDB更快。然而，在需要执行大量的INSERT、UPDATE或DELETE操作时，
+   InnoDB通常表现更好，因为它支持事务处理和行级锁定。
+
+综上所述，InnoDB和MyISAM各有其优点和适用场景。在选择存储引擎时，应根据具体的应用需求和性能要求来决定使用哪种引擎。

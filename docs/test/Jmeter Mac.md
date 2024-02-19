@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Jmeter
+title: Jmeter Mac
 parent: Test
 ---
 
