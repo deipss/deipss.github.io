@@ -46,11 +46,11 @@ parent: Database
 - 只拷贝一次FD到内核空间
 - 内核将就绪的FD直接拷贝到用户空间，不再用户空间自己去遍历出哪个FD是就绪的
 
-#### 2.3.3.1. epoll LT ET
+**epoll LT ET**
 
 ![io-epoll-LT.png](img%2Fio-epoll-LT.png)
 
-#### 2.3.3.2. epoll web server
+**epoll web server**
 
 ![img.png](img/epoll-web.png)
 
@@ -62,36 +62,38 @@ parent: Database
 
 ![img.png](img/io-asynchronized.png)
 
-# 零COPY
+# 3. 零COPY
 
 ![io-zero-copy.png](img%2Fio-zero-copy.png)
 
-因为使用mmap技术实现零拷贝，受到一定的内存大小限制，一般在1-2个G。所以使用零拷贝技术的文件，大小一般在1G左右，
+因为使用mmap技术实现零拷贝，受到一定的内存大小限制，一般在1-2个G。
+所以使用零拷贝技术的文件，大小一般在1G左右，
 比如rocket MQ 的commit log文件就是1G一个。
-# 3. 对比
+
+# 4. 对比
 
 ![img.png](img/io-conclusion.png)
 
-# 4. 线程模型
+# 5. 线程模型
 
 - 只是核心业务（命令处理），是单线程，整体redis（AOF）是多线程
 - 版本4.0 使用异步多线程的方式来执行删除命令
 - 版本6.0 在网络通信中引入多线程，提高多核CPU的利用率
 
-# 5. 为什么使用线程
+# 6. 为什么使用线程
 
 - redis是纯内存（微秒），没有磁盘IO（毫秒），性能瓶颈是在网络延时，不是执行速度
 - 上下文切换会有开销
 - 要应对多线程不安全问题
 
-# 6. redis 网络模型
+# 7. redis 网络模型
 
 ![img.png](img/redis-net-model.png)
 
-# 7. redis 网络协议
+# 8. redis 网络协议
 
 ![img.png](img/redis-io-protocol.png)
 
-# 8. redis 网络协议-数据类型
+# 9. redis 网络协议-数据类型
 
 ![img.png](img/redis-io-protocol-structure.png)

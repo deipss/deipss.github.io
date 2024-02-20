@@ -24,8 +24,8 @@ parent: Database
 
 利用HASH结构记录线程ID和重入次数
 
-```shell
-org.redisson.RedissonLock#tryLockInnerAsync 
+```java
+//org.redisson.RedissonLock#tryLockInnerAsync 
 
 <T> RFuture<T> tryLockInnerAsync(long leaseTime, TimeUnit unit, long threadId, RedisStrictCommand<T> command) {
         internalLockLeaseTime = unit.toMillis(leaseTime);
@@ -45,7 +45,7 @@ org.redisson.RedissonLock#tryLockInnerAsync
                 Collections.singletonList(getName()), internalLockLeaseTime, getLockName(threadId));
     }
     
-  org.redisson.RedissonLock#unlockInnerAsync 
+//  org.redisson.RedissonLock#unlockInnerAsync 
    
      protected RFuture<Boolean> unlockInnerAsync(long threadId) {
         return evalWriteAsync(getName(), LongCodec.INSTANCE, RedisCommands.EVAL_BOOLEAN,
@@ -70,7 +70,7 @@ org.redisson.RedissonLock#tryLockInnerAsync
 - 不是单一的死循环，而是通过消息订阅和信号量的方式来节省资源，收到消息或信号量，才去重试获取锁
 `org.redisson.RedissonLock#tryLock(long, long, java.util.concurrent.TimeUnit)`
 
-```shell
+```java
 @Override
     public boolean tryLock(long waitTime, long leaseTime, TimeUnit unit) throws InterruptedException {
         long time = unit.toMillis(waitTime);
@@ -89,7 +89,8 @@ org.redisson.RedissonLock#tryLockInnerAsync
         }
         
         current = System.currentTimeMillis();
-        RFuture<RedissonLockEntry> subscribeFuture = subscribe(threadId); // 订阅一个通知，这个通知就是锁释放时的通知 "redis.call('publish', KEYS[2], ARGV[1]); "
+        // 订阅一个通知，这个通知就是锁释放时的通知 "redis.call('publish', KEYS[2], ARGV[1]); "
+        RFuture<RedissonLockEntry> subscribeFuture = subscribe(threadId); 
         if (!subscribeFuture.await(time, TimeUnit.MILLISECONDS)) {
             if (!subscribeFuture.cancel(false)) {
                 subscribeFuture.onComplete((res, e) -> {
@@ -148,11 +149,11 @@ org.redisson.RedissonLock#tryLockInnerAsync
 
 - 获取锁之后，利用watchDog定时任务去续约
 
-```shell
-org.redisson.RedissonLock#tryAcquireAsync
-org.redisson.RedissonLock#scheduleExpirationRenewal
-org.redisson.RedissonLock#renewExpiration
-org.redisson.RedissonLock#scheduleExpirationRenewal
+```java
+//org.redisson.RedissonLock#tryAcquireAsync
+//org.redisson.RedissonLock#scheduleExpirationRenewal
+//org.redisson.RedissonLock#renewExpiration
+//org.redisson.RedissonLock#scheduleExpirationRenewal
 private void renewExpiration() {
         ExpirationEntry ee = EXPIRATION_RENEWAL_MAP.get(getEntryName());
         if (ee == null) {
@@ -180,7 +181,8 @@ private void renewExpiration() {
                     
                     if (res) {
                         // reschedule itself
-                        renewExpiration();// 递归调用自身，会不断的续约，什么时候取消续约。在锁释放时             cancelExpirationRenewal(threadId);
+        // 递归调用自身，会不断的续约，什么时候取消续约。在锁释放时 cancelExpirationRenewal(threadId);
+                        renewExpiration();
                     }
                 });
             }
@@ -191,7 +193,8 @@ private void renewExpiration() {
     
 private void scheduleExpirationRenewal(long threadId) {
         ExpirationEntry entry = new ExpirationEntry();
-        ExpirationEntry oldEntry = EXPIRATION_RENEWAL_MAP.putIfAbsent(getEntryName(), entry);// 续约时，锁的可重入
+        // 续约时，锁的可重入
+        ExpirationEntry oldEntry = EXPIRATION_RENEWAL_MAP.putIfAbsent(getEntryName(), entry);
         if (oldEntry != null) {
             oldEntry.addThreadId(threadId);
         } else {
@@ -217,7 +220,7 @@ private void scheduleExpirationRenewal(long threadId) {
 
 ## 5.1 续约
 
-```shell
+```java
 @Override
 org.redisson.RedissonMultiLock#tryLock(long, long, java.util.concurrent.TimeUnit)
     public boolean tryLock(long waitTime, long leaseTime, TimeUnit unit) throws InterruptedException {

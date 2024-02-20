@@ -8,8 +8,9 @@ parent: Database
 
 # 1. KEY设计
 
-- 业务名称：数据名：ID login：user：10
-- 长度不超过44字节，因为KEY是由STRING保存的，STRING底层编码有INT，EMBSTR，RAW三种，EMBSTR在小于44字节时使用，采用连续内存，内存使用小
+- 业务名称：数据名：ID =》 login：user：10
+- 长度不超过44字节，因为KEY是由STRING保存的，STRING底层编码有INT，
+  EMBSTR，RAW三种，EMBSTR在小于44字节时使用，采用连续内存，内存使用小
 
 # 2. 不使用BIG KEY
 
