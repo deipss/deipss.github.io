@@ -58,8 +58,7 @@ WHERE age > 25;
 * **id**: 查询的标识符。
 * **select_type**: 查询的类型（例如 SIMPLE, SUBQUERY, DERIVED 等）。
 * **table**: 输出的表名。
-* **type**: 访问类型（例如 ALL, index, range, ref, eq_ref, const, system, NULL）。
-  https://www.cnblogs.com/xxoome/p/14434061.html **务必浏览此文档**
+* **type**: 访问类型（例如 ALL, index, range, ref, eq_ref, const, system, NULL）。https://www.cnblogs.com/xxoome/p/14434061.html
 * **possible_keys**: 可能使用的索引。
 * **key**: 实际使用的索引。
 * **key_len**: 使用的索引的长度。

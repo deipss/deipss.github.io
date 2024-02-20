@@ -10,6 +10,7 @@ parent: Java
 使用这个库，加上注解的类，编译后，在META-INFO目录下，生成配置文件
 
 ```xml
+
 <dependency>
     <groupId>org.kohsuke.metainf-services</groupId>
     <artifactId>metainf-services</artifactId>
@@ -20,7 +21,6 @@ parent: Java
 
 > @MetaInfServices(InspectorPlugin.class)
 
-
 # 2. java加载SPI
 
 Java的SPI机制就是指：针对一个接口，我们需要加载外部对该接口的实现，
@@ -29,8 +29,8 @@ Java的SPI机制就是指：针对一个接口，我们需要加载外部对该�
 SPI中三个重要的角色：
 
 - 接口
-```java
 
+```java
 public interface InspectorPlugin {
 
     String identify();
@@ -39,18 +39,20 @@ public interface InspectorPlugin {
 
     boolean entrance();
 
-    int watch(ModuleEventWatcher watcher,InvocationSendService service);
+    int watch(ModuleEventWatcher watcher, InvocationSendService service);
 
 }
 ```
+
 - 配置文件
+
 ```java
+
 @MetaInfServices(InspectorPlugin.class)
 public class DubboProviderPlugin extends BasePlugin {
-    public DubboProviderPlugin( InvocationSendService invocationSendService) {
-        super(Constant.DUBBO_PROVIDER,true,invocationSendService);
+    public DubboProviderPlugin(InvocationSendService invocationSendService) {
+        super(Constant.DUBBO_PROVIDER, true, invocationSendService);
     }
-
 
 
     @Override
@@ -58,10 +60,11 @@ public class DubboProviderPlugin extends BasePlugin {
         new EventWatchBuilder(watcher)
                 .onClass("org.apache.dubbo.rpc.filter.ContextFilter").includeBootstrap()
                 .onBehavior("invoke")
-                .onWatch(new DubboProviderEventListener(entrance, protocol,invocationSendService), Event.Type.BEFORE, Event.Type.RETURN, Event.Type.THROWS);
+                .onWatch(new DubboProviderEventListener(entrance, protocol, invocationSendService), Event.Type.BEFORE, Event.Type.RETURN, Event.Type.THROWS);
     }
 }
 ```
+
 - ServiceLoader反射获取
 
 ``` java
@@ -78,6 +81,4 @@ private List<InspectorPlugin> loadInspectorPluginBySPI( ClassLoader classLoader)
         }
         return target;
     }
-
-
 ```

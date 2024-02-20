@@ -7,7 +7,9 @@ parent: Java
 # 1. synchronized的实现
 
 `synchronized` 是 Java 中实现同步的一种机制，它的底层实现完全依赖于 JVM（Java 虚拟机）的支持。在 JVM 中，
+[synchronized 实现原理]( https://pdai.tech/md/db/sql-mysql/sql-mysql-b-tree.html)
 `synchronized` 的实现涉及到对象头（Object Header）和 Monitor 机制。
+
 
 - 对象头（Object Header）
 
@@ -127,8 +129,10 @@ parent: Java
 
 `synchronized` 和 `ReentrantLock` 都是 Java 中用于实现同步的机制，
 但它们在实现方式、功能和性能上有一些区别。
-
+ 
 ## 3.1. synchronized
+
+
 
 `synchronized` 是 Java 语言内置的关键字，用于控制多个线程对共享资源的访问。它可以用来修饰方法或代码块。
 
