@@ -22,7 +22,7 @@ select  concat('drop  table if exsits frxs_fund_accountant_2012.', table_name ,'
 from information_schema.tables WHERE table_schema='frxs_fund_accountant';
 ```
 
-# 日期查询
+# 2. 日期查询
 
 ```postgres-sql
 
@@ -33,7 +33,7 @@ select str_to_date('08/09/2008', '%m/%d/%Y');
 select str_to_date('08.09.2008 08:09:30', '%m.%d.%Y %h:%i:%s'); 
 ```
 
-# 日期计算
+# 3. 日期计算
 
 ```postgres-sql
 
