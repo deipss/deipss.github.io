@@ -96,7 +96,9 @@ public class SemaphoreDemo {
 - https://leetcode-cn.com/problems/building-h2o/
 - https://www.cnblogs.com/dolphin0520/p/3920373.html
 
-当共享变量被一个线程修改后，会立即通过其他线程。 volatile有利于保证变量的原子性，对于i++这样的复合操作在高并发的情况下不行。在Thread类中，线程名字段就是用volatile修饰的。
+当共享变量被一个线程修改后，会立即通过其他线程。 
+volatile有利于保证变量的原子性，对于i++这样的复合操作在高并发的情况下不行。
+在Thread类中，线程名字段就是用volatile修饰的。
 
 ```java
 
@@ -164,9 +166,9 @@ class H2O {
 
 # 3. CountDownLatch
 
-1. 创建CountDownLatch对象<br />
-2. 调用其实例方法 `await()`，让当前线程等待<br />
-3. 调用 `countDown()`方法，让计数器减1<br />
+1. 创建CountDownLatch对象
+2. 调用其实例方法 `await()`，让当前线程等待
+3. 调用 `countDown()`方法，让计数器减1
 4. 当计数器变为0的时候， `await()`方法会返回
 
 ## 3.1. 模拟处理sheet

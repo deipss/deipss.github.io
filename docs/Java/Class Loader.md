@@ -77,7 +77,7 @@ nav_order: 2
 2. 如果类没有被加载，则先委托父类加载（父类加载时会判断该类有没有被自己加载过），如果父类加载过则返回；如果没被加载过则继续向上委托。
 3. 如果一直委托都无法加载，子类加载器才会尝试自己加载。
 
-```text
+```java
 protected Class<?> loadClass(String name, boolean resolve)
         throws ClassNotFoundException
     {
@@ -124,7 +124,7 @@ protected Class<?> loadClass(String name, boolean resolve)
 
 以jvm-sandbox-repeater自定义的类加载器为例，
 
-```text
+```java
     public JarFileLifeCycleManager(String jarFilePath, PluginClassLoader.Routing ... routingArray) {
         File file = new File(jarFilePath);
         if (!file.exists()) {
@@ -160,13 +160,13 @@ ApplicationModel.instance().setConfig(config);
 ![img.png](img/class_loader_jdbc_driver.png)
 
 ```java
-    java.security.AccessController#doPrivileged(java.security.PrivilegedAction<T>)
+//    java.security.AccessController#doPrivileged(java.security.PrivilegedAction<T>)
     static {
         loadInitialDrivers();
         println("JDBC DriverManager initialized");
     }
     
-    java.util.ServiceLoader#load(java.lang.Class<S>)
+//    java.util.ServiceLoader#load(java.lang.Class<S>)
     public static <S> ServiceLoader<S> load(Class<S> service) {
         // 使用应用程序类加载器来加载驱动程序
         // 可以手工设置当前的线程上下文的类加载器  Thread.currentThread().setContextClassLoader();
@@ -194,7 +194,7 @@ ApplicationModel.instance().setConfig(config);
 
 使用findLoadedClass方法
 
-```text
+```java
 final Class<?> loadedClass = findLoadedClass(name);
 ```
 
@@ -202,7 +202,7 @@ final Class<?> loadedClass = findLoadedClass(name);
 
 参加sandbox-repeater的实现，
 
-```text
+```java
 while (isPreloading && --timeout > 0 && ClassloaderBridge.instance().findClassInstances(routing.targetClass).size() == 0) {
     try {
         Thread.sleep(100);
@@ -299,7 +299,9 @@ classDiagram
 加载器，所以在沙箱加载中，可以使用业务代码的类代码器，如Spring的LauncherURLClassLoader去
 加载类，如上图中，****线的关联关系。
 
-- DelegateBizClassLoader delegateBizClassLoader = BusinessClassLoaderHolder.getBussinessClassLoader();
+```java
+DelegateBizClassLoader delegateBizClassLoader = BusinessClassLoaderHolder.getBusinessClassLoader();
+```
 
 下面的代码中，
 ```java
@@ -351,10 +353,14 @@ classDiagram
 ```
 
 # 2. jdk9的类加载器
-- 启动类加载器，使用java编码，在jdk.
+- 启动类加载器，使用java编码，在jdk。不再使用native方法去实现
 
 # 3. Internal Name
-在 .java 文件中，我们使用 Java 语言来编写代码，使用类名的形式是Fully Qualified Class Name，例如 java.lang.String；将 .java 文件编译之后，就会生成 .class 文件；在 .class 文件中，类名的形式会发生变化，称之为Internal Name，例如 java/lang/String。因此，将Fully Qualified Class Name转换成Internal Name的方式就是，将 . 字符转换成 / 字符。
+在 .java 文件中，我们使用 Java 语言来编写代码，使用类名的形式是Fully Qualified Class Name，
+例如 java.lang.String；将 .java 文件编译之后，就会生成 .class 文件；
+在 .class 文件中，类名的形式会发生变化，称之为Internal Name，
+例如 java/lang/String。因此，将Fully Qualified Class Name转换成Internal Name的方式
+就是，将 . 字符转换成 / 字符。
 
 # 4. 参考文献
 
