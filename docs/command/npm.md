@@ -4,6 +4,14 @@ title: npm
 parent: Command
 ---
 
+# 安装 node
+```text
+This package has installed:
+	•	Node.js v21.6.2 to /usr/local/bin/node
+	•	npm v10.2.4 to /usr/local/bin/npm
+Make sure that /usr/local/bin is in your $PATH.
+```
+
 # npm使用国内镜像加速的几种方法原创
 ```shell
 npm config set registry http://mirrors.cloud.tencent.com/npm/
