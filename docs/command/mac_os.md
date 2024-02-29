@@ -105,7 +105,7 @@ deipss@deipssdeMacBook-Air ~ %
 
 ### 1.3.2. 查看已安装的jdk
 
-- brew list --version | grep jdk
+- `brew list --version |grep jdk`
 - 查看本地安装的java版本 /usr/libexec/java_home -V
 - mac上的默认目录 /Library/Java/JavaVirtualMachines/jdk-1.8.jdk/Contents/Home
 
@@ -151,6 +151,10 @@ PC端主要是X86，移动端主是要RAM。
 # 3. 目录
 
 ## 3.1. Mac 的文件目录结构
+
+![mac_file.png](img%2Fmac_file.png)
+
+右侧的就是非root的权限的文件夹，其他的就是需要root权限才可以访问,资源库就是Library文件夹
 
 - /System 文件夹，系统文件夹。与Windows 之中的 C:\windows32 等文件夹类似。
     - Library 系统资料库，其中的 Caches 可以删除。
