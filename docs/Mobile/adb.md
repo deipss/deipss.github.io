@@ -77,7 +77,7 @@ or:
          SERVICE [ARGS]: dumps only service SERVICE, optionally passing ARGS to it
 
 ```
-
+国
 ## 5. logcat
 
 adb logcat --help

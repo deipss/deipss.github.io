@@ -7,16 +7,14 @@ nav_order: 7
 
 # 1. 快速开始
 
-- git文档 https://github.com/alibaba/jvm-sandbox/wiki/USER-QUICK-START
-- 下载路径 http://ompc.oss-cn-hangzhou.aliyuncs.com/jvm-sandbox/release/sandbox-stable-bin.zip
+- [git文档](https://github.com/alibaba/jvm-sandbox/wiki/USER-QUICK-START)
+ 
+- [下载路径](http://ompc.oss-cn-hangzhou.aliyuncs.com/jvm-sandbox/release/sandbox-stable-bin.zip)
 
 下载后一般在用户主目录下。可以修改`/Users/deipss/sandbox/cfg/sandbox.properties`文件中的user_module属性，
 将自己开发的模块所在路径，配置在上去
 
 > user_module=~/.sandbox-module;/Users/deipss/sandbox/sandbox-module;
-
-
-
 
 # 2. 异常制造
 
@@ -33,15 +31,15 @@ cd /opt/sandbox/bin
 ```shell
 cd ～/sandbox/bin
 
-只刷新有变更的module
+#只刷新有变更的module
 ./sandbox.sh -p 66 -f 
 
-强制刷新 不管有没有变更
+#强制刷新 不管有没有变更
 ./sandbox.sh -p 66 -F
 
-关闭某个jvm进程的sandbox增强 
+#关闭某个jvm进程的sandbox增强 
 ./sandbox.sh -p 66 -S 
 
-显示加载了哪些模块
+#显示加载了哪些模块
 ./sandbox.sh -p 66 -l
 ```

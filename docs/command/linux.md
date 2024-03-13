@@ -356,6 +356,9 @@ env | grep -i 'env' 在环境变量中查找包括env字符的行
 
 # 6. 进程
 
+## nmon
+https://nmon.sourceforge.io/pmwiki.php
+
 ## 6.1. ps
 
 ```shell
