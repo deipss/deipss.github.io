@@ -12,7 +12,7 @@ This package has installed:
 Make sure that /usr/local/bin is in your $PATH.
 ```
 
-# npm使用国内镜像加速的几种方法原创
+# npm使用国内镜像加速的几种方法
 ```shell
 npm config set registry http://mirrors.cloud.tencent.com/npm/
 npm config get registry
@@ -24,4 +24,13 @@ npm config get registry
 ```shell
 npm install -g cnpm --registry=https://registry.npmmirror.com
 cnpm install xxx
+```
+
+
+# 应用启动
+```shell
+# 安装依赖
+npm i
+# 本地开发 启动项目
+npm run serve
 ```
