@@ -16,6 +16,15 @@ nav_order: 7
 
 > user_module=~/.sandbox-module;/Users/deipss/sandbox/sandbox-module;
 
+```shell
+# 下载最新版本的JVM-SANDBOX
+wget http://ompc.oss-cn-hangzhou.aliyuncs.com/jvm-sandbox/release/sandbox-stable-bin.zip
+
+# 解压
+unzip sandbox-stable-bin.zip
+
+``` 
+
 # 2. 异常制造
 
 这个异常需要在repeater模块编码
