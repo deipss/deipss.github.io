@@ -8,14 +8,15 @@ nav_order: 8
 ## 1. 编码提效
 
 ### 1.1. postfix
-
+![img.png](img/postfix.png)
 ### 1.2. live template
-
+![img.png](img/template.png)
 ### 1.3. maven builder
 
+![img.png](img/maven.png)
 ### 1.4. code completion
 
-
+![img.png](img/completion.png)
 
 
 ## 2. idea plugin
@@ -51,4 +52,4 @@ nav_order: 8
 - 阿里代码规约检测
 - 领域对象转JSON工具：POJO to JSON
 - 驼峰转换：String manipulation
- 
+ - 测试代码生成：Squaretest
