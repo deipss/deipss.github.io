@@ -81,8 +81,11 @@ sudo ufw delete allow 80/tcp
 
 # 6. install v2ray
 - https://junz.org/post/v2_in_linux/
+
+# 7. install nvidia driver
+- https://linuxconfig.org/how-to-install-the-nvidia-drivers-on-ubuntu-22-04
  
 
-# 7. 系统环境
+# 8. 系统环境
   
 使用.profile文件作为环境变量的配置文件
