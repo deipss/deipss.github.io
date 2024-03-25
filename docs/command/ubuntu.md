@@ -35,7 +35,7 @@ systemctl status <service-name>
 
 ```
 
-# ubuntu services
+# 3. ubuntu services
 
 ```shell
 service --status-all
@@ -46,7 +46,7 @@ service <service-name> status
 
 ```
 
-# 3. ubuntu install jdk
+# 4. ubuntu install jdk
 ```shell
 # 安装jdk8
 sudo apt install openjdk-8-jdk
@@ -61,7 +61,7 @@ export PATH=$JAVA_HOME/bin:$JRE_HOME/bin:$PATH
 ```
  
 
-# 3.1. ubuntu网络防火端设置信息
+# 5. ubuntu网络防火端设置信息
 
 ```shell
 sudo ufw allow 22/tcp
@@ -79,9 +79,10 @@ sudo ufw delete allow 80/tcp
 ```
 
 
-
+# 6. install v2ray
+- https://junz.org/post/v2_in_linux/
  
 
-# 4. 系统环境
+# 7. 系统环境
   
 使用.profile文件作为环境变量的配置文件
