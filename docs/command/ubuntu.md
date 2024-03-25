@@ -12,8 +12,9 @@ lsb_release -a
 lscpu
 ```
 
-# 2. ubuntu start on reboot
+# 2. ubuntu systemctl
 ```shell
+# start with reboot
 systemctl enable nginx.service       
 systemctl enable supervisord
 
@@ -22,6 +23,27 @@ systemctl disable supervisord
 
 systemctl is-enabled nginx
 systemctl is-enabled supervisord
+# show all
+systemctl list-unit-files --type service -all
+
+# start
+systemctl start <service-name>
+systemctl stop <service-name>
+systemctl restart <service-name>
+systemctl status <service-name>
+
+
+```
+
+# ubuntu services
+
+```shell
+service --status-all
+service <service-name> start
+service <service-name> stop
+service <service-name> restart
+service <service-name> status
+
 ```
 
 # 3. ubuntu install jdk
@@ -39,7 +61,7 @@ export PATH=$JAVA_HOME/bin:$JRE_HOME/bin:$PATH
 ```
  
 
-## 3.1. ubuntu网络防火端设置信息
+# 3.1. ubuntu网络防火端设置信息
 
 ```shell
 sudo ufw allow 22/tcp
@@ -55,6 +77,9 @@ sudo ufw delete allow 21/tcp
 sudo ufw delete allow 23/tcp
 sudo ufw delete allow 80/tcp
 ```
+
+
+
  
 
 # 4. 系统环境
