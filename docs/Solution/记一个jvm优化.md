@@ -23,11 +23,11 @@ nav_order: 6
 后面发现是因为公司默认使用ParNew对年轻代进行回收，CMS进行老年代回收。140M是
 公司默认的。
 
-- jstat gcutil 5000 20
+- jstat -gcutil `<jpid>` 5000 20
 查看到有YGC频繁，每次30ms、FGC2小时一次
 
-- jstat gcnew 5000 20
-- jstat gcnewcapbility 5000 20
+- jstat -gcnew `<jpid>` 5000 20
+- jstat -gcnewcapbility `<jpid>` 5000 20
 
 # 3. 解决办法
 - 可以指定新生代最大的内存
