@@ -24,8 +24,6 @@ brew install 用来安装一些不带界面的命令行工具和第三方库。
 brew cask install 用来安装一些带界面的应用软件。
 
 ```shell
-
-
 # 查看brew版本：
 brew -v
 # 更新brew版本：
@@ -47,13 +45,11 @@ brew cask uninstall xxx
 # 查找软件安装位置：
 which xxx （xxx为软件名称）
 
-
 # 诊断
 brew doctor
 
 # 清理不必要的安装包
 brew cleanup
-
 ```
 
 ## 1.2. 镜像加速
@@ -61,7 +57,6 @@ brew cleanup
 - https://zhuanlan.zhihu.com/p/137464385
 
 ```shell
-
 cd "$(brew --repo)"
 git config -l 先查看下当前git的配置
 git remote set-url origin https://mirrors.ustc.edu.cn/brew.git
@@ -70,6 +65,7 @@ cd "$(brew --repo)/Library/Taps/homebrew/homebrew-core"
 git remote set-url origin https://mirrors.ustc.edu.cn/homebrew-core.git
 
 echo 'export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles' >> ~/.bash_profile
+# 不自动更新，不然每次都很慢
 echo 'export HOMEBREW_NO_AUTO_UPDATE=1' >> ~/.bash_profile
 source ~/.bash_profile
 
@@ -109,12 +105,9 @@ deipss@deipssdeMacBook-Air ~ %
 - 查看本地安装的java版本 /usr/libexec/java_home -V
 - mac上的默认目录 /Library/Java/JavaVirtualMachines/jdk-1.8.jdk/Contents/Home
 
-### 1.3.3. 多版本bash配置
-
+### 1.3.3. JDK多版本bash配置
 
 ```shell
-
-
 export JAVA_8_HOME=/Library/Java/JavaVirtualMachines/jdk-1.8.jdk/Contents/Home
 export JAVA_11_HOME=/Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home
 export JAVA_HOME=$JAVA_8_HOME
@@ -127,8 +120,9 @@ alias jdk11="export JAVA_HOME=$JAVA_11_HOME"
 alias ll='ls -alrth'
 
 ```
+
 > source ~/.bash_profile
-> 
+>
 > Zsh应改为 source ~/.zshrc
 
 # 2. cpu
@@ -153,6 +147,7 @@ Apple M3是苹果公司研发、台积电制造的一款单片系统，
 于2023年的苹果全球开发者大会发布，为苹果公司的Apple Silicon中、
 M系列的第三代产品，亦是Mac向苹果芯片迁移计划中的一部分，构建于ARM平台。
 1
+
 # 3. 目录
 
 ## 3.1. Mac 的文件目录结构

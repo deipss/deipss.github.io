@@ -5,7 +5,7 @@ parent: Command
 nav_order: 3
 ---
 
-# 命令
+# 1. 命令
 
 ```shell
 # 清空build目录
@@ -20,7 +20,7 @@ gradle build
 gradle build -x test
 ```
 
-# 仓库配置
+# 2. 仓库配置
 - https://developer.aliyun.com/mirror/maven/
 
 ```shell

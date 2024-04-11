@@ -5,7 +5,7 @@ parent: Command
 nav_order: 1
 ---
 
-# 1. 安装显卡驱动
+# 1. ~~安装显卡驱动~~
 
 ## 1.1. 预备依赖软件
 
@@ -72,7 +72,7 @@ sudo ./NVIDIA-Linux-x86_64-384.59.run –no-x-check -no-nouveau-check -no-opengl
 - Z, --disable-nouveau：禁用nouveau。此参数非必需，因为之前已经手动禁用了nouveau。
 - A：查看更多高级选项。
 
-# 2. 另一个版本
+# 2. ~~安装显卡-另一个版本~~
 
 ## 2.1. 安装显卡驱动
 

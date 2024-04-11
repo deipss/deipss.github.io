@@ -22,7 +22,6 @@ wget http://ompc.oss-cn-hangzhou.aliyuncs.com/jvm-sandbox/release/sandbox-stable
 
 # 解压
 unzip sandbox-stable-bin.zip
-
 ``` 
 
 # 2. 异常制造

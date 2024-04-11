@@ -73,9 +73,6 @@ git checkout -b 分支名
 # 删除分支
 git branch -d 分支名
 git branch |xargs git branch -d
-
-
-
 ```
 
 # 4. 回退
@@ -109,7 +106,8 @@ git log
 
 ## eg.1
 
-```ignorelang
+```shell
+
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
@@ -151,4 +149,5 @@ logs/
 
 
 *.versionsBackup
+
 ```

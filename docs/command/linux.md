@@ -356,37 +356,35 @@ env | grep -i 'env' 在环境变量中查找包括env字符的行
 
 # 6. 进程
 
-## nmon
+## 6.1. nmon
 https://nmon.sourceforge.io/pmwiki.php
 
-## 6.1. ps
+## 6.2. ps
 
 ```shell
-
 查看某个关键字的进程
 ps aux | grep java  
 ps -ef | grep  <关键字>
 
 ps -auf
 ps -L <pid>
-
 ```
 
-## 6.2. lsof (list open files)列出当前系统打开文件
+## 6.3. lsof (list open files)列出当前系统打开文件
 
 ```shell
 lsof -i:<端口号>
 lsof -i
 ```
 
-## 6.3. kill
+## 6.4. kill
 
 - kill -9
 - kill -15
 
 - https://www.runoob.com/linux/linux-comm-kill.html 菜鸟
 
-## 6.4. dmseg
+## 6.5. dmseg
 
 Linux dmesg（英文全称：display message）命令用于显示开机信息。
 - dmseg -t > dmseg1.log

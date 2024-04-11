@@ -233,7 +233,7 @@ docker pull docker.elastic.co/kibana/kibana:7.17.9
 docker run --name kib01-test --net elastic -p 127.0.0.1:5601:5601 -e "ELASTICSEARCH_HOSTS=http://{本地ip}:9200" docker.elastic.co/kibana/kibana:7.17.9
 ```
 
-### 2.5.3. 7.10.2 compose方式来启动ES和KIBANA
+### 2.5.3. 7.10.2 compose方式来启动ES和KIBANA【推荐】
 
 #### 2.5.3.1. 创建 docker-compose.yml
 

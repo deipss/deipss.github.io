@@ -24,7 +24,7 @@ from information_schema.tables WHERE table_schema='frxs_fund_accountant';
 
 # 2. 日期查询
 
-```postgres-sql
+```sql
 
 select now();
 select current_timestamp, current_timestamp();
@@ -35,9 +35,10 @@ select str_to_date('08.09.2008 08:09:30', '%m.%d.%Y %h:%i:%s');
 
 # 3. 日期计算
 
-```postgres-sql
+```sql
 
-set @dt = now();
+set
+@dt = now();
 
 select date_add(@dt, interval 1 day); -- add 1 day
 select date_add(@dt, interval 1 hour); -- add 1 hour

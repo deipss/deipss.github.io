@@ -7,6 +7,8 @@ parent: Command
 
 # 1. 高级路由配套
 
+- 教程 https://toutyrater.github.io/
+
 ## 1.1. 黑名单（PAC代理模式）
 ```json
 
