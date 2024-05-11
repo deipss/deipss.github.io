@@ -147,19 +147,47 @@ https://blog.csdn.net/u014682691/article/details/80605201
   conda config --add channels https://mirrors.bfsu.edu.cn/anaconda/pkgs/main
   conda config --add channels https://mirrors.bfsu.edu.cn/anaconda/pkgs/r
   conda config --add channels https://mirrors.bfsu.edu.cn/anaconda/pkgs/msys2
+  
+  
+  conda config --remove channels https://mirrors.bfsu.edu.cn/anaconda/pkgs/main
+  conda config --remove channels https://mirrors.bfsu.edu.cn/anaconda/pkgs/r
+  conda config --remove channels https://mirrors.bfsu.edu.cn/anaconda/pkgs/msys2
+  
+  conda config --set proxy_servers.https socks5://127.0.0.1:10808
+
 ```
 
 # 3. 安装环境
 
+- 官方路径 ：https://docs.anaconda.com/free/anaconda/install/linux/
+- anaconda 的版本信息：https://repo.anaconda.com/archive/
+
 ```shell
 conda create -n py36 python=3.6
-conda info -e #
+# 显示当前的环境
+conda info -e 
+conda env list
+
 activate [env_name]
 deactivate
 
 conda create [env_name]
-source activate [env_name]
+source activate py36 
 source deactivate
+
+
+```
+## jupter安装与远程登陆
+- 远程登陆参考文档 https://www.jianshu.com/p/8fc3cd032d3c
+```shell
+
+conda install jupyter notebook
+
+vim /home/deipss/.jupyter/jupyter_notebook_config.py
+c.NotebookApp.ip='*'
+c.NotebookApp.password = u'argon2:$argon2id$v=19$m=10240,t=10,p=8$VH3vhkEL5tQMKg6FWYWTeQ$9U2v6D8llgrrEIeiwAqiew'
+c.NotebookApp.open_browser = False
+c.NotebookApp.port =8888 #可自行指定一个端口, 访问时使用该端口
 ```
 
 ### 3.1. 参考资料
