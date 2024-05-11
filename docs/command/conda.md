@@ -164,6 +164,7 @@ https://blog.csdn.net/u014682691/article/details/80605201
 
 ```shell
 conda create -n py36 python=3.6
+conda create -n py310 python=3.10.14
 # 显示当前的环境
 conda info -e 
 conda env list
@@ -173,11 +174,12 @@ deactivate
 
 conda create [env_name]
 source activate py36 
+source activate py310 
 source deactivate
 
 
 ```
-## jupter安装与远程登陆
+## jupyter安装与远程登陆
 - 远程登陆参考文档 https://www.jianshu.com/p/8fc3cd032d3c
 ```shell
 
@@ -187,8 +189,17 @@ vim /home/deipss/.jupyter/jupyter_notebook_config.py
 c.NotebookApp.ip='*'
 c.NotebookApp.password = u'argon2:$argon2id$v=19$m=10240,t=10,p=8$VH3vhkEL5tQMKg6FWYWTeQ$9U2v6D8llgrrEIeiwAqiew'
 c.NotebookApp.open_browser = False
-c.NotebookApp.port =8888 #可自行指定一个端口, 访问时使用该端口
+c.NotebookApp.port =7888 #可自行指定一个端口, 访问时使用该端口
+
+jupyter notebook
+
 ```
+
+## comfyUI
+
+### 后台安装一些pip的包
+-  nohup sh -c 'pip install -r /home/deipss/jupyter_files/ComfyUI/requirements.txt' > runoob.log 2>&1 &
+
 
 ### 3.1. 参考资料
 

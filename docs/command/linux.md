@@ -400,6 +400,9 @@ nohup /root/runoob.sh > runoob.log 2>&1 &
 # 0 – stdin (standard input，标准输入)
 # 1 – stdout (standard output，标准输出)
 # 2 – stderr (standard error，标准错误输出)
+
+nohup sh -c 'pip install -r /home/deipss/jupyter_files/ComfyUI/requirements.txt' > runoob.log 2>&1 &
+sh -c 相当于把后面一个字符串，当作一个sh命令执行
 ```
 
 
