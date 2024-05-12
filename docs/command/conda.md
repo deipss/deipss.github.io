@@ -179,8 +179,11 @@ source deactivate
 
 
 ```
+
 ## jupyter安装与远程登陆
+
 - 远程登陆参考文档 https://www.jianshu.com/p/8fc3cd032d3c
+
 ```shell
 
 conda install jupyter notebook
@@ -198,8 +201,8 @@ jupyter notebook
 ## comfyUI
 
 ### 后台安装一些pip的包
--  nohup sh -c 'pip install -r /home/deipss/jupyter_files/ComfyUI/requirements.txt' > runoob.log 2>&1 &
 
+- nohup sh -c 'pip install -r /home/deipss/jupyter_files/ComfyUI/requirements.txt' > runoob.log 2>&1 &
 
 ### 3.1. 参考资料
 
