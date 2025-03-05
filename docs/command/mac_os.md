@@ -173,3 +173,70 @@ M系列的第三代产品，亦是Mac向苹果芯片迁移计划中的一部分�
 - scroll reverser 用于鼠标与触摸板的转换T
 - logi optional 罗技鼠键
 
+
+# nmap
+```text
+(base) ➜  ~ nmap 192.168.1.0/24                           
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-03-05 21:04 CST
+Nmap scan report for 192.168.1.1
+Host is up (0.0074s latency).
+Not shown: 993 closed tcp ports (conn-refused)
+PORT      STATE    SERVICE
+21/tcp    filtered ftp
+23/tcp    filtered telnet
+80/tcp    open     http
+445/tcp   open     microsoft-ds
+5431/tcp  open     park-agent
+8080/tcp  open     http-proxy
+32768/tcp open     filenet-tms
+
+Nmap scan report for 192.168.1.2
+Host is up (0.0084s latency).
+Not shown: 994 closed tcp ports (conn-refused)
+PORT     STATE SERVICE
+21/tcp   open  ftp
+22/tcp   open  ssh
+3306/tcp open  mysql
+8080/tcp open  http-proxy
+9200/tcp open  wap-wsp
+9876/tcp open  sd
+
+Nmap scan report for 192.168.1.6
+Host is up (0.00015s latency).
+Not shown: 998 closed tcp ports (conn-refused)
+PORT     STATE SERVICE
+5000/tcp open  upnp
+7000/tcp open  afs3-fileserver
+```
+
+## principle
+- 主机发现（Host Discovery）
+确定目标主机是否在线。通过发送多种探测包（如ICMP、ARP、TCP SYN/ACK等），结合响应判断主机活跃状态。
+
+```text
+ARP请求（局域网）
+
+数据包类型：ARP Request（广播）
+
+作用：在局域网内解析目标IP的MAC地址，确认主机在线。
+
+特点：仅用于同一子网，绕过IP层直接通过数据链路层探测。
+
+ICMP Echo请求（Ping）
+
+数据包类型：ICMP Type 8（Echo Request）
+
+作用：检测目标是否
+```
+- 端口扫描（Port Scanning）
+检测目标主机的端口开放状态。不同扫描技术利用TCP/UDP协议特性，通过发送特定标志位的数据包并分析响应（如SYN-ACK、RST或无响应）判断端口状态。
+
+- 服务与版本检测（Service and Version Detection）
+连接到开放端口，发送协议特定的请求（如HTTP GET、SSH握手），解析响应以识别服务及其版本。
+
+- 操作系统检测（OS Fingerprinting）
+分析目标TCP/IP协议栈的独特行为（如初始序列号生成、TCP选项支持、ICMP响应模式），与已知操作系统指纹库匹配。
+
+- 脚本扫描（NSE, Nmap Scripting Engine）
+执行自定义脚本，进一步探测漏洞、配置错误或其他信息（如SSL证书、共享文件夹）。
+
