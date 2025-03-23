@@ -27,6 +27,12 @@ target/
 /nbdist/
 /.nb-gradle/
 build/
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+.bundle
+vendle/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
