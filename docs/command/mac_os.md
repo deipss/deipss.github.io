@@ -240,3 +240,18 @@ ICMP Echo请求（Ping）
 - 脚本扫描（NSE, Nmap Scripting Engine）
 执行自定义脚本，进一步探测漏洞、配置错误或其他信息（如SSL证书、共享文件夹）。
 
+# oh my zsh
+Oh My Zsh 默认是基于 **Zsh**（Z Shell）的，它是为 Zsh 提供的一个开源框架，用于增强 Zsh 的功能和使用体验。
+
+### 简要说明：
+1. **Zsh** 是 Oh My Zsh 的基础 shell。
+2. Oh My Zsh 并不直接与 `sh` 或 `bash` 兼容，它专注于扩展 Zsh 的功能。
+3. 如果你安装了 Oh My Zsh，默认情况下你的终端会切换到 Zsh。
+
+### 如何确认当前使用的 shell？
+运行以下命令可以查看当前用户的默认 shell：
+```bash
+echo $SHELL
+```
+
+如果输出类似 `/bin/zsh`，则表示当前默认使用的是 Zsh。

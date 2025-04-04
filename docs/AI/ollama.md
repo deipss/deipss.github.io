@@ -82,3 +82,41 @@ Ollama是一个用Go编写的语言模型运行时，它可以调用多种模型
 5. **输出结果**：最后，Ollama将处理后的结果输出给用户，可以是在命令行中打印出来，或者通过API返回给调用者。
 
 不同的模型可能有不同的具体实现和调用方式，Ollama需要根据具体模型的特点和要求来进行适配和调用。同时，为了提高性能和效率，Ollama可能还会采用一些优化措施，如模型量化、并行计算等。
+
+
+# 安装细节
+
+- [allama](https://github.com/jmhessel/allama)
+- [install](https://github.com/ollama/ollama/blob/main/docs/linux.md)
+- 环境变量OLLAMA_PORT默认也是11434
+
+## 需要添加环境变量才能远程访问
+
+
+
+```shell
+vim /etc/systemd/system/ollama.service
+
+[Service]
+Environment="OLLAMA_HOST=0.0.0.0"
+Environment="OLLAMA_ORIGINS=*"
+
+```
+
+```shell
+[Unit]
+Description=Ollama Service
+After=network-online.target
+
+[Service]
+ExecStart=/usr/bin/ollama serve
+User=ollama
+Group=ollama
+Restart=always
+RestartSec=3
+Environment="PATH=$PATH"
+Environment="OLLAMA_HOST=0.0.0.0"
+Environment="OLLAMA_ORIGINS=*"
+[Install]
+WantedBy=multi-user.target
+```
