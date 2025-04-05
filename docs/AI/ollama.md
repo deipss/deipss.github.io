@@ -90,6 +90,62 @@ Ollama是一个用Go编写的语言模型运行时，它可以调用多种模型
 - [install](https://github.com/ollama/ollama/blob/main/docs/linux.md)
 - 环境变量OLLAMA_PORT默认也是11434
 
+## 安装过程
+```shell
+# 下载 Ollama 的 Linux AMD64 ROCm 版本安装包
+curl -L https://ollama.com/download/ollama-linux-amd64-rocm.tgz -o ollama-linux-amd64-rocm.tgz
+
+# 解压安装包到 /usr 目录
+sudo tar -C /usr -xzf ollama-linux-amd64-rocm.tgz
+
+# 创建 ollama 用户，用于运行 Ollama 服务
+# -r 表示创建一个系统用户，-s 指定用户的登录 shell 为 /bin/false，禁止用户登录
+# -U 表示创建一个与用户同名的组，-m 表示创建用户的家目录，-d 指定家目录的路径
+sudo useradd -r -s /bin/false -U -m -d /usr/share/ollama ollama
+
+# 将当前用户添加到 ollama 组，以便当前用户可以与 Ollama 服务交互
+sudo usermod -a -G ollama $(whoami)
+
+# 编辑 Ollama 服务的 systemd 配置文件
+vim /etc/systemd/system/ollama.service
+
+[Unit]
+# 描述 Ollama 服务
+Description=Ollama Service
+# 指定网络在线后启动服务
+After=network-online.target
+
+[Service]
+# 指定服务启动命令
+ExecStart=/usr/bin/ollama serve
+# 指定运行服务的用户和组
+User=ollama
+Group=ollama
+# 配置服务异常退出后自动重启
+Restart=always
+# 配置重启前等待的时间
+RestartSec=3
+# 设置环境变量
+Environment="PATH=$PATH"
+
+[Install]
+# 指定服务安装时的依赖目标
+WantedBy=multi-user.target
+
+# 重新加载 systemd 配置，以便识别到新创建的 Ollama 服务
+sudo systemctl daemon-reload
+
+# 启用 Ollama 服务，使其在系统启动时自动运行
+sudo systemctl enable ollama
+
+# 启动 Ollama 服务
+sudo systemctl start ollama
+
+# 检查 Ollama 服务的状态，确保其正在运行
+sudo systemctl status ollama
+
+```
+
 ## 需要添加环境变量才能远程访问
 
 
