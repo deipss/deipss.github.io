@@ -15,7 +15,7 @@ nav_order: 8
 - chrome
 - 腾讯电脑管家（安装jdk1.8）
 - feem 局域网数据传递 可以跨OS
-- Chocolatey windows的包管理工具,国内不好安装，可以在gitee上，下载下来，安装使用
+- Chocolatey windows的包管理工具
 
 ## 1.2. 编码
 

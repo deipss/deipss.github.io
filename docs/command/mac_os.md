@@ -170,7 +170,7 @@ M系列的第三代产品，亦是Mac向苹果芯片迁移计划中的一部分�
 # 4. 其他常用软件
 
 - tabby 远程登陆
-- scroll reverser 用于鼠标与触摸板的转换T
+- scroll reverser 用于鼠标与触摸板的转换
 - logi optional 罗技鼠键
 
 
