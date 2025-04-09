@@ -178,7 +178,10 @@ ifconfig -address
 ```shell
 yum install tcpdump
 -w write写入某个文件 
-tcpdump -w package.cap  
+tcpdump -w package.cap
+
+tshark tcpdump的高级版本
+
 ```
 
 ## 3.4. netstat
