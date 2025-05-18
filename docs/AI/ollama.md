@@ -3,7 +3,6 @@ layout: default
 title: ollama
 parent: AI
 nav_order: 1
-toc: true
 
 ---
 
