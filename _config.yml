@@ -1,6 +1,5 @@
 title: Deipss' blog
 description: powered by just-the-docs
-theme: just-the-docs
 
 url: https://just-the-docs.github.io
 
@@ -97,3 +96,5 @@ heading_anchors: true
 # Supports a CSV of tracking ID strings (eg. "UA-1234567-89,G-1AB234CDE5")
 ga_tracking: UA-2709176-10
 ga_tracking_anonymize_ip: true # Use GDPR compliant Google Analytics settings (true/nil by default)
+back_to_top: true
+back_to_top_text: "Back to top"
