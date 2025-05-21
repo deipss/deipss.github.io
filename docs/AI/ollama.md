@@ -3,8 +3,9 @@ layout: default
 title: ollama
 parent: AI
 nav_order: 1
-
 ---
+{:toc}
+
 
 # 1. ollama安装安装
 
