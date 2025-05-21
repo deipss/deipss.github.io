@@ -17,3 +17,44 @@ mermaid:
 enable_copy_code_button: true
 favicon_ico: "/assets/images/favicon.ico"
 
+# 集合配置 - 将每个子文件夹配置为独立集合
+collections:
+  AI:
+    output: true
+    sort_by: name  # 按文件名排序
+  command:
+    output: true
+    sort_by: name
+  Database:
+    output: true
+    sort_by: name
+  Java:
+    output: true
+    sort_by: name
+  Mobile:
+    output: true
+    sort_by: name
+  Net:
+    output: true
+    sort_by: name
+  Pattern:
+    output: true
+    sort_by: name
+  Python:
+    output: true
+    sort_by: name
+  Reading:
+    output: true
+    sort_by: name
+  Sandbox:
+    output: true
+    sort_by: name
+  Solution:
+    output: true
+    sort_by: name
+  spring:
+    output: true
+    sort_by: name
+  test:
+    output: true
+    sort_by: name
